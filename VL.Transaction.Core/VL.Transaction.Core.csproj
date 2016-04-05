@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2226688B-A762-4A37-9376-846BE594718F}</ProjectGuid>
+    <ProjectGuid>{811E1B01-695A-4C56-8751-55A4191F6DBF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VL.Account.Core</RootNamespace>
-    <AssemblyName>VL.Account.Core</AssemblyName>
+    <RootNamespace>VL.Transaction.Core</RootNamespace>
+    <AssemblyName>VL.Transaction.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -46,10 +46,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="VL.Account.Entities, Version=1.0.5931.16908, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Account.Entities.1.0.1603291743.1\lib\net452\VL.Account.Entities.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="VL.Common.DAS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\VL.Common.DAS.1.0.0.0\lib\net452\VL.Common.DAS.dll</HintPath>
       <Private>True</Private>
@@ -58,25 +54,24 @@
       <HintPath>..\packages\VL.Common.ORM.1.0.5928.31752\lib\net452\VL.Common.ORM.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="VL.Enums, Version=1.0.5932.30698, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Enums.1.0.1603291802.1\lib\net452\VL.Enums.dll</HintPath>
+    <Reference Include="VL.Transaction.Entities, Version=1.0.5933.29836, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Transaction.Entities.1.0.1603301634.1\lib\net452\VL.Transaction.Entities.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="DomainEntities\TAccount.cs" />
+    <Compile Include="DomainEntities\TGoods.cs" />
+    <Compile Include="DomainEntities\TOrder.cs" />
+    <Compile Include="DomainEntities\TOrderDetail.cs" />
+    <Compile Include="DomainEntities\TReceipt.cs" />
+    <Compile Include="DomainEntities\TRedPacket.cs" />
+    <Compile Include="DomainEntities\TUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Scripts\jquery-2.1.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Scripts\jquery-2.1.1.intellisense.js" />
-    <Content Include="Scripts\jquery-2.1.1.js" />
-    <Content Include="Scripts\jquery-2.1.1.min.js" />
-    <Content Include="Scripts\nugetexample.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
