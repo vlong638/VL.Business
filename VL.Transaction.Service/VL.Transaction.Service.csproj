@@ -89,7 +89,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="Scripts\jquery-2.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VL.Transaction.Core\VL.Transaction.Core.csproj">
@@ -99,10 +98,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ForTest\InitTest.sql" />
-    <Content Include="Scripts\jquery-2.1.1.intellisense.js" />
-    <Content Include="Scripts\jquery-2.1.1.js" />
-    <Content Include="Scripts\jquery-2.1.1.min.js" />
-    <Content Include="Scripts\nugetexample.js" />
     <Content Include="设计蓝图.txt" />
   </ItemGroup>
   <ItemGroup />
