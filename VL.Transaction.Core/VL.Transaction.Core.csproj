@@ -54,10 +54,6 @@
       <HintPath>..\packages\VL.Common.ORM.1.0.5928.31752\lib\net452\VL.Common.ORM.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="VL.Transaction.Entities, Version=1.0.5933.29836, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Transaction.Entities.1.0.1603301634.1\lib\net452\VL.Transaction.Entities.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DomainEntities\TAccount.cs" />
