@@ -84,6 +84,7 @@
     <Compile Include="DomainEntities\Operator.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubResults\AuthenticateResult.cs" />
     <Compile Include="SubResults\CreateUserResult.cs" />
     <Compile Include="UserService.cs" />
     <Compile Include="Utilities\LogHelper.cs" />

@@ -13,7 +13,7 @@ namespace VL.User.Service.DomainEntities
         {
             var result = new Result<CreateUserResult>();
             //用户名校验
-            if (user.CheckUniqueOfUserName(session))
+            if (user.CheckExistenceOfUserName(session))
             {
                 result.ResultCode = EResultCode.Failure;
                 result.SubResultCode = CreateUserResult.UserNameExist;
@@ -21,7 +21,7 @@ namespace VL.User.Service.DomainEntities
                 return result;
             }
             //手机号码校验
-            if (user.CheckUniqueOfMobile(session))
+            if (user.CheckExistenceOfMobile(session))
             {
                 result.ResultCode = EResultCode.Failure;
                 result.SubResultCode = CreateUserResult.MobileExist;
@@ -29,7 +29,7 @@ namespace VL.User.Service.DomainEntities
                 return result;
             }
             //邮箱校验
-            if (user.CheckUniqueOfEmail(session))
+            if (user.CheckExistenceOfEmail(session))
             {
                 result.ResultCode = EResultCode.Failure;
                 result.SubResultCode = CreateUserResult.EmailExist;
@@ -52,7 +52,30 @@ namespace VL.User.Service.DomainEntities
                 return result;
             }
         }
+        public Result<AuthenticateResult> Authenticate(DbSession session, TUser user)
+        {
+            var result = new Result<AuthenticateResult>();
+            //用户名校验
+            if (!user.CheckExistenceOfUserName(session))
+            {
+                result.ResultCode = EResultCode.Failure;
+                result.SubResultCode = AuthenticateResult.UserNameUnexist;
+                result.Content = "用户名不存在";
+                return result;
+            }
+            //登录校验
+            if (!user.Authenticate(session))
+            {
+                result.ResultCode = EResultCode.Failure;
+                result.SubResultCode = AuthenticateResult.PasswordError;
+                result.Content = "密码错误";
+                return result;
+            }
+            else
+            {
 
+            }
+        }
         public Result SimulateCreate(DbSession session, TUser user, DateTime simulateTime)
         {
             //真实创建

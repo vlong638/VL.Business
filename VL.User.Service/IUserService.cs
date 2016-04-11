@@ -11,8 +11,8 @@ namespace VL.User.Service
     public interface IUserService
     {
         [OperationContract]
-        Result<CreateUserResult> CreateUser(TUser user);
+        Result<CreateUserResult> Register(TUser user);
         [OperationContract]
-        Result SimulateCreateUser(TUser user, DateTime simulateTime);
+        Result SimulateRegister(TUser user, DateTime simulateTime);
     }
 }

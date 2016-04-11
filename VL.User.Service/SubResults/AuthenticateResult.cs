@@ -3,17 +3,13 @@
 namespace VL.User.Service.SubResults
 {
     [DataContract]
-    public enum CreateUserResult
+    public enum AuthenticateResult
     {
         [EnumMember]
         None,
         [EnumMember]
-        UserNameExist,
+        UserNameUnexist,
         [EnumMember]
-        MobileExist,
-        [EnumMember]
-        EmailExist,
-        [EnumMember]
-        InserFailed,
+        PasswordError
     }
 }

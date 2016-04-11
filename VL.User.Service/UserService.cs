@@ -15,7 +15,8 @@ namespace VL.User.Service
     /// </summary>
     public class UserService : IUserService
     {
-        public Result<CreateUserResult> CreateUser(TUser user)
+        #region Ordinary Operation
+        public Result<CreateUserResult> Register(TUser user)
         {
             return ServiceDelegator.HandleEvent(() =>
             {
@@ -42,8 +43,11 @@ namespace VL.User.Service
                 }
                 return result;
             });
-        }
-        public Result SimulateCreateUser(TUser user, DateTime simulateTime)
+        } 
+        #endregion
+
+        #region Simulation
+        public Result SimulateRegister(TUser user, DateTime simulateTime)
         {
             return ServiceDelegator.HandleEvent(() =>
             {
@@ -70,6 +74,7 @@ namespace VL.User.Service
                 }
                 return result;
             });
-        }
+        } 
+        #endregion
     }
 }
