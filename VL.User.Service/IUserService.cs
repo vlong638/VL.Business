@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ServiceModel;
 using VL.Common.Protocol.IResult;
-using VL.User.Entities;
+using VL.User.Objects.Entities;
 using VL.User.Service.SubResults;
 
 namespace VL.User.Service

@@ -2,7 +2,7 @@
 using VL.Common.DAS.Objects;
 using VL.Common.DAS.Utilities;
 using VL.Common.Protocol.IResult;
-using VL.User.Entities;
+using VL.User.Objects.Entities;
 using VL.User.Service.DomainEntities;
 using VL.User.Service.SubResults;
 using VL.User.Service.Utilities;

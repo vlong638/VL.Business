@@ -79,10 +79,6 @@
       <HintPath>..\packages\VL.Common.Protocol.1.0.1604111129.1\lib\net452\VL.Common.Protocol.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="VL.User, Version=1.0.5945.17716, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.User.1.0.1604110951.1\lib\net452\VL.User.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DomainEntities\Operator.cs" />
@@ -101,13 +97,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VL.User.Core\VL.User.Core.csproj">
-      <Project>{c96b9ff1-a8bb-4e20-8a20-82f64d37af8d}</Project>
-      <Name>VL.User.Core</Name>
+    <ProjectReference Include="..\VL.User.Objects\VL.User.Objects.csproj">
+      <Project>{b25101bf-c6b8-4f49-a7eb-b08af01b1fbc}</Project>
+      <Name>VL.User.Objects</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="设计蓝图.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
