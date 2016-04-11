@@ -55,19 +55,15 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="VL.Common.DAS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Common.DAS.1.0.1604081556.0\lib\net452\VL.Common.DAS.dll</HintPath>
+      <HintPath>..\packages\VL.Common.DAS.1.0.1604081601.0\lib\net452\VL.Common.DAS.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="VL.Common.ORM, Version=1.0.5942.26966, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\VL.Common.ORM.1.0.1604081458.1\lib\net452\VL.Common.ORM.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="VL.Common.Protocol, Version=1.0.5934.24621, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Common.Protocol.1.0.1603311340.1\lib\net452\VL.Common.Protocol.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="VL.User, Version=1.0.5942.19912, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.User.1.0.1604081104.1\lib\net452\VL.User.dll</HintPath>
+    <Reference Include="VL.User, Version=1.0.5945.17716, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.User.1.0.1604110951.1\lib\net452\VL.User.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -79,6 +75,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="设计蓝图.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

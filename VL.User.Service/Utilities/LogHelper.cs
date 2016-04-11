@@ -20,7 +20,7 @@ namespace VL.User.Service.Utilities
                 if (result.ResultCode == EResultCode.Error)
                     ServiceLogger.Error(result.Content);
             }
-            catch (Exception ex)
+            catch// (Exception ex)
             {
                 //日志不影响功能
             }

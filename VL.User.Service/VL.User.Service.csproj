@@ -59,12 +59,12 @@
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="VL.Common.Configurator, Version=1.0.5939.28641, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Common.Configurator.1.1.1604051629.1\lib\net452\VL.Common.Configurator.dll</HintPath>
+    <Reference Include="VL.Common.Configurator, Version=1.1.5942.25976, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.Configurator.1.1.1604111016.1\lib\net452\VL.Common.Configurator.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="VL.Common.DAS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Common.DAS.1.0.1604081601.0\lib\net452\VL.Common.DAS.dll</HintPath>
+      <HintPath>..\packages\VL.Common.DAS.1.0.1604111017.0\lib\net452\VL.Common.DAS.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="VL.Common.Logger, Version=1.0.5942.29503, Culture=neutral, processorArchitecture=MSIL">
@@ -75,12 +75,12 @@
       <HintPath>..\packages\VL.Common.ORM.1.0.1604081458.1\lib\net452\VL.Common.ORM.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="VL.Common.Protocol, Version=1.0.5942.30911, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Common.Protocol.1.0.1604081712.1\lib\net452\VL.Common.Protocol.dll</HintPath>
+    <Reference Include="VL.Common.Protocol, Version=1.0.5945.20675, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.Protocol.1.0.1604111129.1\lib\net452\VL.Common.Protocol.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="VL.User, Version=1.0.5942.19912, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.User.1.0.1604081104.1\lib\net452\VL.User.dll</HintPath>
+    <Reference Include="VL.User, Version=1.0.5945.17716, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.User.1.0.1604110951.1\lib\net452\VL.User.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -91,6 +91,7 @@
     <Compile Include="SubResults\CreateUserResult.cs" />
     <Compile Include="UserService.cs" />
     <Compile Include="Utilities\LogHelper.cs" />
+    <Compile Include="Utilities\ServiceDelegator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -105,7 +106,9 @@
       <Name>VL.User.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="设计蓝图.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <VSToolsPath Condition="'$(VSToolsPath)' == '' and '$(VisualStudioVersion)' != '' and '$(VisualStudioVersion)' != '11.0'">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

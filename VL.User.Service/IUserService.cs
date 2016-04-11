@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 using VL.Common.Protocol.IResult;
 using VL.User.Entities;
 using VL.User.Service.SubResults;
@@ -9,6 +10,9 @@ namespace VL.User.Service
     [ServiceContract]
     public interface IUserService
     {
+        [OperationContract]
         Result<CreateUserResult> CreateUser(TUser user);
+        [OperationContract]
+        Result SimulateCreateUser(TUser user, DateTime simulateTime);
     }
 }
