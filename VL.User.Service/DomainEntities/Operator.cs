@@ -52,7 +52,7 @@ namespace VL.User.Service.DomainEntities
                 return result;
             }
         }
-        public Result<AuthenticateResult> Authenticate(DbSession session, TUser user)
+        public Result<AuthenticateResult> AuthenticateUser(DbSession session, TUser user)
         {
             var result = new Result<AuthenticateResult>();
             //用户名校验
@@ -73,9 +73,12 @@ namespace VL.User.Service.DomainEntities
             }
             else
             {
-
+                //TODO处理登录状态
+                return result;
             }
         }
+
+        #region Simulate
         public Result SimulateCreate(DbSession session, TUser user, DateTime simulateTime)
         {
             //真实创建
@@ -92,6 +95,7 @@ namespace VL.User.Service.DomainEntities
                 result.Content = "数据篡改失败";
             }
             return result;
-        }
+        } 
+        #endregion
     }
 }

@@ -63,6 +63,10 @@
       <HintPath>..\packages\VL.Common.ORM.1.0.1604111655.1\lib\net452\VL.Common.ORM.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="VL.Common.Protocol, Version=1.0.5945.30475, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.Protocol.1.0.1604111656.1\lib\net452\VL.Common.Protocol.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DomainEntities\TUser.cs" />
