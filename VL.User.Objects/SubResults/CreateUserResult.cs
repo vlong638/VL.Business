@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace VL.User.Service.SubResults
+namespace VL.User.Objects.SubResults
 {
     [DataContract]
     public enum CreateUserResult
