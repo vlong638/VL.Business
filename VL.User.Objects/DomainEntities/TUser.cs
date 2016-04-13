@@ -3,8 +3,7 @@ using VL.Common.DAS.Objects;
 using VL.Common.ORM.Objects;
 using VL.Common.ORM.Utilities.QueryBuilders;
 using VL.Common.ORM.Utilities.QueryOperators;
-using VL.Common.Protocol.IResult;
-using VL.Common.Protocol.ISimulation;
+using VL.Common.Protocol.IService;
 using VL.User.Objects.SubResults;
 
 namespace VL.User.Objects.Entities

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Testing.UserServiceReference;
+using VL.Common.Protocol;
 using VL.Common.Protocol.IService;
 using VL.User.Service.Configs;
 using VL.User.Service.Utilities;
@@ -14,9 +15,15 @@ namespace Testing
     {
         static void Main(string[] args)
         {
+            //UserServiceContext.ProtocolConfig = new ProtocolConfig("ProtocolConfig.config");
+            //UserServiceContext.DatabaseConfig = new DbConfigs("DbConnections.config");
+            //UserServiceContext.ProtocolConfig.Save();
+            //UserServiceContext.DatabaseConfig.Save();
+
+
             //TestService();
             //CreateDbConfigForUser();
-            var result = new ServiceContext().Init();
+            var result = new UserServiceContext().Init();
         }
 
         private static void CreateDbConfigForUser()

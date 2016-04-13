@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ServiceModel;
-using VL.Common.Protocol.IResult;
+using VL.Common.Protocol.IService;
 using VL.User.Objects.Entities;
 using VL.User.Objects.SubResults;
 
