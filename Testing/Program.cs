@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Testing.UserServiceReference;
-using VL.Common.Protocol;
-using VL.Common.Protocol.IService;
 using VL.User.Service.Configs;
 using VL.User.Service.Utilities;
 
@@ -22,8 +16,12 @@ namespace Testing
 
 
             //TestService();
-            //CreateDbConfigForUser();
-            var result = new UserServiceContext().Init();
+            //CreateDbConfigForUser();\
+
+            do
+            {
+                new UserServiceContext().Init();
+            } while (Console.ReadLine() != "q");
         }
 
         private static void CreateDbConfigForUser()

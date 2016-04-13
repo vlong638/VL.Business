@@ -14,7 +14,6 @@ namespace VL.User.Service.Configs
             List<DbConfigItem> result = new List<DbConfigItem>()
             {
                 new DbConfigItem("User"),
-                new DbConfigItem("Other"),
             };
             return result;
         }

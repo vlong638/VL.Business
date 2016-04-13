@@ -75,8 +75,8 @@
       <HintPath>..\packages\VL.Common.ORM.1.0.1604121448.1\lib\net452\VL.Common.ORM.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="VL.Common.Protocol, Version=1.0.5947.28117, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Common.Protocol.1.0.1604131537.1\lib\net452\VL.Common.Protocol.dll</HintPath>
+    <Reference Include="VL.Common.Protocol, Version=1.0.5947.29746, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.Protocol.1.0.1604131632.1\lib\net452\VL.Common.Protocol.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -90,8 +90,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Configs\DbConnections.config" />
-    <None Include="Configs\ProtocolConfig.config" />
+    <None Include="Configs\DbConnections.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Configs\ProtocolConfig.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="log4net.config">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
