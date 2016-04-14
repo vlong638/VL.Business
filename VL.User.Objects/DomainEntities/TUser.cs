@@ -12,13 +12,13 @@ namespace VL.User.Objects.Entities
     {
         public Result<CreateUserResult> Create(DbSession session)
         {
-            var result = new Result<CreateUserResult>();
+            var result = new Result<CreateUserResult>(nameof(Create));
             //用户名校验
             if (this.CheckExistenceOfUserName(session))
             {
                 result.ResultCode = EResultCode.Failure;
                 result.SubResultCode = CreateUserResult.UserNameExist;
-                result.Content = "用户名已存在";
+                result.Message = "用户名已存在";
                 return result;
             }
             //手机号码校验
@@ -26,7 +26,7 @@ namespace VL.User.Objects.Entities
             {
                 result.ResultCode = EResultCode.Failure;
                 result.SubResultCode = CreateUserResult.MobileExist;
-                result.Content = "手机号码已存在";
+                result.Message = "手机号码已存在";
                 return result;
             }
             //邮箱校验
@@ -34,7 +34,7 @@ namespace VL.User.Objects.Entities
             {
                 result.ResultCode = EResultCode.Failure;
                 result.SubResultCode = CreateUserResult.EmailExist;
-                result.Content = "邮箱已存在";
+                result.Message = "邮箱已存在";
                 return result;
             }
             //保存入数据库
@@ -49,14 +49,15 @@ namespace VL.User.Objects.Entities
             {
                 result.ResultCode = EResultCode.Failure;
                 result.SubResultCode = CreateUserResult.InserFailed;
-                result.Content = "数据新增失败";
+                result.Message = "数据新增失败";
                 return result;
             }
         }
         public Result SimulateCreate(DbSession session, DateTime simulateTime)
         {
+            var result = new Result<CreateUserResult>(nameof(SimulateCreate));
             //真实创建
-            var result = this.Create(session);
+            result.CopyContent(Create(session));
             if (result.ResultCode != EResultCode.Success)
             {
                 return result;
@@ -66,19 +67,19 @@ namespace VL.User.Objects.Entities
             if (!this.DbUpdate(session, TUserProperties.CreateTime.Title))
             {
                 result.ResultCode = EResultCode.Failure;
-                result.Content = "数据篡改失败";
+                result.Message = "数据篡改失败";
             }
             return result;
         }
         public Result<AuthenticateResult> Authenticate(DbSession session)
         {
-            var result = new Result<AuthenticateResult>();
+            var result = new Result<AuthenticateResult>(nameof(Authenticate));
             //用户名校验
             if (!this.CheckExistenceOfUserName(session))
             {
                 result.ResultCode = EResultCode.Failure;
                 result.SubResultCode = AuthenticateResult.UserNameUnexist;
-                result.Content = "用户名不存在";
+                result.Message = "用户名不存在";
                 return result;
             }
             //密码校验
@@ -86,7 +87,7 @@ namespace VL.User.Objects.Entities
             {
                 result.ResultCode = EResultCode.Failure;
                 result.SubResultCode = AuthenticateResult.PasswordError;
-                result.Content = "密码错误";
+                result.Message = "密码错误";
                 return result;
             }
             else
