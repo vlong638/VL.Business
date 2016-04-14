@@ -20,7 +20,7 @@ namespace Testing
 
             do
             {
-                new UserServiceContext().Init();
+                var result = new UserServiceClient().CheckNodeReferences();
             } while (Console.ReadLine() != "q");
         }
 

@@ -162,105 +162,6 @@ namespace Testing.UserServiceReference {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Result", Namespace="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IResult")]
-    [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Testing.UserServiceReference.ResultOfCreateUserResult9I7TJpd5))]
-    public partial class Result : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ContentField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Testing.UserServiceReference.EResultCode ResultCodeField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Content {
-            get {
-                return this.ContentField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ContentField, value) != true)) {
-                    this.ContentField = value;
-                    this.RaisePropertyChanged("Content");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Testing.UserServiceReference.EResultCode ResultCode {
-            get {
-                return this.ResultCodeField;
-            }
-            set {
-                if ((this.ResultCodeField.Equals(value) != true)) {
-                    this.ResultCodeField = value;
-                    this.RaisePropertyChanged("ResultCode");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ResultOfCreateUserResult9I7TJpd5", Namespace="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IResult")]
-    [System.SerializableAttribute()]
-    public partial class ResultOfCreateUserResult9I7TJpd5 : Testing.UserServiceReference.Result {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Testing.UserServiceReference.CreateUserResult SubResultCodeField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Testing.UserServiceReference.CreateUserResult SubResultCode {
-            get {
-                return this.SubResultCodeField;
-            }
-            set {
-                if ((this.SubResultCodeField.Equals(value) != true)) {
-                    this.SubResultCodeField = value;
-                    this.RaisePropertyChanged("SubResultCode");
-                }
-            }
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="EResultCode", Namespace="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IResult")]
-    public enum EResultCode : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Success = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Failure = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Error = 2,
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CreateUserResult", Namespace="http://schemas.datacontract.org/2004/07/VL.User.Objects.SubResults")]
     public enum CreateUserResult : int {
@@ -281,21 +182,55 @@ namespace Testing.UserServiceReference {
         InserFailed = 4,
     }
     
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AuthenticateResult", Namespace="http://schemas.datacontract.org/2004/07/VL.User.Objects.SubResults")]
+    public enum AuthenticateResult : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        None = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UserNameUnexist = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        PasswordError = 2,
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="UserServiceReference.IUserService")]
     public interface IUserService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/Register", ReplyAction="http://tempuri.org/IUserService/RegisterResponse")]
-        Testing.UserServiceReference.ResultOfCreateUserResult9I7TJpd5 Register(Testing.UserServiceReference.TUser user);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWCFServiceNode/CheckAlive", ReplyAction="http://tempuri.org/IWCFServiceNode/CheckAliveResponse")]
+        bool CheckAlive();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWCFServiceNode/CheckAlive", ReplyAction="http://tempuri.org/IWCFServiceNode/CheckAliveResponse")]
+        System.Threading.Tasks.Task<bool> CheckAliveAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWCFServiceNode/CheckNodeReferences", ReplyAction="http://tempuri.org/IWCFServiceNode/CheckNodeReferencesResponse")]
+        VL.Common.Protocol.IService.DependencyResult CheckNodeReferences();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWCFServiceNode/CheckNodeReferences", ReplyAction="http://tempuri.org/IWCFServiceNode/CheckNodeReferencesResponse")]
+        System.Threading.Tasks.Task<VL.Common.Protocol.IService.DependencyResult> CheckNodeReferencesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/Register", ReplyAction="http://tempuri.org/IUserService/RegisterResponse")]
-        System.Threading.Tasks.Task<Testing.UserServiceReference.ResultOfCreateUserResult9I7TJpd5> RegisterAsync(Testing.UserServiceReference.TUser user);
+        VL.Common.Protocol.IService.Result<Testing.UserServiceReference.CreateUserResult> Register(Testing.UserServiceReference.TUser user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/Register", ReplyAction="http://tempuri.org/IUserService/RegisterResponse")]
+        System.Threading.Tasks.Task<VL.Common.Protocol.IService.Result<Testing.UserServiceReference.CreateUserResult>> RegisterAsync(Testing.UserServiceReference.TUser user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/AuthenticateUser", ReplyAction="http://tempuri.org/IUserService/AuthenticateUserResponse")]
+        VL.Common.Protocol.IService.Result<Testing.UserServiceReference.AuthenticateResult> AuthenticateUser(Testing.UserServiceReference.TUser user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/AuthenticateUser", ReplyAction="http://tempuri.org/IUserService/AuthenticateUserResponse")]
+        System.Threading.Tasks.Task<VL.Common.Protocol.IService.Result<Testing.UserServiceReference.AuthenticateResult>> AuthenticateUserAsync(Testing.UserServiceReference.TUser user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/SimulateRegister", ReplyAction="http://tempuri.org/IUserService/SimulateRegisterResponse")]
-        Testing.UserServiceReference.Result SimulateRegister(Testing.UserServiceReference.TUser user, System.DateTime simulateTime);
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(VL.Common.Protocol.IService.Result<Testing.UserServiceReference.AuthenticateResult>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(VL.Common.Protocol.IService.Result<Testing.UserServiceReference.CreateUserResult>))]
+        VL.Common.Protocol.IService.Result SimulateRegister(Testing.UserServiceReference.TUser user, System.DateTime simulateTime);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/SimulateRegister", ReplyAction="http://tempuri.org/IUserService/SimulateRegisterResponse")]
-        System.Threading.Tasks.Task<Testing.UserServiceReference.Result> SimulateRegisterAsync(Testing.UserServiceReference.TUser user, System.DateTime simulateTime);
+        System.Threading.Tasks.Task<VL.Common.Protocol.IService.Result> SimulateRegisterAsync(Testing.UserServiceReference.TUser user, System.DateTime simulateTime);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -325,19 +260,43 @@ namespace Testing.UserServiceReference {
                 base(binding, remoteAddress) {
         }
         
-        public Testing.UserServiceReference.ResultOfCreateUserResult9I7TJpd5 Register(Testing.UserServiceReference.TUser user) {
+        public bool CheckAlive() {
+            return base.Channel.CheckAlive();
+        }
+        
+        public System.Threading.Tasks.Task<bool> CheckAliveAsync() {
+            return base.Channel.CheckAliveAsync();
+        }
+        
+        public VL.Common.Protocol.IService.DependencyResult CheckNodeReferences() {
+            return base.Channel.CheckNodeReferences();
+        }
+        
+        public System.Threading.Tasks.Task<VL.Common.Protocol.IService.DependencyResult> CheckNodeReferencesAsync() {
+            return base.Channel.CheckNodeReferencesAsync();
+        }
+        
+        public VL.Common.Protocol.IService.Result<Testing.UserServiceReference.CreateUserResult> Register(Testing.UserServiceReference.TUser user) {
             return base.Channel.Register(user);
         }
         
-        public System.Threading.Tasks.Task<Testing.UserServiceReference.ResultOfCreateUserResult9I7TJpd5> RegisterAsync(Testing.UserServiceReference.TUser user) {
+        public System.Threading.Tasks.Task<VL.Common.Protocol.IService.Result<Testing.UserServiceReference.CreateUserResult>> RegisterAsync(Testing.UserServiceReference.TUser user) {
             return base.Channel.RegisterAsync(user);
         }
         
-        public Testing.UserServiceReference.Result SimulateRegister(Testing.UserServiceReference.TUser user, System.DateTime simulateTime) {
+        public VL.Common.Protocol.IService.Result<Testing.UserServiceReference.AuthenticateResult> AuthenticateUser(Testing.UserServiceReference.TUser user) {
+            return base.Channel.AuthenticateUser(user);
+        }
+        
+        public System.Threading.Tasks.Task<VL.Common.Protocol.IService.Result<Testing.UserServiceReference.AuthenticateResult>> AuthenticateUserAsync(Testing.UserServiceReference.TUser user) {
+            return base.Channel.AuthenticateUserAsync(user);
+        }
+        
+        public VL.Common.Protocol.IService.Result SimulateRegister(Testing.UserServiceReference.TUser user, System.DateTime simulateTime) {
             return base.Channel.SimulateRegister(user, simulateTime);
         }
         
-        public System.Threading.Tasks.Task<Testing.UserServiceReference.Result> SimulateRegisterAsync(Testing.UserServiceReference.TUser user, System.DateTime simulateTime) {
+        public System.Threading.Tasks.Task<VL.Common.Protocol.IService.Result> SimulateRegisterAsync(Testing.UserServiceReference.TUser user, System.DateTime simulateTime) {
             return base.Channel.SimulateRegisterAsync(user, simulateTime);
         }
     }

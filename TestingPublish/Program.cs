@@ -11,6 +11,19 @@ namespace TestingPublish
     {
         static void Main(string[] args)
         {
+            do
+            {
+                var result = new UserServiceClient().CheckNodeReferences();
+            } while (Console.ReadLine() != "q");
+
+            if (false)
+            {
+                Register();
+            }
+        }
+
+        private static void Register()
+        {
             UserServiceClient client = new UserServiceClient();
             TUser user = new TUser();
             user.UserName = "vlong638";

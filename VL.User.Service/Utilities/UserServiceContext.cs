@@ -14,7 +14,7 @@ namespace VL.User.Service.Utilities
             DatabaseConfig = new DbConfigs("DbConnections.config");
         }
 
-        public override bool InitOthers()
+        protected override bool InitOthers()
         {
             return true;
         }

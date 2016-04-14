@@ -25,9 +25,9 @@
     <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="1c17950a-9341-4407-ae4c-b3382dacaddd" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VL.User.Service/Service1/mex" />
     <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="08be9ea4-ccd8-4254-9c44-5b3228874870" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VL.User.Service/Service1/mex" />
     <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="028e54ba-c917-4014-b859-4b5f263ae786" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VL.User.Service/Service1/mex" />
+    <MetadataFile FileName="VL.Common.Protocol.IService.xsd" MetadataType="Schema" ID="cd62bf44-6333-4fdf-85e6-452245f80dce" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VL.User.Service/Service1/mex" />
     <MetadataFile FileName="VL.User.Objects.Entities.xsd" MetadataType="Schema" ID="771813a6-73ec-4ccb-a1a0-3e1b1f97296a" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VL.User.Service/Service1/mex" />
     <MetadataFile FileName="VL.Common.ORM.Objects.xsd" MetadataType="Schema" ID="2d90cd6b-e1ac-4a00-9b08-0e21dd24aaa3" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VL.User.Service/Service1/mex" />
-    <MetadataFile FileName="VL.Common.Protocol.IResult.xsd" MetadataType="Schema" ID="acac3016-421a-465e-bdee-2705780c0b8c" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VL.User.Service/Service1/mex" />
     <MetadataFile FileName="VL.User.Objects.SubResults.xsd" MetadataType="Schema" ID="7d64c123-4911-4506-ad6e-e78d3617e106" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VL.User.Service/Service1/mex" />
   </Metadata>
   <Extensions>

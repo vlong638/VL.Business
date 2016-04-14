@@ -16,9 +16,12 @@ namespace VL.User.Service.DomainEntities
         {
             return user.Authenticate(session);
         }
+
+        #region Simulation
         public Result SimulateCreate(DbSession session, TUser user, DateTime simulateTime)
         {
             return user.SimulateCreate(session, simulateTime);
-        }
+        } 
+        #endregion
     }
 }

@@ -15,6 +15,174 @@ namespace TestingPublish.UserServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DependencyResult", Namespace="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IService")]
+    [System.SerializableAttribute()]
+    public partial class DependencyResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private TestingPublish.UserServiceReference.DependencyDetail[] DependencyDetailsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsAllDependenciesAvailableField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TestingPublish.UserServiceReference.DependencyDetail[] DependencyDetails {
+            get {
+                return this.DependencyDetailsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DependencyDetailsField, value) != true)) {
+                    this.DependencyDetailsField = value;
+                    this.RaisePropertyChanged("DependencyDetails");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsAllDependenciesAvailable {
+            get {
+                return this.IsAllDependenciesAvailableField;
+            }
+            set {
+                if ((this.IsAllDependenciesAvailableField.Equals(value) != true)) {
+                    this.IsAllDependenciesAvailableField = value;
+                    this.RaisePropertyChanged("IsAllDependenciesAvailable");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DependencyDetail", Namespace="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IService")]
+    [System.SerializableAttribute()]
+    public partial class DependencyDetail : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DependencyNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private TestingPublish.UserServiceReference.DependencyType DependencyTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsDependencyAvailableField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MessageField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DependencyName {
+            get {
+                return this.DependencyNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DependencyNameField, value) != true)) {
+                    this.DependencyNameField = value;
+                    this.RaisePropertyChanged("DependencyName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TestingPublish.UserServiceReference.DependencyType DependencyType {
+            get {
+                return this.DependencyTypeField;
+            }
+            set {
+                if ((this.DependencyTypeField.Equals(value) != true)) {
+                    this.DependencyTypeField = value;
+                    this.RaisePropertyChanged("DependencyType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsDependencyAvailable {
+            get {
+                return this.IsDependencyAvailableField;
+            }
+            set {
+                if ((this.IsDependencyAvailableField.Equals(value) != true)) {
+                    this.IsDependencyAvailableField = value;
+                    this.RaisePropertyChanged("IsDependencyAvailable");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Message {
+            get {
+                return this.MessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MessageField, value) != true)) {
+                    this.MessageField = value;
+                    this.RaisePropertyChanged("Message");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DependencyType", Namespace="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IService")]
+    public enum DependencyType : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Config = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Database = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Service = 2,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="IPDMTBase", Namespace="http://schemas.datacontract.org/2004/07/VL.Common.ORM.Objects")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(TestingPublish.UserServiceReference.TUser))]
@@ -164,8 +332,9 @@ namespace TestingPublish.UserServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Result", Namespace="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IResult")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Result", Namespace="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IService")]
     [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TestingPublish.UserServiceReference.ResultOfAuthenticateResult9I7TJpd5))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(TestingPublish.UserServiceReference.ResultOfCreateUserResult9I7TJpd5))]
     public partial class Result : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -226,7 +395,30 @@ namespace TestingPublish.UserServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ResultOfCreateUserResult9I7TJpd5", Namespace="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IResult")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ResultOfAuthenticateResult9I7TJpd5", Namespace="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IService")]
+    [System.SerializableAttribute()]
+    public partial class ResultOfAuthenticateResult9I7TJpd5 : TestingPublish.UserServiceReference.Result {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private TestingPublish.UserServiceReference.AuthenticateResult SubResultCodeField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TestingPublish.UserServiceReference.AuthenticateResult SubResultCode {
+            get {
+                return this.SubResultCodeField;
+            }
+            set {
+                if ((this.SubResultCodeField.Equals(value) != true)) {
+                    this.SubResultCodeField = value;
+                    this.RaisePropertyChanged("SubResultCode");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ResultOfCreateUserResult9I7TJpd5", Namespace="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IService")]
     [System.SerializableAttribute()]
     public partial class ResultOfCreateUserResult9I7TJpd5 : TestingPublish.UserServiceReference.Result {
         
@@ -248,7 +440,7 @@ namespace TestingPublish.UserServiceReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="EResultCode", Namespace="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IResult")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EResultCode", Namespace="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IService")]
     public enum EResultCode : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
@@ -281,15 +473,47 @@ namespace TestingPublish.UserServiceReference {
         InserFailed = 4,
     }
     
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AuthenticateResult", Namespace="http://schemas.datacontract.org/2004/07/VL.User.Objects.SubResults")]
+    public enum AuthenticateResult : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        None = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UserNameUnexist = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        PasswordError = 2,
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="UserServiceReference.IUserService")]
     public interface IUserService {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWCFServiceNode/CheckAlive", ReplyAction="http://tempuri.org/IWCFServiceNode/CheckAliveResponse")]
+        bool CheckAlive();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWCFServiceNode/CheckAlive", ReplyAction="http://tempuri.org/IWCFServiceNode/CheckAliveResponse")]
+        System.Threading.Tasks.Task<bool> CheckAliveAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWCFServiceNode/CheckNodeReferences", ReplyAction="http://tempuri.org/IWCFServiceNode/CheckNodeReferencesResponse")]
+        TestingPublish.UserServiceReference.DependencyResult CheckNodeReferences();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWCFServiceNode/CheckNodeReferences", ReplyAction="http://tempuri.org/IWCFServiceNode/CheckNodeReferencesResponse")]
+        System.Threading.Tasks.Task<TestingPublish.UserServiceReference.DependencyResult> CheckNodeReferencesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/Register", ReplyAction="http://tempuri.org/IUserService/RegisterResponse")]
         TestingPublish.UserServiceReference.ResultOfCreateUserResult9I7TJpd5 Register(TestingPublish.UserServiceReference.TUser user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/Register", ReplyAction="http://tempuri.org/IUserService/RegisterResponse")]
         System.Threading.Tasks.Task<TestingPublish.UserServiceReference.ResultOfCreateUserResult9I7TJpd5> RegisterAsync(TestingPublish.UserServiceReference.TUser user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/AuthenticateUser", ReplyAction="http://tempuri.org/IUserService/AuthenticateUserResponse")]
+        TestingPublish.UserServiceReference.ResultOfAuthenticateResult9I7TJpd5 AuthenticateUser(TestingPublish.UserServiceReference.TUser user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/AuthenticateUser", ReplyAction="http://tempuri.org/IUserService/AuthenticateUserResponse")]
+        System.Threading.Tasks.Task<TestingPublish.UserServiceReference.ResultOfAuthenticateResult9I7TJpd5> AuthenticateUserAsync(TestingPublish.UserServiceReference.TUser user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/SimulateRegister", ReplyAction="http://tempuri.org/IUserService/SimulateRegisterResponse")]
         TestingPublish.UserServiceReference.Result SimulateRegister(TestingPublish.UserServiceReference.TUser user, System.DateTime simulateTime);
@@ -325,12 +549,36 @@ namespace TestingPublish.UserServiceReference {
                 base(binding, remoteAddress) {
         }
         
+        public bool CheckAlive() {
+            return base.Channel.CheckAlive();
+        }
+        
+        public System.Threading.Tasks.Task<bool> CheckAliveAsync() {
+            return base.Channel.CheckAliveAsync();
+        }
+        
+        public TestingPublish.UserServiceReference.DependencyResult CheckNodeReferences() {
+            return base.Channel.CheckNodeReferences();
+        }
+        
+        public System.Threading.Tasks.Task<TestingPublish.UserServiceReference.DependencyResult> CheckNodeReferencesAsync() {
+            return base.Channel.CheckNodeReferencesAsync();
+        }
+        
         public TestingPublish.UserServiceReference.ResultOfCreateUserResult9I7TJpd5 Register(TestingPublish.UserServiceReference.TUser user) {
             return base.Channel.Register(user);
         }
         
         public System.Threading.Tasks.Task<TestingPublish.UserServiceReference.ResultOfCreateUserResult9I7TJpd5> RegisterAsync(TestingPublish.UserServiceReference.TUser user) {
             return base.Channel.RegisterAsync(user);
+        }
+        
+        public TestingPublish.UserServiceReference.ResultOfAuthenticateResult9I7TJpd5 AuthenticateUser(TestingPublish.UserServiceReference.TUser user) {
+            return base.Channel.AuthenticateUser(user);
+        }
+        
+        public System.Threading.Tasks.Task<TestingPublish.UserServiceReference.ResultOfAuthenticateResult9I7TJpd5> AuthenticateUserAsync(TestingPublish.UserServiceReference.TUser user) {
+            return base.Channel.AuthenticateUserAsync(user);
         }
         
         public TestingPublish.UserServiceReference.Result SimulateRegister(TestingPublish.UserServiceReference.TUser user, System.DateTime simulateTime) {

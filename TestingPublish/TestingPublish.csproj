@@ -55,7 +55,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Service References\UserServiceReference\TestingPublish.UserServiceReference.DependencyResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\UserServiceReference\TestingPublish.UserServiceReference.Result.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\UserServiceReference\TestingPublish.UserServiceReference.ResultOfAuthenticateResult9I7TJpd5.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\UserServiceReference\TestingPublish.UserServiceReference.ResultOfCreateUserResult9I7TJpd5.datasource">
