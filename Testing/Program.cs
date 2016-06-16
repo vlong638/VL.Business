@@ -1,7 +1,6 @@
 ﻿using System;
 using Testing.UserServiceReference;
 using VL.User.Service.Configs;
-using VL.User.Service.Utilities;
 
 namespace Testing
 {
@@ -9,15 +8,13 @@ namespace Testing
     {
         static void Main(string[] args)
         {
-            //UserServiceContext.ProtocolConfig = new ProtocolConfig("ProtocolConfig.config");
-            //UserServiceContext.DatabaseConfig = new DbConfigs("DbConnections.config");
-            //UserServiceContext.ProtocolConfig.Save();
-            //UserServiceContext.DatabaseConfig.Save();
-
-
             //TestService();
-            //CreateDbConfigForUser();\
+            //CreateDbConfigForUser();
+            //CheckNodeReferences();
+        }
 
+        private static void CheckNodeReferences()
+        {
             do
             {
                 var result = new UserServiceClient().CheckNodeReferences();
