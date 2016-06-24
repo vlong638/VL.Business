@@ -16,10 +16,8 @@ namespace TestingPublish
                 var result = new UserServiceClient().CheckNodeReferences();
             } while (Console.ReadLine() != "q");
 
-            if (false)
-            {
-                Register();
-            }
+            //注册用户测试
+            //Register();
         }
 
         private static void Register()

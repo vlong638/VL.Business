@@ -30,7 +30,7 @@ namespace Dacai.MagicSquareAlgorithm.Objects.Entities
             //{
             //    notValueSetting
             //}
-            result.SubResultCode = odds / 100;
+            result.Data = odds / 100;
             return result;
         }
     }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using VL.Common.DAS.Objects;
 using VL.Common.ORM.Objects;
 using VL.Common.ORM.Utilities.QueryBuilders;
@@ -8,8 +9,11 @@ using VL.User.Objects.SubResults;
 
 namespace VL.User.Objects.Entities
 {
-    public partial class TUser : IPDMTBase, ISimulatable
+    public partial class TUser : IPDMTBase
     {
+
+
+        #region Outer Subject Function
         public Result<CreateUserResult> Create(DbSession session)
         {
             var result = new Result<CreateUserResult>(nameof(Create));
@@ -17,7 +21,7 @@ namespace VL.User.Objects.Entities
             if (this.CheckExistenceOfUserName(session))
             {
                 result.ResultCode = EResultCode.Failure;
-                result.SubResultCode = CreateUserResult.UserNameExist;
+                result.Data = CreateUserResult.UserNameExist;
                 result.Message = "用户名已存在";
                 return result;
             }
@@ -25,7 +29,7 @@ namespace VL.User.Objects.Entities
             if (this.CheckExistenceOfMobile(session))
             {
                 result.ResultCode = EResultCode.Failure;
-                result.SubResultCode = CreateUserResult.MobileExist;
+                result.Data = CreateUserResult.MobileExist;
                 result.Message = "手机号码已存在";
                 return result;
             }
@@ -33,7 +37,7 @@ namespace VL.User.Objects.Entities
             if (this.CheckExistenceOfEmail(session))
             {
                 result.ResultCode = EResultCode.Failure;
-                result.SubResultCode = CreateUserResult.EmailExist;
+                result.Data = CreateUserResult.EmailExist;
                 result.Message = "邮箱已存在";
                 return result;
             }
@@ -48,28 +52,10 @@ namespace VL.User.Objects.Entities
             else
             {
                 result.ResultCode = EResultCode.Failure;
-                result.SubResultCode = CreateUserResult.InserFailed;
+                result.Data = CreateUserResult.InserFailed;
                 result.Message = "数据新增失败";
                 return result;
             }
-        }
-        public Result SimulateCreate(DbSession session, DateTime simulateTime)
-        {
-            var result = new Result<CreateUserResult>(nameof(SimulateCreate));
-            //真实创建
-            result.CopyContent(Create(session));
-            if (result.ResultCode != EResultCode.Success)
-            {
-                return result;
-            }
-            //篡改信息以符合模拟要求
-            CreateTime = simulateTime;
-            if (!this.DbUpdate(session, TUserProperties.CreateTime.Title))
-            {
-                result.ResultCode = EResultCode.Failure;
-                result.Message = "数据篡改失败";
-            }
-            return result;
         }
         public Result<AuthenticateResult> Authenticate(DbSession session)
         {
@@ -78,7 +64,7 @@ namespace VL.User.Objects.Entities
             if (!this.CheckExistenceOfUserName(session))
             {
                 result.ResultCode = EResultCode.Failure;
-                result.SubResultCode = AuthenticateResult.UserNameUnexist;
+                result.Data = AuthenticateResult.UserNameUnexist;
                 result.Message = "用户名不存在";
                 return result;
             }
@@ -86,7 +72,7 @@ namespace VL.User.Objects.Entities
             if (!this.CheckValidityOfPassword(session))
             {
                 result.ResultCode = EResultCode.Failure;
-                result.SubResultCode = AuthenticateResult.PasswordError;
+                result.Data = AuthenticateResult.PasswordError;
                 result.Message = "密码错误";
                 return result;
             }
@@ -96,8 +82,10 @@ namespace VL.User.Objects.Entities
                 return result;
             }
         }
+        #endregion
 
-        public bool CheckExistenceOfUserName(DbSession session)
+        #region Inner Function
+        private bool CheckExistenceOfUserName(DbSession session)
         {
             var queryOperator = IDbQueryOperator.GetQueryOperator(session);
             var selectBuilder = new SelectBuilder();
@@ -105,7 +93,7 @@ namespace VL.User.Objects.Entities
             selectBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TUserProperties.UserName, OperatorType.Equal, this.UserName));
             return queryOperator.SelectAsInt(session, selectBuilder) > 0;
         }
-        public bool CheckExistenceOfMobile(DbSession session)
+        private bool CheckExistenceOfMobile(DbSession session)
         {
             var queryOperator = IDbQueryOperator.GetQueryOperator(session);
             var selectBuilder = new SelectBuilder();
@@ -113,7 +101,7 @@ namespace VL.User.Objects.Entities
             selectBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TUserProperties.Mobile, OperatorType.Equal, this.Mobile));
             return queryOperator.SelectAsInt(session, selectBuilder) > 0;
         }
-        public bool CheckExistenceOfEmail(DbSession session)
+        private bool CheckExistenceOfEmail(DbSession session)
         {
             var queryOperator = IDbQueryOperator.GetQueryOperator(session);
             var selectBuilder = new SelectBuilder();
@@ -121,7 +109,7 @@ namespace VL.User.Objects.Entities
             selectBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TUserProperties.Email, OperatorType.Equal, this.Email));
             return queryOperator.SelectAsInt(session, selectBuilder) > 0;
         }
-        public bool CheckValidityOfPassword(DbSession session)
+        private bool CheckValidityOfPassword(DbSession session)
         {
             var queryOperator = IDbQueryOperator.GetQueryOperator(session);
             var selectBuilder = new SelectBuilder();
@@ -130,5 +118,13 @@ namespace VL.User.Objects.Entities
             selectBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TUserProperties.Password, OperatorType.Equal, this.Password));
             return queryOperator.SelectAsInt(session, selectBuilder) > 0;
         }
+        #endregion
+
+        #region Outer Object Function
+        public List<TUser> GetAllUsers(DbSession session)
+        {
+            return new List<TUser>().DbSelect(session);
+        }
+        #endregion
     }
 }

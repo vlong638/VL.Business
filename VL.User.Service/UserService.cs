@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using VL.Common.Logger.Utilities;
+using VL.Common.Protocol;
 using VL.Common.Protocol.IService;
 using VL.User.Objects.Entities;
 using VL.User.Objects.SubResults;
+using VL.User.Service.Configs;
 using VL.User.Service.DomainEntities;
 using VL.User.Service.Utilities;
 
@@ -13,39 +17,45 @@ namespace VL.User.Service
     /// </summary>
     public class UserService : IUserService
     {
+        UserServiceContext ServiceContext { set; get; }
+
         public bool CheckAlive()
         {
-            return true;
+            var result = CheckNodeReferences();
+            return result.IsAllDependenciesAvailable;
         }
         public DependencyResult CheckNodeReferences()
         {
-            return new UserServiceContext().InitForService();
+            if (ServiceContext == null)
+            {
+                ServiceContext = new UserServiceContext(
+                new DbConfigs("DbConnections.config"),
+                new ProtocolConfig("ProtocolConfig.config"),
+                LoggerProvider.GetLog4netLogger("ServiceLog"));
+            }
+            return ServiceContext.InitForService();
         }
 
         public Result<CreateUserResult> Register(TUser user)
         {
             return ServiceDelegator.HandleSimpleTransactionEvent(nameof(User), (session) =>
             {
-                return new Operator().CreateUser(session, user);
+                return new SubjectOperator().CreateUser(session, user);
             });
         }
         public Result<AuthenticateResult> AuthenticateUser(TUser user)
         {
             return ServiceDelegator.HandleSimpleTransactionEvent(nameof(User), (session) =>
             {
-                return new Operator().AuthenticateUser(session, user);
+                return new SubjectOperator().AuthenticateUser(session, user);
             });
         }
-
-        #region Simulation
-        public Result SimulateRegister(TUser user, DateTime simulateTime)
+        public Result<List<TUser>> GetAllUsers()
         {
             return ServiceDelegator.HandleSimpleTransactionEvent(nameof(User), (session) =>
             {
-                return new Operator().SimulateCreate(session, user, simulateTime);
-            }, true);
+                return new ObjectOperator().GetAllUsers(session);
+            });
         }
-
-        #endregion
     }
 }

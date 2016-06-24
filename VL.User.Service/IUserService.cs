@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 using VL.Common.Protocol.IService;
 using VL.User.Objects.Entities;
@@ -10,14 +11,16 @@ namespace VL.User.Service
     [ServiceContract]
     public interface IUserService:IWCFServiceNode
     {
+        #region Subject
         [OperationContract]
         Result<CreateUserResult> Register(TUser user);
         [OperationContract]
-        Result<AuthenticateResult> AuthenticateUser(TUser user);
+        Result<AuthenticateResult> AuthenticateUser(TUser user); 
+        #endregion
 
-        #region Simulation
+        #region Object
         [OperationContract]
-        Result SimulateRegister(TUser user, DateTime simulateTime); 
+        Result<List<TUser>> GetAllUsers(); 
         #endregion
     }
 }

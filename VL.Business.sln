@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{D9DC0CEA-CAD1-4605-A49E-699DC2480849}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSAlgorithm.Objects", "MSAlgorithm.Objects\MSAlgorithm.Objects.csproj", "{927C33BE-214F-414A-97A3-F37360F0DFA5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSAlgorithm.Service", "MSAlgorithm.Service\MSAlgorithm.Service.csproj", "{4D02DA7C-8384-415D-9C54-FB71EED8C69C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "Sample\Sample.csproj", "{0594697C-22A0-4B1E-8D2F-01090DBF7BEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{4D02DA7C-8384-415D-9C54-FB71EED8C69C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D02DA7C-8384-415D-9C54-FB71EED8C69C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D02DA7C-8384-415D-9C54-FB71EED8C69C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0594697C-22A0-4B1E-8D2F-01090DBF7BEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0594697C-22A0-4B1E-8D2F-01090DBF7BEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0594697C-22A0-4B1E-8D2F-01090DBF7BEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0594697C-22A0-4B1E-8D2F-01090DBF7BEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
