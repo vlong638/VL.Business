@@ -23,6 +23,14 @@ namespace Dacai.MagicSquareAlgorithm.Objects.Entities
         public Int16 JCWeight { get; set; }
         [DataMember]
         public Int16 PLWeight { get; set; }
+        [DataMember]
+        public override string TableName
+        {
+            get
+            {
+                return nameof(TMSAlgorithm);
+            }
+        }
         #endregion
 
         #region Constructors
@@ -70,10 +78,6 @@ namespace Dacai.MagicSquareAlgorithm.Objects.Entities
             {
                 this.PLWeight = Convert.ToInt16(reader[nameof(this.PLWeight)]);
             }
-        }
-        public override string GetTableName()
-        {
-            return nameof(TMSAlgorithm);
         }
         #endregion
     }

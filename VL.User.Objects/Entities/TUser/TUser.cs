@@ -78,9 +78,13 @@ namespace VL.User.Objects.Entities
                 this.CreateTime = Convert.ToDateTime(reader[nameof(this.CreateTime)]);
             }
         }
-        public override string GetTableName()
+        [DataMember]
+        public override string TableName
         {
-            return nameof(TUser);
+            get
+            {
+                return nameof(TUser);
+            }
         }
         #endregion
     }

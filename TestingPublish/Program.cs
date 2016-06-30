@@ -13,7 +13,9 @@ namespace TestingPublish
         {
             do
             {
-                var result = new UserServiceClient().CheckNodeReferences();
+               var result1 = new UserServiceClient().Test();
+                var result2 = new UserServiceClient().CheckNodeReferences();
+                //var result = new UserServiceClient().Test();
             } while (Console.ReadLine() != "q");
 
             //注册用户测试

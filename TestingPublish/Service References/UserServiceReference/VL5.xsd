@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://dcwl027:8001/VL.User.Service.UserService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IService" />
-  <xs:import schemaLocation="http://dcwl027:8001/VL.User.Service.UserService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/VL.User.Objects.Entities" />
+  <xs:import schemaLocation="http://dcwl027:8001/VL.User.Service.UserService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/VL.User.Service" />
+  <xs:import schemaLocation="http://dcwl027:8001/VL.User.Service.UserService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/VL.User.Objects.Entities" />
   <xs:element name="CheckAlive">
     <xs:complexType>
       <xs:sequence />
@@ -26,46 +27,67 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="Test">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TestResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="TestResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetA">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/VL.User.Service" minOccurs="0" name="GetAResult" nillable="true" type="q2:A" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="Register">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/VL.User.Objects.Entities" minOccurs="0" name="user" nillable="true" type="q2:TUser" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/VL.User.Objects.Entities" minOccurs="0" name="user" nillable="true" type="q3:TUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RegisterResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IService" minOccurs="0" name="RegisterResult" nillable="true" type="q3:ResultOfCreateUserResult9I7TJpd5" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IService" minOccurs="0" name="RegisterResult" nillable="true" type="q4:ResultOfCreateUserResult9I7TJpd5" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AuthenticateUser">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/VL.User.Objects.Entities" minOccurs="0" name="user" nillable="true" type="q4:TUser" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/VL.User.Objects.Entities" minOccurs="0" name="user" nillable="true" type="q5:TUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AuthenticateUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IService" minOccurs="0" name="AuthenticateUserResult" nillable="true" type="q5:ResultOfAuthenticateResult9I7TJpd5" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IService" minOccurs="0" name="AuthenticateUserResult" nillable="true" type="q6:ResultOfAuthenticateResult9I7TJpd5" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="SimulateRegister">
+  <xs:element name="GetAllUsers">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/VL.User.Objects.Entities" minOccurs="0" name="user" nillable="true" type="q6:TUser" />
-        <xs:element minOccurs="0" name="simulateTime" type="xs:dateTime" />
-      </xs:sequence>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="SimulateRegisterResponse">
+  <xs:element name="GetAllUsersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IService" minOccurs="0" name="SimulateRegisterResult" nillable="true" type="q7:Result" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IService" minOccurs="0" name="GetAllUsersResult" nillable="true" type="q7:ResultOfArrayOfTUserOnBUIjEi" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

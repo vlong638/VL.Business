@@ -5,9 +5,10 @@
       <xsd:import schemaLocation="http://dcwl027:8001/VL.User.Service.UserService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://dcwl027:8001/VL.User.Service.UserService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://dcwl027:8001/VL.User.Service.UserService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/VL.Common.Protocol.IService" />
-      <xsd:import schemaLocation="http://dcwl027:8001/VL.User.Service.UserService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/VL.User.Objects.Entities" />
-      <xsd:import schemaLocation="http://dcwl027:8001/VL.User.Service.UserService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/VL.Common.ORM.Objects" />
-      <xsd:import schemaLocation="http://dcwl027:8001/VL.User.Service.UserService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/VL.User.Objects.SubResults" />
+      <xsd:import schemaLocation="http://dcwl027:8001/VL.User.Service.UserService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/VL.User.Service" />
+      <xsd:import schemaLocation="http://dcwl027:8001/VL.User.Service.UserService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/VL.User.Objects.Entities" />
+      <xsd:import schemaLocation="http://dcwl027:8001/VL.User.Service.UserService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/VL.Common.ORM.Objects" />
+      <xsd:import schemaLocation="http://dcwl027:8001/VL.User.Service.UserService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/VL.User.Objects.SubResults" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IUserService_CheckAlive_InputMessage">
@@ -22,6 +23,18 @@
   <wsdl:message name="IUserService_CheckNodeReferences_OutputMessage">
     <wsdl:part name="parameters" element="tns:CheckNodeReferencesResponse" />
   </wsdl:message>
+  <wsdl:message name="IUserService_Test_InputMessage">
+    <wsdl:part name="parameters" element="tns:Test" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_Test_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TestResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_GetA_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetA" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_GetA_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAResponse" />
+  </wsdl:message>
   <wsdl:message name="IUserService_Register_InputMessage">
     <wsdl:part name="parameters" element="tns:Register" />
   </wsdl:message>
@@ -34,11 +47,11 @@
   <wsdl:message name="IUserService_AuthenticateUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:AuthenticateUserResponse" />
   </wsdl:message>
-  <wsdl:message name="IUserService_SimulateRegister_InputMessage">
-    <wsdl:part name="parameters" element="tns:SimulateRegister" />
+  <wsdl:message name="IUserService_GetAllUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllUsers" />
   </wsdl:message>
-  <wsdl:message name="IUserService_SimulateRegister_OutputMessage">
-    <wsdl:part name="parameters" element="tns:SimulateRegisterResponse" />
+  <wsdl:message name="IUserService_GetAllUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllUsersResponse" />
   </wsdl:message>
   <wsdl:portType name="IUserService">
     <wsdl:operation name="CheckAlive">
@@ -49,6 +62,14 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IWCFServiceNode/CheckNodeReferences" message="tns:IUserService_CheckNodeReferences_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IWCFServiceNode/CheckNodeReferencesResponse" message="tns:IUserService_CheckNodeReferences_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="Test">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/Test" message="tns:IUserService_Test_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/TestResponse" message="tns:IUserService_Test_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetA">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetA" message="tns:IUserService_GetA_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetAResponse" message="tns:IUserService_GetA_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="Register">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/Register" message="tns:IUserService_Register_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/RegisterResponse" message="tns:IUserService_Register_OutputMessage" />
@@ -57,9 +78,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/AuthenticateUser" message="tns:IUserService_AuthenticateUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/AuthenticateUserResponse" message="tns:IUserService_AuthenticateUser_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="SimulateRegister">
-      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/SimulateRegister" message="tns:IUserService_SimulateRegister_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/SimulateRegisterResponse" message="tns:IUserService_SimulateRegister_OutputMessage" />
+    <wsdl:operation name="GetAllUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetAllUsers" message="tns:IUserService_GetAllUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetAllUsersResponse" message="tns:IUserService_GetAllUsers_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IUserService" type="tns:IUserService">
@@ -75,6 +96,24 @@
     </wsdl:operation>
     <wsdl:operation name="CheckNodeReferences">
       <soap:operation soapAction="http://tempuri.org/IWCFServiceNode/CheckNodeReferences" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Test">
+      <soap:operation soapAction="http://tempuri.org/IUserService/Test" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetA">
+      <soap:operation soapAction="http://tempuri.org/IUserService/GetA" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -100,8 +139,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="SimulateRegister">
-      <soap:operation soapAction="http://tempuri.org/IUserService/SimulateRegister" style="document" />
+    <wsdl:operation name="GetAllUsers">
+      <soap:operation soapAction="http://tempuri.org/IUserService/GetAllUsers" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -11,6 +11,13 @@ namespace VL.User.Service
     [ServiceContract]
     public interface IUserService:IWCFServiceNode
     {
+        #region Test
+        [OperationContract]
+        int Test();
+        [OperationContract]
+        A GetA(); 
+        #endregion
+
         #region Subject
         [OperationContract]
         Result<CreateUserResult> Register(TUser user);
@@ -20,7 +27,7 @@ namespace VL.User.Service
 
         #region Object
         [OperationContract]
-        Result<List<TUser>> GetAllUsers(); 
+        Result<List<TUser>> GetAllUsers();
         #endregion
     }
 }

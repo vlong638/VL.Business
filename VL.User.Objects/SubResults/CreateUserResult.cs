@@ -14,6 +14,6 @@ namespace VL.User.Objects.SubResults
         [EnumMember]
         EmailExist,
         [EnumMember]
-        InserFailed,
+        InsertFailed,
     }
 }

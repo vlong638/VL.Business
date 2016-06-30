@@ -9,7 +9,9 @@
     <GenerateInternalTypes>false</GenerateInternalTypes>
     <GenerateMessageContracts>false</GenerateMessageContracts>
     <NamespaceMappings />
-    <CollectionMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
     <GenerateSerializableTypes>true</GenerateSerializableTypes>
     <Serializer>Auto</Serializer>
     <UseSerializerForFaults>true</UseSerializerForFaults>
@@ -29,6 +31,7 @@
     <MetadataFile FileName="VL2.xsd" MetadataType="Schema" ID="7eab2554-c137-4602-af18-95b248bd1054" SourceId="1" SourceUrl="http://dcwl027:8001/VL.User.Service.UserService.svc?xsd=xsd1" />
     <MetadataFile FileName="VL3.xsd" MetadataType="Schema" ID="1d54dbd4-f6eb-4d5d-b1a8-b12558431b3f" SourceId="1" SourceUrl="http://dcwl027:8001/VL.User.Service.UserService.svc?xsd=xsd4" />
     <MetadataFile FileName="VL4.xsd" MetadataType="Schema" ID="6126e42e-b9f1-4e3f-b61a-42d3e1d1f789" SourceId="1" SourceUrl="http://dcwl027:8001/VL.User.Service.UserService.svc?xsd=xsd3" />
+    <MetadataFile FileName="VL6.xsd" MetadataType="Schema" ID="dbcb4b5d-8e47-4725-a4ad-f58efc840448" SourceId="1" SourceUrl="http://dcwl027:8001/VL.User.Service.UserService.svc?xsd=xsd6" />
     <MetadataFile FileName="VL5.xsd" MetadataType="Schema" ID="22aeb38f-31bb-423e-9919-151a8a0ff628" SourceId="1" SourceUrl="http://dcwl027:8001/VL.User.Service.UserService.svc?xsd=xsd0" />
   </Metadata>
   <Extensions>

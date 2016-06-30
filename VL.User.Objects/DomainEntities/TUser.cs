@@ -52,7 +52,7 @@ namespace VL.User.Objects.Entities
             else
             {
                 result.ResultCode = EResultCode.Failure;
-                result.Data = CreateUserResult.InserFailed;
+                result.Data = CreateUserResult.InsertFailed;
                 result.Message = "数据新增失败";
                 return result;
             }

@@ -18,6 +18,7 @@ namespace VL.User.Service
     public class UserService : IUserService
     {
         UserServiceContext ServiceContext { set; get; }
+        DependencyResult DependencyResult { set; get; }
 
         public bool CheckAlive()
         {
@@ -26,14 +27,22 @@ namespace VL.User.Service
         }
         public DependencyResult CheckNodeReferences()
         {
-            if (ServiceContext == null)
+            try
             {
-                ServiceContext = new UserServiceContext(
-                new DbConfigs("DbConnections.config"),
-                new ProtocolConfig("ProtocolConfig.config"),
-                LoggerProvider.GetLog4netLogger("ServiceLog"));
+                if (DependencyResult == null)
+                {
+                    ServiceContext = new UserServiceContext(
+                        new DbConfigs("DbConnections.config"),
+                        new ProtocolConfig("ProtocolConfig.config"),
+                        LoggerProvider.GetLog4netLogger("ServiceLog"));
+                }
+                DependencyResult = ServiceContext.Init();
             }
-            return ServiceContext.InitForService();
+            catch (Exception ex)
+            {
+                LoggerProvider.GetLog4netLogger("ServiceLog").Error(ex.ToString());
+            }
+            return DependencyResult;
         }
 
         public Result<CreateUserResult> Register(TUser user)
@@ -57,5 +66,35 @@ namespace VL.User.Service
                 return new ObjectOperator().GetAllUsers(session);
             });
         }
+
+        #region Test
+        public int Test()
+        {
+            LoggerProvider.GetLog4netLogger("ServiceLog").Error("message for test");
+            return 1;
+        }
+        public A GetA()
+        {
+            return new A()
+            {
+                Name = "A",
+                As = new List<A>()
+                {
+                    new A()
+                    {
+                        Name ="Sub A"
+                    }
+                },
+                Bs = new List<B>()
+                {
+                    new B()
+                    {
+                        Name="Sub B",
+                        Value=1
+                    }
+                },
+            };
+        }
+        #endregion
     }
 }

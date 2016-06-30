@@ -64,9 +64,13 @@ namespace VL.User.Objects.Entities
                 this.Email = Convert.ToString(reader[nameof(this.Email)]);
             }
         }
-        public override string GetTableName()
+        [DataMember]
+        public override string TableName
         {
-            return nameof(TUserBasicInfo);
+            get
+            {
+                return nameof(TUserBasicInfo);
+            }
         }
         #endregion
     }
