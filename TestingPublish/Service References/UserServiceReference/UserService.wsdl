@@ -29,6 +29,12 @@
   <wsdl:message name="IUserService_Test_OutputMessage">
     <wsdl:part name="parameters" element="tns:TestResponse" />
   </wsdl:message>
+  <wsdl:message name="IUserService_GetIsSQLLogAvailable_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetIsSQLLogAvailable" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_GetIsSQLLogAvailable_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetIsSQLLogAvailableResponse" />
+  </wsdl:message>
   <wsdl:message name="IUserService_GetA_InputMessage">
     <wsdl:part name="parameters" element="tns:GetA" />
   </wsdl:message>
@@ -65,6 +71,10 @@
     <wsdl:operation name="Test">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/Test" message="tns:IUserService_Test_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/TestResponse" message="tns:IUserService_Test_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIsSQLLogAvailable">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetIsSQLLogAvailable" message="tns:IUserService_GetIsSQLLogAvailable_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetIsSQLLogAvailableResponse" message="tns:IUserService_GetIsSQLLogAvailable_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetA">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetA" message="tns:IUserService_GetA_InputMessage" />
@@ -105,6 +115,15 @@
     </wsdl:operation>
     <wsdl:operation name="Test">
       <soap:operation soapAction="http://tempuri.org/IUserService/Test" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIsSQLLogAvailable">
+      <soap:operation soapAction="http://tempuri.org/IUserService/GetIsSQLLogAvailable" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

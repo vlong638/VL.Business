@@ -6,6 +6,7 @@
       <xs:enumeration value="UserNameExist" />
       <xs:enumeration value="MobileExist" />
       <xs:enumeration value="EmailExist" />
+      <xs:enumeration value="IdExist" />
       <xs:enumeration value="InsertFailed" />
     </xs:restriction>
   </xs:simpleType>

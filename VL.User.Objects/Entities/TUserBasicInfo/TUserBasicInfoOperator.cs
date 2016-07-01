@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using VL.Common.DAS.Objects;
 using VL.Common.ORM.Utilities.QueryBuilders;
-using VL.Common.ORM.Utilities.QueryOperators;
+using VL.Common.Protocol.IService.IORM;
 
 namespace VL.User.Objects.Entities
 {
@@ -12,20 +12,20 @@ namespace VL.User.Objects.Entities
         #region 写
         public static bool DbDelete(this TUserBasicInfo entity, DbSession session)
         {
-            var query = IDbQueryBuilder.GetDbQueryBuilder(session);
+            var query = IORMProvider.GetDbQueryBuilder(session);
             query.DeleteBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TUserBasicInfoProperties.UserId, OperatorType.Equal, entity.UserId));
-            return IDbQueryOperator.GetQueryOperator(session).Delete<TUserBasicInfo>(session, query);
+            return IORMProvider.GetQueryOperator(session).Delete<TUserBasicInfo>(session, query);
         }
         public static bool DbDelete(this List<TUserBasicInfo> entities, DbSession session)
         {
-            var query = IDbQueryBuilder.GetDbQueryBuilder(session);
+            var query = IORMProvider.GetDbQueryBuilder(session);
             var Ids = entities.Select(c =>c.UserId );
             query.DeleteBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TUserBasicInfoProperties.UserId, OperatorType.In, Ids));
-            return IDbQueryOperator.GetQueryOperator(session).Delete<TUserBasicInfo>(session, query);
+            return IORMProvider.GetQueryOperator(session).Delete<TUserBasicInfo>(session, query);
         }
         public static bool DbInsert(this TUserBasicInfo entity, DbSession session)
         {
-            var query = IDbQueryBuilder.GetDbQueryBuilder(session);
+            var query = IORMProvider.GetDbQueryBuilder(session);
             InsertBuilder builder = new InsertBuilder();
             builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TUserBasicInfoProperties.UserId, entity.UserId));
             builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TUserBasicInfoProperties.Gender, entity.Gender));
@@ -33,11 +33,11 @@ namespace VL.User.Objects.Entities
             builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TUserBasicInfoProperties.Mobile, entity.Mobile));
             builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TUserBasicInfoProperties.Email, entity.Email));
             query.InsertBuilders.Add(builder);
-            return IDbQueryOperator.GetQueryOperator(session).Insert<TUserBasicInfo>(session, query);
+            return IORMProvider.GetQueryOperator(session).Insert<TUserBasicInfo>(session, query);
         }
         public static bool DbInsert(this List<TUserBasicInfo> entities, DbSession session)
         {
-            var query = IDbQueryBuilder.GetDbQueryBuilder(session);
+            var query = IORMProvider.GetDbQueryBuilder(session);
             foreach (var entity in entities)
             {
                 InsertBuilder builder = new InsertBuilder();
@@ -48,11 +48,11 @@ namespace VL.User.Objects.Entities
                 builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TUserBasicInfoProperties.Email, entity.Email));
                 query.InsertBuilders.Add(builder);
             }
-            return IDbQueryOperator.GetQueryOperator(session).InsertAll<TUserBasicInfo>(session, query);
+            return IORMProvider.GetQueryOperator(session).InsertAll<TUserBasicInfo>(session, query);
         }
         public static bool DbUpdate(this TUserBasicInfo entity, DbSession session, params string[] fields)
         {
-            var query = IDbQueryBuilder.GetDbQueryBuilder(session);
+            var query = IORMProvider.GetDbQueryBuilder(session);
             UpdateBuilder builder = new UpdateBuilder();
             builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TUserBasicInfoProperties.UserId, OperatorType.Equal, entity.UserId));
             if (fields.Contains(TUserBasicInfoProperties.Gender.Title))
@@ -72,11 +72,11 @@ namespace VL.User.Objects.Entities
                 builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TUserBasicInfoProperties.Email, entity.Email));
             }
             query.UpdateBuilders.Add(builder);
-            return IDbQueryOperator.GetQueryOperator(session).Update<TUserBasicInfo>(session, query);
+            return IORMProvider.GetQueryOperator(session).Update<TUserBasicInfo>(session, query);
         }
         public static bool DbUpdate(this List<TUserBasicInfo> entities, DbSession session, params string[] fields)
         {
-            var query = IDbQueryBuilder.GetDbQueryBuilder(session);
+            var query = IORMProvider.GetDbQueryBuilder(session);
             foreach (var entity in entities)
             {
                 UpdateBuilder builder = new UpdateBuilder();
@@ -99,13 +99,13 @@ namespace VL.User.Objects.Entities
                 }
                 query.UpdateBuilders.Add(builder);
             }
-            return IDbQueryOperator.GetQueryOperator(session).UpdateAll<TUserBasicInfo>(session, query);
+            return IORMProvider.GetQueryOperator(session).UpdateAll<TUserBasicInfo>(session, query);
         }
         #endregion
         #region 读
         public static TUserBasicInfo DbSelect(this TUserBasicInfo entity, DbSession session, params string[] fields)
         {
-            var query = IDbQueryBuilder.GetDbQueryBuilder(session);
+            var query = IORMProvider.GetDbQueryBuilder(session);
             SelectBuilder builder = new SelectBuilder();
             foreach (var field in fields)
             {
@@ -113,20 +113,23 @@ namespace VL.User.Objects.Entities
             }
             builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TUserBasicInfoProperties.UserId, OperatorType.Equal, entity.UserId));
             query.SelectBuilders.Add(builder);
-            return IDbQueryOperator.GetQueryOperator(session).Select<TUserBasicInfo>(session, query);
+            return IORMProvider.GetQueryOperator(session).Select<TUserBasicInfo>(session, query);
         }
         public static List<TUserBasicInfo> DbSelect(this List<TUserBasicInfo> entities, DbSession session, params string[] fields)
         {
-            var query = IDbQueryBuilder.GetDbQueryBuilder(session);
+            var query = IORMProvider.GetDbQueryBuilder(session);
             SelectBuilder builder = new SelectBuilder();
             foreach (var field in fields)
             {
                 builder.ComponentFieldAliases.FieldAliases.Add(new FieldAlias(field));
             }
             var Ids = entities.Select(c =>c.UserId );
-            builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TUserBasicInfoProperties.UserId, OperatorType.In, Ids));
+            if (Ids.Count() != 0)
+            {
+                builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TUserBasicInfoProperties.UserId, OperatorType.In, Ids));
+            }
             query.SelectBuilders.Add(builder);
-            return IDbQueryOperator.GetQueryOperator(session).SelectAll<TUserBasicInfo>(session, query);
+            return IORMProvider.GetQueryOperator(session).SelectAll<TUserBasicInfo>(session, query);
         }
         #endregion
         #endregion

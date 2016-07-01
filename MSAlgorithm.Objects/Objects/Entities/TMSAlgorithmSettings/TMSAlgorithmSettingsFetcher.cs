@@ -11,7 +11,7 @@ namespace Dacai.MagicSquareAlgorithm.Objects.Entities
         #region Methods
         public static bool FetchTMSAlgorithm(this TMSAlgorithmSettings tMSAlgorithmSettings, DbSession session)
         {
-            var query = IDbQueryBuilder.GetDbQueryBuilder(session);
+            var query = VL.Common.Protocol.IService.IORM.IORMProvider.GetDbQueryBuilder(session);
             SelectBuilder builder = new SelectBuilder();
             builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TMSAlgorithmProperties.AlgorithmId, OperatorType.Equal, tMSAlgorithmSettings.AlgorithmId));
             query.SelectBuilders.Add(builder);

@@ -15,6 +15,8 @@ namespace VL.User.Service
         [OperationContract]
         int Test();
         [OperationContract]
+        bool GetIsSQLLogAvailable();
+        [OperationContract]
         A GetA(); 
         #endregion
 

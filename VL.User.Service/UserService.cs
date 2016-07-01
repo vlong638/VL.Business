@@ -17,8 +17,8 @@ namespace VL.User.Service
     /// </summary>
     public class UserService : IUserService
     {
-        UserServiceContext ServiceContext { set; get; }
-        DependencyResult DependencyResult { set; get; }
+        static UserServiceContext ServiceContext { set; get; }
+        static DependencyResult DependencyResult { set; get; }
 
         public bool CheckAlive()
         {
@@ -47,21 +47,21 @@ namespace VL.User.Service
 
         public Result<CreateUserResult> Register(TUser user)
         {
-            return ServiceDelegator.HandleSimpleTransactionEvent(nameof(User), (session) =>
+            return ServiceContext.ServiceDelegator.HandleSimpleTransactionEvent(nameof(User), (session) =>
             {
                 return new SubjectOperator().CreateUser(session, user);
             });
         }
         public Result<AuthenticateResult> AuthenticateUser(TUser user)
         {
-            return ServiceDelegator.HandleSimpleTransactionEvent(nameof(User), (session) =>
+            return ServiceContext.ServiceDelegator.HandleSimpleTransactionEvent(nameof(User), (session) =>
             {
                 return new SubjectOperator().AuthenticateUser(session, user);
             });
         }
         public Result<List<TUser>> GetAllUsers()
         {
-            return ServiceDelegator.HandleSimpleTransactionEvent(nameof(User), (session) =>
+            return ServiceContext.ServiceDelegator.HandleSimpleTransactionEvent(nameof(User), (session) =>
             {
                 return new ObjectOperator().GetAllUsers(session);
             });
@@ -72,6 +72,10 @@ namespace VL.User.Service
         {
             LoggerProvider.GetLog4netLogger("ServiceLog").Error("message for test");
             return 1;
+        }
+        public bool GetIsSQLLogAvailable()
+        {
+            return ServiceContext.ProtocolConfig.IsSQLLogAvailable.Value;
         }
         public A GetA()
         {
