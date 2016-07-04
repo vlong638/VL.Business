@@ -13,8 +13,6 @@ namespace VL.User.Objects.Entities
 {
     public partial class TUser : IPDMTBase
     {
-
-
         #region Outer Subject Function
         public Result<CreateUserResult> Create(DbSession session)
         {
