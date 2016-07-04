@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -96,13 +97,16 @@
     <None Include="Service References\UserServiceReference\TestingPublish.UserServiceReference.A.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\UserServiceReference\TestingPublish.UserServiceReference.AuthenticateResult.datasource">
+    <None Include="Service References\UserServiceReference\TestingPublish.UserServiceReference.DependencyResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\UserServiceReference\TestingPublish.UserServiceReference.CreateUserResult.datasource">
+    <None Include="Service References\UserServiceReference\TestingPublish.UserServiceReference.ResultOfArrayOfTUserOnBUIjEi.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\UserServiceReference\TestingPublish.UserServiceReference.TUser.datasource">
+    <None Include="Service References\UserServiceReference\TestingPublish.UserServiceReference.ResultOfAuthenticateResult9I7TJpd5.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\UserServiceReference\TestingPublish.UserServiceReference.ResultOfCreateUserResult9I7TJpd5.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\UserServiceReference\UserService.wsdl" />

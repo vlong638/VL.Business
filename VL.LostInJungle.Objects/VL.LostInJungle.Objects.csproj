@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DE0E47D6-4F86-4D13-BCFA-0E2BC60D3611}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VL.LostInJungle.Objects</RootNamespace>
+    <AssemblyName>VL.LostInJungle.Objects</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.8\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.12.1.2400\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="VL.Common.Configurator, Version=1.1.5947.26749, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.Configurator.1.1.1604131452.1\lib\net452\VL.Common.Configurator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VL.Common.DAS, Version=1.0.5947.27705, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.DAS.1.0.1604131525.1\lib\net452\VL.Common.DAS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VL.Common.Logger, Version=1.0.5946.30246, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.Logger.1.0.1604121655.1\lib\net452\VL.Common.Logger.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VL.Common.ORM, Version=1.0.6026.25431, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.ORM.1.0.1607011407.1\lib\net452\VL.Common.ORM.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VL.Common.Protocol, Version=1.0.6026.27174, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.Protocol.1.0.1607011506.1\lib\net452\VL.Common.Protocol.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\DomainEntities\TArea.cs" />
+    <Compile Include="Objects\DomainEntities\TAreaEvent.cs" />
+    <Compile Include="Objects\DomainEntities\TCreature.cs" />
+    <Compile Include="Objects\DomainEntities\TCreatureProperty.cs" />
+    <Compile Include="Objects\DomainEntities\TCreatureQuality.cs" />
+    <Compile Include="Objects\DomainEntities\TCreatureSkill.cs" />
+    <Compile Include="Objects\DomainEntities\TEvent.cs" />
+    <Compile Include="Objects\DomainEntities\TPrototypeCreature.cs" />
+    <Compile Include="Objects\DomainEntities\TTeam.cs" />
+    <Compile Include="Objects\DomainEntities\TTeamCreature.cs" />
+    <Compile Include="Objects\Entities\TAreaEvent\TAreaEvent.cs" />
+    <Compile Include="Objects\Entities\TAreaEvent\TAreaEventOperator.cs" />
+    <Compile Include="Objects\Entities\TAreaEvent\TAreaEventProperties.cs" />
+    <Compile Include="Objects\Entities\TArea\TArea.cs" />
+    <Compile Include="Objects\Entities\TArea\TAreaOperator.cs" />
+    <Compile Include="Objects\Entities\TArea\TAreaProperties.cs" />
+    <Compile Include="Objects\Entities\TCreatureProperty\TCreatureProperty.cs" />
+    <Compile Include="Objects\Entities\TCreatureProperty\TCreaturePropertyOperator.cs" />
+    <Compile Include="Objects\Entities\TCreatureProperty\TCreaturePropertyProperties.cs" />
+    <Compile Include="Objects\Entities\TCreatureQuality\TCreatureQuality.cs" />
+    <Compile Include="Objects\Entities\TCreatureQuality\TCreatureQualityOperator.cs" />
+    <Compile Include="Objects\Entities\TCreatureQuality\TCreatureQualityProperties.cs" />
+    <Compile Include="Objects\Entities\TCreatureSkill\TCreatureSkill.cs" />
+    <Compile Include="Objects\Entities\TCreatureSkill\TCreatureSkillOperator.cs" />
+    <Compile Include="Objects\Entities\TCreatureSkill\TCreatureSkillProperties.cs" />
+    <Compile Include="Objects\Entities\TCreature\TCreature.cs" />
+    <Compile Include="Objects\Entities\TCreature\TCreatureOperator.cs" />
+    <Compile Include="Objects\Entities\TCreature\TCreatureProperties.cs" />
+    <Compile Include="Objects\Entities\TEvent\TEvent.cs" />
+    <Compile Include="Objects\Entities\TEvent\TEventOperator.cs" />
+    <Compile Include="Objects\Entities\TEvent\TEventProperties.cs" />
+    <Compile Include="Objects\Entities\TPrototypeCreature\TPrototypeCreature.cs" />
+    <Compile Include="Objects\Entities\TPrototypeCreature\TPrototypeCreatureOperator.cs" />
+    <Compile Include="Objects\Entities\TPrototypeCreature\TPrototypeCreatureProperties.cs" />
+    <Compile Include="Objects\Entities\TTeamCreature\TTeamCreature.cs" />
+    <Compile Include="Objects\Entities\TTeamCreature\TTeamCreatureOperator.cs" />
+    <Compile Include="Objects\Entities\TTeamCreature\TTeamCreatureProperties.cs" />
+    <Compile Include="Objects\Entities\TTeam\TTeam.cs" />
+    <Compile Include="Objects\Entities\TTeam\TTeamOperator.cs" />
+    <Compile Include="Objects\Entities\TTeam\TTeamProperties.cs" />
+    <Compile Include="Objects\Enums\EAreaType.cs" />
+    <Compile Include="Objects\Enums\ECombatSkill.cs" />
+    <Compile Include="Objects\Enums\ECreatureType.cs" />
+    <Compile Include="Objects\Enums\ECreatureUseType.cs" />
+    <Compile Include="Objects\Enums\EFirstLevelQuality.cs" />
+    <Compile Include="Objects\Enums\EProfession.cs" />
+    <Compile Include="Objects\Enums\EQuality.cs" />
+    <Compile Include="Objects\Enums\ESecondLevelQuality.cs" />
+    <Compile Include="Objects\Enums\EThirdLevelQuality.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SQLs\数据库创建脚本.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
