@@ -71,8 +71,8 @@
       <HintPath>..\packages\VL.Common.ORM.1.0.1607011407.1\lib\net452\VL.Common.ORM.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="VL.Common.Protocol, Version=1.0.6026.27174, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Common.Protocol.1.0.1607011506.1\lib\net452\VL.Common.Protocol.dll</HintPath>
+    <Reference Include="VL.Common.Protocol, Version=1.0.6029.20303, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.Protocol.1.0.1607041121.1\lib\net452\VL.Common.Protocol.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

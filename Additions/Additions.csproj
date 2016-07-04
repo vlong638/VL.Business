@@ -55,8 +55,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="VL.Common.Configurator, Version=1.1.5947.26749, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Common.Configurator.1.1.1604131452.1\lib\net452\VL.Common.Configurator.dll</HintPath>
+    <Reference Include="VL.Common.Configurator, Version=1.1.6026.27142, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.Configurator.1.1.1607011505.1\lib\net452\VL.Common.Configurator.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="VL.Common.DAS, Version=1.0.5947.27705, Culture=neutral, processorArchitecture=MSIL">
@@ -71,8 +71,8 @@
       <HintPath>..\packages\VL.Common.ORM.1.0.1607011407.1\lib\net452\VL.Common.ORM.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="VL.Common.Protocol, Version=1.0.6026.27174, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Common.Protocol.1.0.1607011506.1\lib\net452\VL.Common.Protocol.dll</HintPath>
+    <Reference Include="VL.Common.Protocol, Version=1.0.6029.20303, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.Protocol.1.0.1607041121.1\lib\net452\VL.Common.Protocol.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
