@@ -6,7 +6,7 @@ namespace VL.User.Objects.SubResults
     public enum AuthenticateResult
     {
         [EnumMember]
-        None,
+        Success,
         [EnumMember]
         UserNameUnexist,
         [EnumMember]

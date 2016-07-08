@@ -14,80 +14,56 @@ namespace VL.User.Objects.Entities
     public partial class TUser : IPDMTBase
     {
         #region Outer Subject Function
-        public Result<CreateUserResult> Create(DbSession session)
+        public CreateUserResult Create(DbSession session)
         {
-            var result = new Result<CreateUserResult>(nameof(Create));
             //用户名校验
             if (this.CheckExistenceOfUserName(session))
             {
-                result.ResultCode = EResultCode.Failure;
-                result.Data = CreateUserResult.UserNameExist;
-                result.Message = "用户名已存在";
-                return result;
+                return CreateUserResult.UserNameExist;
             }
             //手机号码校验
             if (this.CheckExistenceOfMobile(session))
             {
-                result.ResultCode = EResultCode.Failure;
-                result.Data = CreateUserResult.MobileExist;
-                result.Message = "手机号码已存在";
-                return result;
+                return CreateUserResult.MobileExist;
             }
             //邮箱校验
             if (this.CheckExistenceOfEmail(session))
             {
-                result.ResultCode = EResultCode.Failure;
-                result.Data = CreateUserResult.EmailExist;
-                result.Message = "邮箱已存在";
-                return result;
+                return CreateUserResult.EmailExist;
             }
             //Id校验
             if (this.CheckExistenceOfId(session))
             {
-                result.ResultCode = EResultCode.Failure;
-                result.Data = CreateUserResult.IdExist;
-                result.Message = "Id已存在";
-                return result;
+                return CreateUserResult.IdExist;
             }
             //保存入数据库
             UserId = Guid.NewGuid();
             CreateTime = DateTime.Now;
             if (this.DbInsert(session))
             {
-                result.ResultCode = EResultCode.Success;
-                return result;
+                return CreateUserResult.Success;
             }
             else
             {
-                result.ResultCode = EResultCode.Failure;
-                result.Data = CreateUserResult.DbOperationFailed;
-                result.Message = "数据新增失败";
-                return result;
+                return CreateUserResult.DbOperationFailed;
             }
         }
-        public Result<AuthenticateResult> Authenticate(DbSession session)
+
+        public AuthenticateResult Authenticate(DbSession session)
         {
-            var result = new Result<AuthenticateResult>(nameof(Authenticate));
             //用户名校验
             if (!this.CheckExistenceOfUserName(session))
             {
-                result.ResultCode = EResultCode.Failure;
-                result.Data = AuthenticateResult.UserNameUnexist;
-                result.Message = "用户名不存在";
-                return result;
+                return AuthenticateResult.UserNameUnexist;
             }
             //密码校验
             if (!this.CheckValidityOfPassword(session))
             {
-                result.ResultCode = EResultCode.Failure;
-                result.Data = AuthenticateResult.PasswordError;
-                result.Message = "密码错误";
-                return result;
+                return AuthenticateResult.Success;
             }
             else
             {
-                //TODO处理登录状态
-                return result;
+                return AuthenticateResult.PasswordError;
             }
         }
         #endregion

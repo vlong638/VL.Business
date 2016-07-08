@@ -6,7 +6,7 @@ namespace VL.User.Objects.SubResults
     public enum CreateUserResult
     {
         [EnumMember]
-        None,
+        Success,
         [EnumMember]
         DbOperationFailed,
         [EnumMember]
