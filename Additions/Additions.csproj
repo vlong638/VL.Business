@@ -83,9 +83,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="PDMs\Dacai.MagicSquareAlgorithm.pdm" />
+    <None Include="PDMs\Dacai.MagicSquareAlgorithm2.pdm" />
     <None Include="PDMs\Dota分析器2.pdm" />
     <None Include="PDMs\GenerateSample.pdm" />
     <None Include="PDMs\LostInJungle.pdm" />
+    <None Include="PDMs\TODOTask.pdm" />
     <None Include="PDMs\VL.Common.pdm" />
     <None Include="PDMs\VL.Transaction.pdm" />
     <None Include="PDMs\VL.User.pdm" />

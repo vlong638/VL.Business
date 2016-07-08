@@ -8,6 +8,8 @@ namespace VL.User.Objects.SubResults
         [EnumMember]
         None,
         [EnumMember]
+        DbOperationFailed,
+        [EnumMember]
         UserNameExist,
         [EnumMember]
         MobileExist,
@@ -15,7 +17,5 @@ namespace VL.User.Objects.SubResults
         EmailExist,
         [EnumMember]
         IdExist,
-        [EnumMember]
-        InsertFailed,
     }
 }

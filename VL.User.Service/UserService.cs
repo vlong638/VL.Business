@@ -47,6 +47,9 @@ namespace VL.User.Service
 
         public Result<CreateUserResult> Register(TUser user)
         {
+            ///Service级的方法决定事务操作的框架,以及落地的数据库
+            ///Domain级的方法决定领域操作的具体执行逻辑
+            ///Entity级的方法
             return ServiceContext.ServiceDelegator.HandleSimpleTransactionEvent(nameof(User), (session) =>
             {
                 return new SubjectOperator().CreateUser(session, user);
