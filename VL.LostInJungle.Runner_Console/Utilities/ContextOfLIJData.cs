@@ -16,8 +16,10 @@ namespace VL.LostInJungle.Runner_Console.Utilities
 
         public void InitData(DbSession session)
         {
+            session.Open();
             Areas.DbSelect(session);
             PrototypeCreatures.DbSelect(session);
+            session.Close();
         }
     }
 }

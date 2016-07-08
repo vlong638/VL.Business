@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{D9DC0CEA-CAD1-4605-A49E-699DC2480849}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User", "User", "{163F9C2E-D4E0-4665-BFC0-AA7BE76FFCE9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VL.User", "VL.User", "{163F9C2E-D4E0-4665-BFC0-AA7BE76FFCE9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VL.User.Service", "VL.User.Service\VL.User.Service.csproj", "{A4A080F6-FC5A-4717-BC9A-BC8D31070FB8}"
 EndProject
@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VL.User.Objects", "VL.User.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingPublish", "TestingPublish\TestingPublish.csproj", "{6D661B18-986F-4BC8-A73C-3824EE76C9E0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSAlgorithm", "MSAlgorithm", "{202D647D-E08A-4DD1-8991-F22E97977BDD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VL.MSAlgorithm", "VL.MSAlgorithm", "{202D647D-E08A-4DD1-8991-F22E97977BDD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSAlgorithm.Objects", "MSAlgorithm.Objects\MSAlgorithm.Objects.csproj", "{927C33BE-214F-414A-97A3-F37360F0DFA5}"
 EndProject
@@ -23,11 +23,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSAlgorithm.Service", "MSAl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "Sample\Sample.csproj", "{0594697C-22A0-4B1E-8D2F-01090DBF7BEF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LostInJungle", "LostInJungle", "{023012B8-D81C-4462-ADFA-2521F758EFE6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VL.LostInJungle", "VL.LostInJungle", "{023012B8-D81C-4462-ADFA-2521F758EFE6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VL.LostInJungle.Objects", "VL.LostInJungle.Objects\VL.LostInJungle.Objects.csproj", "{DE0E47D6-4F86-4D13-BCFA-0E2BC60D3611}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VL.LostInJungle.Runner_Console", "VL.LostInJungle.Runner_Console\VL.LostInJungle.Runner_Console.csproj", "{17438199-3B1D-4AE7-AF25-6E7F6B505969}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VL.Space", "VL.Space", "{B9FFBA36-ED4B-47B7-AF01-A883BD825595}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

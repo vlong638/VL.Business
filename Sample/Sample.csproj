@@ -49,6 +49,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -78,7 +79,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configs\DbConfig.cs" />
+    <Compile Include="DomainFacades\ObjectFacade.cs" />
+    <Compile Include="DomainFacades\SubjectFacade.cs" />
     <Compile Include="DomainObject.cs" />
+    <Compile Include="Objects\DomainEntities\TSubtask.cs" />
+    <Compile Include="Objects\DomainEntities\TTask.cs" />
+    <Compile Include="Objects\Entities\TSubtask\TSubtask.cs" />
+    <Compile Include="Objects\Entities\TSubtask\TSubtaskOperator.cs" />
+    <Compile Include="Objects\Entities\TSubtask\TSubtaskProperties.cs" />
+    <Compile Include="Objects\Entities\TTask\TTask.cs" />
+    <Compile Include="Objects\Entities\TTask\TTaskOperator.cs" />
+    <Compile Include="Objects\Entities\TTask\TTaskProperties.cs" />
+    <Compile Include="Objects\Enums\EDealStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

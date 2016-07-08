@@ -64,6 +64,7 @@ namespace VL.LostInJungle.Runner_Console.Utilities
 
         public void InitData(DbSession session, ContextOfLIJData dataContext, List<TUser> users)
         {
+            session.Open();
             //创建Area
             if (dataContext.Areas.Count == 0)
             {
@@ -80,6 +81,7 @@ namespace VL.LostInJungle.Runner_Console.Utilities
                     prototypeCreature.DbInsert(session);
                 }
             }
+            session.Close();
         }
     }
 }
