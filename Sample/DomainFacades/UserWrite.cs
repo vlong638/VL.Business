@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TODOTask.Objects.DomainFacades
 {
-    class ObjectFacade
+    public partial class User
     {
     }
 }

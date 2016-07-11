@@ -79,8 +79,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configs\DbConfig.cs" />
-    <Compile Include="DomainFacades\ObjectFacade.cs" />
-    <Compile Include="DomainFacades\SubjectFacade.cs" />
+    <Compile Include="DomainFacades\UserWrite.cs" />
+    <Compile Include="DomainFacades\UserRead.cs" />
     <Compile Include="DomainObject.cs" />
     <Compile Include="Objects\DomainEntities\TSubtask.cs" />
     <Compile Include="Objects\DomainEntities\TTask.cs" />
