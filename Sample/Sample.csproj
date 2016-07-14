@@ -78,12 +78,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configs\DbConfig.cs" />
+    <Compile Include="Configs\DbConfigOfSample.cs" />
     <Compile Include="DomainFacades\UserWrite.cs" />
     <Compile Include="DomainFacades\UserRead.cs" />
-    <Compile Include="DomainObject.cs" />
-    <Compile Include="Objects\DomainEntities\TSubtask.cs" />
-    <Compile Include="Objects\DomainEntities\TTask.cs" />
+    <Compile Include="Objects\DomainEntities\DomainObject.cs" />
     <Compile Include="Objects\Entities\TSubtask\TSubtask.cs" />
     <Compile Include="Objects\Entities\TSubtask\TSubtaskOperator.cs" />
     <Compile Include="Objects\Entities\TSubtask\TSubtaskProperties.cs" />
@@ -92,6 +90,7 @@
     <Compile Include="Objects\Entities\TTask\TTaskProperties.cs" />
     <Compile Include="Objects\Enums\EDealStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\ServiceContextOfSample.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

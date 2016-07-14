@@ -17,7 +17,7 @@ namespace VL.User.Service
     /// </summary>
     public class UserService : IUserService
     {
-        static UserServiceContext ServiceContext { set; get; }
+        static ServiceContextOfUser ServiceContext { set; get; }
         static DependencyResult DependencyResult { set; get; }
 
         public bool CheckAlive()
@@ -31,8 +31,8 @@ namespace VL.User.Service
             {
                 if (DependencyResult == null)
                 {
-                    ServiceContext = new UserServiceContext(
-                        new DbConfigs("DbConnections.config"),
+                    ServiceContext = new ServiceContextOfUser(
+                        new DbConfigOfUser("DbConnections.config"),
                         new ProtocolConfig("ProtocolConfig.config"),
                         LoggerProvider.GetLog4netLogger("ServiceLog"));
                 }

@@ -23,7 +23,7 @@ namespace Testing
 
         private static void CreateDbConfigForUser()
         {
-            DbConfigs dbConfigs = new DbConfigs("DbConnections.config");
+            DbConfigOfUser dbConfigs = new DbConfigOfUser("DbConnections.config");
             dbConfigs.Save();
         }
 

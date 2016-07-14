@@ -9,13 +9,13 @@ using VL.User.Service.Configs;
 
 namespace VL.User.Service.Utilities
 {
-    public class UserServiceContext : ServiceContext
+    public class ServiceContextOfUser : ServiceContext
     {
-        static UserServiceContext()
+        static ServiceContextOfUser()
         {
         }
 
-        public UserServiceContext(DbConfigEntity databaseConfig, ProtocolConfig protocolConfig, ILogger serviceLogger) : base(databaseConfig, protocolConfig, serviceLogger)
+        public ServiceContextOfUser(DbConfigEntity databaseConfig, ProtocolConfig protocolConfig, ILogger serviceLogger) : base(databaseConfig, protocolConfig, serviceLogger)
         {
         }
 

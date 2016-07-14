@@ -3,9 +3,9 @@ using VL.Common.DAS.Utilities;
 
 namespace VL.User.Service.Configs
 {
-    public class DbConfigs : DbConfigEntity
+    public class DbConfigOfUser : DbConfigEntity
     {
-        public DbConfigs(string fileName) : base(fileName)
+        public DbConfigOfUser(string fileName) : base(fileName)
         {
         }
 
@@ -13,7 +13,7 @@ namespace VL.User.Service.Configs
         {
             List<DbConfigItem> result = new List<DbConfigItem>()
             {
-                new DbConfigItem("User"),
+                new DbConfigItem(nameof(VL.User)),
             };
             return result;
         }

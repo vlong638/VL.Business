@@ -7,9 +7,9 @@ using VL.Common.DAS.Utilities;
 
 namespace Sample.Configs
 {
-    public class DbConfig : DbConfigEntity
+    public class DbConfigOfSample : DbConfigEntity
     {
-        public DbConfig(string fileName) : base(fileName)
+        public DbConfigOfSample(string fileName) : base(fileName)
         {
         }
 
