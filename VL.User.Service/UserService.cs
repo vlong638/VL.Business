@@ -31,10 +31,7 @@ namespace VL.User.Service
             {
                 if (DependencyResult == null)
                 {
-                    ServiceContext = new ServiceContextOfUser(
-                        new DbConfigOfUser("DbConnections.config"),
-                        new ProtocolConfig("ProtocolConfig.config"),
-                        LoggerProvider.GetLog4netLogger("ServiceLog"));
+                    ServiceContext = new ServiceContextOfUser();
                 }
                 DependencyResult = ServiceContext.Init();
             }

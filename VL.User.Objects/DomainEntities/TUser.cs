@@ -74,11 +74,9 @@ namespace VL.User.Objects.Entities
             var queryOperator = IORMProvider.GetQueryOperator(session);
             var selectBuilder = new SelectBuilder();
             selectBuilder.TableName = nameof(TUser);
-            selectBuilder.ComponentFieldAliases.FieldAliases.Add(new FieldAlias("count(*)"));
-            selectBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TUserProperties.UserName, OperatorType.Equal, this.UserName));
-            ////TODO Test
-            //File.AppendAllText(@"E:\Publish\UserService\Logs\ORM.txt", selectBuilder.ToQueryString(session, nameof(TUser)) + System.Environment.NewLine);
-            var result = queryOperator.SelectAsInt(session, selectBuilder);
+            selectBuilder.ComponentSelect.Values.Add(new ComponentValueOfSelect ("count(*)"));
+            selectBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TUserProperties.UserName, this.UserName, LocateType.Equal));
+            var result = queryOperator.SelectAsInt<TUser>(session, selectBuilder);
             return result.HasValue&& result.Value> 0;
         }
         private bool CheckExistenceOfMobile(DbSession session)
@@ -86,9 +84,9 @@ namespace VL.User.Objects.Entities
             var queryOperator = IORMProvider.GetQueryOperator(session);
             var selectBuilder = new SelectBuilder();
             selectBuilder.TableName = nameof(TUser);
-            selectBuilder.ComponentFieldAliases.FieldAliases.Add(new FieldAlias("count(*)"));
-            selectBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TUserProperties.Mobile, OperatorType.Equal, this.Mobile));
-            var result = queryOperator.SelectAsInt(session, selectBuilder);
+            selectBuilder.ComponentSelect.Values.Add(new ComponentValueOfSelect("count(*)"));
+            selectBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TUserProperties.Mobile, this.Mobile, LocateType.Equal));
+            var result = queryOperator.SelectAsInt<TUser>(session, selectBuilder);
             return result.HasValue && result.Value > 0;
         }
         private bool CheckExistenceOfEmail(DbSession session)
@@ -96,9 +94,9 @@ namespace VL.User.Objects.Entities
             var queryOperator = IORMProvider.GetQueryOperator(session);
             var selectBuilder = new SelectBuilder();
             selectBuilder.TableName = nameof(TUser);
-            selectBuilder.ComponentFieldAliases.FieldAliases.Add(new FieldAlias("count(*)"));
-            selectBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TUserProperties.Email, OperatorType.Equal, this.Email));
-            var result = queryOperator.SelectAsInt(session, selectBuilder);
+            selectBuilder.ComponentSelect.Values.Add(new ComponentValueOfSelect("count(*)"));
+            selectBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TUserProperties.Email, this.Email, LocateType.Equal));
+            var result = queryOperator.SelectAsInt<TUser>(session, selectBuilder);
             return result.HasValue && result.Value > 0;
         }
         private bool CheckExistenceOfId(DbSession session)
@@ -106,9 +104,9 @@ namespace VL.User.Objects.Entities
             var queryOperator = IORMProvider.GetQueryOperator(session);
             var selectBuilder = new SelectBuilder();
             selectBuilder.TableName = nameof(TUser);
-            selectBuilder.ComponentFieldAliases.FieldAliases.Add(new FieldAlias("count(*)"));
-            selectBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TUserProperties.IdCardNumber, OperatorType.Equal, this.IdCardNumber));
-            var result = queryOperator.SelectAsInt(session, selectBuilder);
+            selectBuilder.ComponentSelect.Values.Add(new ComponentValueOfSelect("count(*)"));
+            selectBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TUserProperties.IdCardNumber, this.IdCardNumber, LocateType.Equal));
+            var result = queryOperator.SelectAsInt<TUser>(session, selectBuilder);
             return result.HasValue && result.Value > 0;
         }
         private bool CheckValidityOfPassword(DbSession session)
@@ -116,10 +114,10 @@ namespace VL.User.Objects.Entities
             var queryOperator = IORMProvider.GetQueryOperator(session);
             var selectBuilder = new SelectBuilder();
             selectBuilder.TableName = nameof(TUser);
-            selectBuilder.ComponentFieldAliases.FieldAliases.Add(new FieldAlias("count(*)"));
-            selectBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TUserProperties.UserId, OperatorType.Equal, this.UserId));
-            selectBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TUserProperties.Password, OperatorType.Equal, this.Password));
-            var result = queryOperator.SelectAsInt(session, selectBuilder);
+            selectBuilder.ComponentSelect.Values.Add(new ComponentValueOfSelect("count(*)"));
+            selectBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TUserProperties.UserId, this.UserId, LocateType.Equal));
+            selectBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TUserProperties.Password, this.Password, LocateType.Equal));
+            var result = queryOperator.SelectAsInt<TUser>(session, selectBuilder);
             return result.HasValue && result.Value > 0;
         }
         #endregion

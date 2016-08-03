@@ -11,10 +11,9 @@ namespace VL.User.Service.Utilities
 {
     public class ServiceContextOfUser : ServiceContext
     {
-        static ServiceContextOfUser()
+        public ServiceContextOfUser() : base()
         {
         }
-
         public ServiceContextOfUser(DbConfigEntity databaseConfig, ProtocolConfig protocolConfig, ILogger serviceLogger) : base(databaseConfig, protocolConfig, serviceLogger)
         {
         }
@@ -23,6 +22,21 @@ namespace VL.User.Service.Utilities
         {
             return nameof(UserService);
         }
+
+        protected override DbConfigEntity GetDefaultDatabaseConfig()
+        {
+            return new DbConfigOfUser("DbConnections.config");
+        }
+        protected override ProtocolConfig GetDefaultProtocolConfig()
+        {
+            return new ProtocolConfig("ProtocolConfig.config");
+        }
+
+        protected override ILogger GetDefaultServiceLogger()
+        {
+            return LoggerProvider.GetLog4netLogger("ServiceLog");
+        }
+
         protected override List<DependencyResult> InitOthers()
         {
             return new List<DependencyResult>();

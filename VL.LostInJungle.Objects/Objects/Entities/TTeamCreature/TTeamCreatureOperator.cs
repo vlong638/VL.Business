@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using VL.Common.DAS.Objects;
+using VL.Common.ORM.Objects;
 using VL.Common.ORM.Utilities.QueryBuilders;
 using VL.Common.Protocol.IService.IORM;
 
@@ -13,23 +15,23 @@ namespace VL.LostInJungle.Objects.Entities
         public static bool DbDelete(this TTeamCreature entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TTeamCreatureProperties.TeamId, OperatorType.Equal, entity.TeamId));
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TTeamCreatureProperties.CreatureId, OperatorType.Equal, entity.CreatureId));
+            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TTeamCreatureProperties.TeamId, entity.TeamId, LocateType.Equal));
+            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TTeamCreatureProperties.CreatureId, entity.CreatureId, LocateType.Equal));
             return IORMProvider.GetQueryOperator(session).Delete<TTeamCreature>(session, query);
         }
         public static bool DbDelete(this List<TTeamCreature> entities, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             var Ids = entities.Select(c =>c.TeamId );
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TTeamCreatureProperties.TeamId, OperatorType.In, Ids));
+            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TTeamCreatureProperties.TeamId, Ids, LocateType.In));
             return IORMProvider.GetQueryOperator(session).Delete<TTeamCreature>(session, query);
         }
         public static bool DbInsert(this TTeamCreature entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             InsertBuilder builder = new InsertBuilder();
-            builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TTeamCreatureProperties.TeamId, entity.TeamId));
-            builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TTeamCreatureProperties.CreatureId, entity.CreatureId));
+            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TTeamCreatureProperties.TeamId, entity.TeamId));
+            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TTeamCreatureProperties.CreatureId, entity.CreatureId));
             query.InsertBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Insert<TTeamCreature>(session, query);
         }
@@ -39,63 +41,110 @@ namespace VL.LostInJungle.Objects.Entities
             foreach (var entity in entities)
             {
                 InsertBuilder builder = new InsertBuilder();
-                builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TTeamCreatureProperties.TeamId, entity.TeamId));
-                builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TTeamCreatureProperties.CreatureId, entity.CreatureId));
+                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TTeamCreatureProperties.TeamId, entity.TeamId));
+                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TTeamCreatureProperties.CreatureId, entity.CreatureId));
                 query.InsertBuilders.Add(builder);
             }
             return IORMProvider.GetQueryOperator(session).InsertAll<TTeamCreature>(session, query);
         }
-        public static bool DbUpdate(this TTeamCreature entity, DbSession session, params string[] fields)
+        public static bool DbUpdate(this TTeamCreature entity, DbSession session, params PDMDbProperty[] fields)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             UpdateBuilder builder = new UpdateBuilder();
-            builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TTeamCreatureProperties.TeamId, OperatorType.Equal, entity.TeamId));
-            builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TTeamCreatureProperties.CreatureId, OperatorType.Equal, entity.CreatureId));
+            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TTeamCreatureProperties.TeamId, entity.TeamId, LocateType.Equal));
+            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TTeamCreatureProperties.CreatureId, entity.CreatureId, LocateType.Equal));
+            if (fields==null|| fields.Length==0)
+            {
+                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TTeamCreatureProperties.TeamId, entity.TeamId));
+                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TTeamCreatureProperties.CreatureId, entity.CreatureId));
+            }
+            else
+            {
+            }
             query.UpdateBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Update<TTeamCreature>(session, query);
         }
-        public static bool DbUpdate(this List<TTeamCreature> entities, DbSession session, params string[] fields)
+        public static bool DbUpdate(this List<TTeamCreature> entities, DbSession session, params PDMDbProperty[] fields)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             foreach (var entity in entities)
             {
                 UpdateBuilder builder = new UpdateBuilder();
-                builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TTeamCreatureProperties.TeamId, OperatorType.Equal, entity.TeamId));
-                builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TTeamCreatureProperties.CreatureId, OperatorType.Equal, entity.CreatureId));
+                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TTeamCreatureProperties.TeamId, entity.TeamId, LocateType.Equal));
+                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TTeamCreatureProperties.CreatureId, entity.CreatureId, LocateType.Equal));
+                if (fields==null|| fields.Length==0)
+                {
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TTeamCreatureProperties.TeamId, entity.TeamId));
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TTeamCreatureProperties.CreatureId, entity.CreatureId));
+                }
+                else
+                {
+                }
                 query.UpdateBuilders.Add(builder);
             }
             return IORMProvider.GetQueryOperator(session).UpdateAll<TTeamCreature>(session, query);
         }
         #endregion
         #region 读
-        public static TTeamCreature DbSelect(this TTeamCreature entity, DbSession session, params string[] fields)
+        public static TTeamCreature DbSelect(this TTeamCreature entity, DbSession session, params PDMDbProperty[] fields)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             SelectBuilder builder = new SelectBuilder();
-            foreach (var field in fields)
+            if (fields.Count() == 0)
             {
-                builder.ComponentFieldAliases.FieldAliases.Add(new FieldAlias(field));
+                builder.ComponentSelect.Values.Add(TTeamCreatureProperties.TeamId);
+                builder.ComponentSelect.Values.Add(TTeamCreatureProperties.CreatureId);
             }
-            builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TTeamCreatureProperties.TeamId, OperatorType.Equal, entity.TeamId));
-            builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TTeamCreatureProperties.CreatureId, OperatorType.Equal, entity.CreatureId));
+            else
+            {
+                builder.ComponentSelect.Values.Add(TTeamCreatureProperties.TeamId);
+                builder.ComponentSelect.Values.Add(TTeamCreatureProperties.CreatureId);
+                foreach (var field in fields)
+                {
+                    builder.ComponentSelect.Values.Add(field);
+                }
+            }
+            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TTeamCreatureProperties.TeamId, entity.TeamId, LocateType.Equal));
+            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TTeamCreatureProperties.CreatureId, entity.CreatureId, LocateType.Equal));
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Select<TTeamCreature>(session, query);
         }
-        public static List<TTeamCreature> DbSelect(this List<TTeamCreature> entities, DbSession session, params string[] fields)
+        public static List<TTeamCreature> DbSelect(this List<TTeamCreature> entities, DbSession session, params PDMDbProperty[] fields)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             SelectBuilder builder = new SelectBuilder();
-            foreach (var field in fields)
+            if (fields.Count() == 0)
             {
-                builder.ComponentFieldAliases.FieldAliases.Add(new FieldAlias(field));
+                builder.ComponentSelect.Values.Add(TTeamCreatureProperties.TeamId);
+                builder.ComponentSelect.Values.Add(TTeamCreatureProperties.CreatureId);
+            }
+            else
+            {
+                builder.ComponentSelect.Values.Add(TTeamCreatureProperties.TeamId);
+                builder.ComponentSelect.Values.Add(TTeamCreatureProperties.CreatureId);
+                foreach (var field in fields)
+                {
+                    builder.ComponentSelect.Values.Add(field);
+                }
             }
             var Ids = entities.Select(c =>c.TeamId );
             if (Ids.Count() != 0)
             {
-                builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TTeamCreatureProperties.TeamId, OperatorType.In, Ids));
+                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TTeamCreatureProperties.TeamId, Ids, LocateType.In));
             }
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).SelectAll<TTeamCreature>(session, query);
+        }
+        public static void DbLoad(this TTeamCreature entity, DbSession session, params PDMDbProperty[] fields)
+        {
+            var result = entity.DbSelect(session, fields);
+        }
+        public static void DbLoad(this List<TTeamCreature> entities, DbSession session, params PDMDbProperty[] fields)
+        {
+            foreach (var entity in entities)
+            {
+                entity.DbLoad(session, fields);
+            }
         }
         #endregion
         #endregion

@@ -24,6 +24,22 @@ namespace Sample.Utilities
         {
             return nameof(Sample);
         }
+
+        protected override DbConfigEntity GetDefaultDatabaseConfig()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override ProtocolConfig GetDefaultProtocolConfig()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override ILogger GetDefaultServiceLogger()
+        {
+            throw new NotImplementedException();
+        }
+
         protected override List<DependencyResult> InitOthers()
         {
             return new List<DependencyResult>();

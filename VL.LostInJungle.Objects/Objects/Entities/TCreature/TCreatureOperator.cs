@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using VL.Common.DAS.Objects;
+using VL.Common.ORM.Objects;
 using VL.Common.ORM.Utilities.QueryBuilders;
 using VL.Common.Protocol.IService.IORM;
 
@@ -13,26 +15,30 @@ namespace VL.LostInJungle.Objects.Entities
         public static bool DbDelete(this TCreature entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TCreatureProperties.CreatureId, OperatorType.Equal, entity.CreatureId));
+            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureProperties.CreatureId, entity.CreatureId, LocateType.Equal));
             return IORMProvider.GetQueryOperator(session).Delete<TCreature>(session, query);
         }
         public static bool DbDelete(this List<TCreature> entities, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             var Ids = entities.Select(c =>c.CreatureId );
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TCreatureProperties.CreatureId, OperatorType.In, Ids));
+            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureProperties.CreatureId, Ids, LocateType.In));
             return IORMProvider.GetQueryOperator(session).Delete<TCreature>(session, query);
         }
         public static bool DbInsert(this TCreature entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             InsertBuilder builder = new InsertBuilder();
-            builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.CreatureId, entity.CreatureId));
-            builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.CreatureType, entity.CreatureType));
-            builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.Name, entity.Name));
-            builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.Experience, entity.Experience));
-            builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.Level, entity.Level));
-            builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.Profession, entity.Profession));
+            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.CreatureId, entity.CreatureId));
+            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.CreatureType, entity.CreatureType));
+            if (entity.Name == null)
+            {
+                throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.Name));
+            }
+            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.Name, entity.Name));
+            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.Experience, entity.Experience));
+            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.Level, entity.Level));
+            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.Profession, entity.Profession));
             query.InsertBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Insert<TCreature>(session, query);
         }
@@ -42,70 +48,98 @@ namespace VL.LostInJungle.Objects.Entities
             foreach (var entity in entities)
             {
                 InsertBuilder builder = new InsertBuilder();
-                builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.CreatureId, entity.CreatureId));
-                builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.CreatureType, entity.CreatureType));
-                builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.Name, entity.Name));
-                builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.Experience, entity.Experience));
-                builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.Level, entity.Level));
-                builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.Profession, entity.Profession));
+                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.CreatureId, entity.CreatureId));
+                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.CreatureType, entity.CreatureType));
+            if (entity.Name == null)
+            {
+                throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.Name));
+            }
+                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.Name, entity.Name));
+                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.Experience, entity.Experience));
+                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.Level, entity.Level));
+                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.Profession, entity.Profession));
                 query.InsertBuilders.Add(builder);
             }
             return IORMProvider.GetQueryOperator(session).InsertAll<TCreature>(session, query);
         }
-        public static bool DbUpdate(this TCreature entity, DbSession session, params string[] fields)
+        public static bool DbUpdate(this TCreature entity, DbSession session, params PDMDbProperty[] fields)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             UpdateBuilder builder = new UpdateBuilder();
-            builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TCreatureProperties.CreatureId, OperatorType.Equal, entity.CreatureId));
-            if (fields.Contains(TCreatureProperties.CreatureType.Title))
+            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureProperties.CreatureId, entity.CreatureId, LocateType.Equal));
+            if (fields==null|| fields.Length==0)
             {
-                builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.CreatureType, entity.CreatureType));
+                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.CreatureId, entity.CreatureId));
+                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.CreatureType, entity.CreatureType));
+                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Name, entity.Name));
+                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Experience, entity.Experience));
+                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Level, entity.Level));
+                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Profession, entity.Profession));
             }
-            if (fields.Contains(TCreatureProperties.Name.Title))
+            else
             {
-                builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.Name, entity.Name));
-            }
-            if (fields.Contains(TCreatureProperties.Experience.Title))
-            {
-                builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.Experience, entity.Experience));
-            }
-            if (fields.Contains(TCreatureProperties.Level.Title))
-            {
-                builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.Level, entity.Level));
-            }
-            if (fields.Contains(TCreatureProperties.Profession.Title))
-            {
-                builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.Profession, entity.Profession));
+                if (fields.Contains(TCreatureProperties.CreatureType))
+                {
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.CreatureType, entity.CreatureType));
+                }
+                if (fields.Contains(TCreatureProperties.Name))
+                {
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Name, entity.Name));
+                }
+                if (fields.Contains(TCreatureProperties.Experience))
+                {
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Experience, entity.Experience));
+                }
+                if (fields.Contains(TCreatureProperties.Level))
+                {
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Level, entity.Level));
+                }
+                if (fields.Contains(TCreatureProperties.Profession))
+                {
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Profession, entity.Profession));
+                }
             }
             query.UpdateBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Update<TCreature>(session, query);
         }
-        public static bool DbUpdate(this List<TCreature> entities, DbSession session, params string[] fields)
+        public static bool DbUpdate(this List<TCreature> entities, DbSession session, params PDMDbProperty[] fields)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             foreach (var entity in entities)
             {
                 UpdateBuilder builder = new UpdateBuilder();
-                builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TCreatureProperties.CreatureId, OperatorType.Equal, entity.CreatureId));
-                if (fields.Contains(TCreatureProperties.CreatureType.Title))
+                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureProperties.CreatureId, entity.CreatureId, LocateType.Equal));
+                if (fields==null|| fields.Length==0)
                 {
-                    builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.CreatureType, entity.CreatureType));
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.CreatureId, entity.CreatureId));
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.CreatureType, entity.CreatureType));
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Name, entity.Name));
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Experience, entity.Experience));
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Level, entity.Level));
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Profession, entity.Profession));
                 }
-                if (fields.Contains(TCreatureProperties.Name.Title))
+                else
                 {
-                    builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.Name, entity.Name));
-                }
-                if (fields.Contains(TCreatureProperties.Experience.Title))
-                {
-                    builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.Experience, entity.Experience));
-                }
-                if (fields.Contains(TCreatureProperties.Level.Title))
-                {
-                    builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.Level, entity.Level));
-                }
-                if (fields.Contains(TCreatureProperties.Profession.Title))
-                {
-                    builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TCreatureProperties.Profession, entity.Profession));
+                    if (fields.Contains(TCreatureProperties.CreatureType))
+                    {
+                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.CreatureType, entity.CreatureType));
+                    }
+                    if (fields.Contains(TCreatureProperties.Name))
+                    {
+                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Name, entity.Name));
+                    }
+                    if (fields.Contains(TCreatureProperties.Experience))
+                    {
+                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Experience, entity.Experience));
+                    }
+                    if (fields.Contains(TCreatureProperties.Level))
+                    {
+                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Level, entity.Level));
+                    }
+                    if (fields.Contains(TCreatureProperties.Profession))
+                    {
+                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Profession, entity.Profession));
+                    }
                 }
                 query.UpdateBuilders.Add(builder);
             }
@@ -113,33 +147,90 @@ namespace VL.LostInJungle.Objects.Entities
         }
         #endregion
         #region 读
-        public static TCreature DbSelect(this TCreature entity, DbSession session, params string[] fields)
+        public static TCreature DbSelect(this TCreature entity, DbSession session, params PDMDbProperty[] fields)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             SelectBuilder builder = new SelectBuilder();
-            foreach (var field in fields)
+            if (fields.Count() == 0)
             {
-                builder.ComponentFieldAliases.FieldAliases.Add(new FieldAlias(field));
+                builder.ComponentSelect.Values.Add(TCreatureProperties.CreatureId);
+                builder.ComponentSelect.Values.Add(TCreatureProperties.CreatureType);
+                builder.ComponentSelect.Values.Add(TCreatureProperties.Name);
+                builder.ComponentSelect.Values.Add(TCreatureProperties.Experience);
+                builder.ComponentSelect.Values.Add(TCreatureProperties.Level);
+                builder.ComponentSelect.Values.Add(TCreatureProperties.Profession);
             }
-            builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TCreatureProperties.CreatureId, OperatorType.Equal, entity.CreatureId));
+            else
+            {
+                builder.ComponentSelect.Values.Add(TCreatureProperties.CreatureId);
+                foreach (var field in fields)
+                {
+                    builder.ComponentSelect.Values.Add(field);
+                }
+            }
+            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureProperties.CreatureId, entity.CreatureId, LocateType.Equal));
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Select<TCreature>(session, query);
         }
-        public static List<TCreature> DbSelect(this List<TCreature> entities, DbSession session, params string[] fields)
+        public static List<TCreature> DbSelect(this List<TCreature> entities, DbSession session, params PDMDbProperty[] fields)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             SelectBuilder builder = new SelectBuilder();
-            foreach (var field in fields)
+            if (fields.Count() == 0)
             {
-                builder.ComponentFieldAliases.FieldAliases.Add(new FieldAlias(field));
+                builder.ComponentSelect.Values.Add(TCreatureProperties.CreatureId);
+                builder.ComponentSelect.Values.Add(TCreatureProperties.CreatureType);
+                builder.ComponentSelect.Values.Add(TCreatureProperties.Name);
+                builder.ComponentSelect.Values.Add(TCreatureProperties.Experience);
+                builder.ComponentSelect.Values.Add(TCreatureProperties.Level);
+                builder.ComponentSelect.Values.Add(TCreatureProperties.Profession);
+            }
+            else
+            {
+                builder.ComponentSelect.Values.Add(TCreatureProperties.CreatureId);
+                foreach (var field in fields)
+                {
+                    builder.ComponentSelect.Values.Add(field);
+                }
             }
             var Ids = entities.Select(c =>c.CreatureId );
             if (Ids.Count() != 0)
             {
-                builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TCreatureProperties.CreatureId, OperatorType.In, Ids));
+                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureProperties.CreatureId, Ids, LocateType.In));
             }
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).SelectAll<TCreature>(session, query);
+        }
+        public static void DbLoad(this TCreature entity, DbSession session, params PDMDbProperty[] fields)
+        {
+            var result = entity.DbSelect(session, fields);
+            if (fields.Contains(TCreatureProperties.CreatureType))
+            {
+                entity.CreatureType = result.CreatureType;
+            }
+            if (fields.Contains(TCreatureProperties.Name))
+            {
+                entity.Name = result.Name;
+            }
+            if (fields.Contains(TCreatureProperties.Experience))
+            {
+                entity.Experience = result.Experience;
+            }
+            if (fields.Contains(TCreatureProperties.Level))
+            {
+                entity.Level = result.Level;
+            }
+            if (fields.Contains(TCreatureProperties.Profession))
+            {
+                entity.Profession = result.Profession;
+            }
+        }
+        public static void DbLoad(this List<TCreature> entities, DbSession session, params PDMDbProperty[] fields)
+        {
+            foreach (var entity in entities)
+            {
+                entity.DbLoad(session, fields);
+            }
         }
         #endregion
         #endregion

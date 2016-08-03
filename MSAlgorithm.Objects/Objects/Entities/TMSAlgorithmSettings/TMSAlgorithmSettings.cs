@@ -21,14 +21,6 @@ namespace Dacai.MagicSquareAlgorithm.Objects.Entities
         public EResultType ResultType { get; set; }
         [DataMember]
         public Int16 WeightValue { get; set; }
-        [DataMember]
-        public override string TableName
-        {
-            get
-            {
-                return nameof(TMSAlgorithmSettings);
-            }
-        }
         #endregion
 
         #region Constructors
@@ -70,6 +62,14 @@ namespace Dacai.MagicSquareAlgorithm.Objects.Entities
             if (fields.Contains(nameof(WeightValue)))
             {
                 this.WeightValue = Convert.ToInt16(reader[nameof(this.WeightValue)]);
+            }
+        }
+        [DataMember]
+        public override string TableName
+        {
+            get
+            {
+                return nameof(TMSAlgorithmSettings);
             }
         }
         #endregion

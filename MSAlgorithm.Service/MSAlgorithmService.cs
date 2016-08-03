@@ -1,5 +1,6 @@
 ﻿using Dacai.MagicSquareAlgorithm.Objects.Entities;
 using MSAlgorithm.Service.DomainEntities;
+using MSAlgorithm.Service.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace MSAlgorithm.Service
     {
         public Result<int> CalculateOdds(Guid algorithmId)
         {
-            return ServiceDelegator.HandleSimpleTransactionEvent(nameof(MSAlgorithm), (session) =>
+            return new ServiceDelegator(new ServiceContextOfAlgorithm()).HandleSimpleTransactionEvent(nameof(MSAlgorithm), (session) =>
             {
                 TMSAlgorithm algorithm = new TMSAlgorithm();
                 algorithm.AlgorithmId = algorithmId;

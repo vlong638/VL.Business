@@ -16,6 +16,10 @@ namespace VL.LostInJungle.Runner_Console.Utilities
     /// </summary>
     public class ContextOfLIJService : ServiceContext
     {
+        public ContextOfLIJService()
+        {
+        }
+
         public ContextOfLIJService(DbConfigEntity databaseConfig, ProtocolConfig protocolConfig, ILogger serviceLogger) : base(databaseConfig, protocolConfig, serviceLogger)
         {
         }
@@ -23,6 +27,21 @@ namespace VL.LostInJungle.Runner_Console.Utilities
         public override string GetUnitName()
         {
             return nameof(LostInJungle);
+        }
+
+        protected override DbConfigEntity GetDefaultDatabaseConfig()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override ProtocolConfig GetDefaultProtocolConfig()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override ILogger GetDefaultServiceLogger()
+        {
+            throw new NotImplementedException();
         }
 
         protected override List<DependencyResult> InitOthers()

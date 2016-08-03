@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using VL.Common.DAS.Objects;
+using VL.Common.ORM.Objects;
 using VL.Common.ORM.Utilities.QueryBuilders;
-using VL.Common.ORM.Utilities.QueryOperators;
+using VL.Common.Protocol.IService.IORM;
 
 namespace Dacai.MagicSquareAlgorithm.Objects.Entities
 {
@@ -12,113 +14,185 @@ namespace Dacai.MagicSquareAlgorithm.Objects.Entities
         #region 写
         public static bool DbDelete(this TMSAlgorithmSettings entity, DbSession session)
         {
-            var query = IDbQueryBuilder.GetDbQueryBuilder(session);
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TMSAlgorithmSettingsProperties.AlgorithmId, OperatorType.Equal, entity.AlgorithmId));
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TMSAlgorithmSettingsProperties.TopWeightType, OperatorType.Equal, entity.TopWeightType));
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TMSAlgorithmSettingsProperties.SubWeightType, OperatorType.Equal, entity.SubWeightType));
-            return IDbQueryOperator.GetQueryOperator(session).Delete<TMSAlgorithmSettings>(session, query);
+            var query = IORMProvider.GetDbQueryBuilder(session);
+            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId, LocateType.Equal));
+            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType, LocateType.Equal));
+            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType, LocateType.Equal));
+            return IORMProvider.GetQueryOperator(session).Delete<TMSAlgorithmSettings>(session, query);
         }
         public static bool DbDelete(this List<TMSAlgorithmSettings> entities, DbSession session)
         {
-            var query = IDbQueryBuilder.GetDbQueryBuilder(session);
+            var query = IORMProvider.GetDbQueryBuilder(session);
             var Ids = entities.Select(c =>c.AlgorithmId );
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TMSAlgorithmSettingsProperties.AlgorithmId, OperatorType.In, Ids));
-            return IDbQueryOperator.GetQueryOperator(session).Delete<TMSAlgorithmSettings>(session, query);
+            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.AlgorithmId, Ids, LocateType.In));
+            return IORMProvider.GetQueryOperator(session).Delete<TMSAlgorithmSettings>(session, query);
         }
         public static bool DbInsert(this TMSAlgorithmSettings entity, DbSession session)
         {
-            var query = IDbQueryBuilder.GetDbQueryBuilder(session);
+            var query = IORMProvider.GetDbQueryBuilder(session);
             InsertBuilder builder = new InsertBuilder();
-            builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId));
-            builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType));
-            builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType));
-            builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
-            builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
+            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId));
+            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType));
+            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType));
+            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
+            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
             query.InsertBuilders.Add(builder);
-            return IDbQueryOperator.GetQueryOperator(session).Insert<TMSAlgorithmSettings>(session, query);
+            return IORMProvider.GetQueryOperator(session).Insert<TMSAlgorithmSettings>(session, query);
         }
         public static bool DbInsert(this List<TMSAlgorithmSettings> entities, DbSession session)
         {
-            var query = IDbQueryBuilder.GetDbQueryBuilder(session);
+            var query = IORMProvider.GetDbQueryBuilder(session);
             foreach (var entity in entities)
             {
                 InsertBuilder builder = new InsertBuilder();
-                builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId));
-                builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType));
-                builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType));
-                builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
-                builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
+                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId));
+                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType));
+                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType));
+                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
+                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
                 query.InsertBuilders.Add(builder);
             }
-            return IDbQueryOperator.GetQueryOperator(session).InsertAll<TMSAlgorithmSettings>(session, query);
+            return IORMProvider.GetQueryOperator(session).InsertAll<TMSAlgorithmSettings>(session, query);
         }
-        public static bool DbUpdate(this TMSAlgorithmSettings entity, DbSession session, params string[] fields)
+        public static bool DbUpdate(this TMSAlgorithmSettings entity, DbSession session, params PDMDbProperty[] fields)
         {
-            var query = IDbQueryBuilder.GetDbQueryBuilder(session);
+            var query = IORMProvider.GetDbQueryBuilder(session);
             UpdateBuilder builder = new UpdateBuilder();
-            builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TMSAlgorithmSettingsProperties.AlgorithmId, OperatorType.Equal, entity.AlgorithmId));
-            builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TMSAlgorithmSettingsProperties.TopWeightType, OperatorType.Equal, entity.TopWeightType));
-            builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TMSAlgorithmSettingsProperties.SubWeightType, OperatorType.Equal, entity.SubWeightType));
-            if (fields.Contains(TMSAlgorithmSettingsProperties.ResultType.Title))
+            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId, LocateType.Equal));
+            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType, LocateType.Equal));
+            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType, LocateType.Equal));
+            if (fields==null|| fields.Length==0)
             {
-                builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
+                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId));
+                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType));
+                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType));
+                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
+                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
             }
-            if (fields.Contains(TMSAlgorithmSettingsProperties.WeightValue.Title))
+            else
             {
-                builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
+                if (fields.Contains(TMSAlgorithmSettingsProperties.ResultType))
+                {
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
+                }
+                if (fields.Contains(TMSAlgorithmSettingsProperties.WeightValue))
+                {
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
+                }
             }
             query.UpdateBuilders.Add(builder);
-            return IDbQueryOperator.GetQueryOperator(session).Update<TMSAlgorithmSettings>(session, query);
+            return IORMProvider.GetQueryOperator(session).Update<TMSAlgorithmSettings>(session, query);
         }
-        public static bool DbUpdate(this List<TMSAlgorithmSettings> entities, DbSession session, params string[] fields)
+        public static bool DbUpdate(this List<TMSAlgorithmSettings> entities, DbSession session, params PDMDbProperty[] fields)
         {
-            var query = IDbQueryBuilder.GetDbQueryBuilder(session);
+            var query = IORMProvider.GetDbQueryBuilder(session);
             foreach (var entity in entities)
             {
                 UpdateBuilder builder = new UpdateBuilder();
-                builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TMSAlgorithmSettingsProperties.AlgorithmId, OperatorType.Equal, entity.AlgorithmId));
-                builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TMSAlgorithmSettingsProperties.TopWeightType, OperatorType.Equal, entity.TopWeightType));
-                builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TMSAlgorithmSettingsProperties.SubWeightType, OperatorType.Equal, entity.SubWeightType));
-                if (fields.Contains(TMSAlgorithmSettingsProperties.ResultType.Title))
+                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId, LocateType.Equal));
+                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType, LocateType.Equal));
+                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType, LocateType.Equal));
+                if (fields==null|| fields.Length==0)
                 {
-                    builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId));
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType));
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType));
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
                 }
-                if (fields.Contains(TMSAlgorithmSettingsProperties.WeightValue.Title))
+                else
                 {
-                    builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
+                    if (fields.Contains(TMSAlgorithmSettingsProperties.ResultType))
+                    {
+                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
+                    }
+                    if (fields.Contains(TMSAlgorithmSettingsProperties.WeightValue))
+                    {
+                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
+                    }
                 }
                 query.UpdateBuilders.Add(builder);
             }
-            return IDbQueryOperator.GetQueryOperator(session).UpdateAll<TMSAlgorithmSettings>(session, query);
+            return IORMProvider.GetQueryOperator(session).UpdateAll<TMSAlgorithmSettings>(session, query);
         }
         #endregion
         #region 读
-        public static TMSAlgorithmSettings DbSelect(this TMSAlgorithmSettings entity, DbSession session, params string[] fields)
+        public static TMSAlgorithmSettings DbSelect(this TMSAlgorithmSettings entity, DbSession session, params PDMDbProperty[] fields)
         {
-            var query = IDbQueryBuilder.GetDbQueryBuilder(session);
+            var query = IORMProvider.GetDbQueryBuilder(session);
             SelectBuilder builder = new SelectBuilder();
-            foreach (var field in fields)
+            if (fields.Count() == 0)
             {
-                builder.ComponentFieldAliases.FieldAliases.Add(new FieldAlias(field));
+                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.AlgorithmId);
+                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.TopWeightType);
+                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.SubWeightType);
+                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.ResultType);
+                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.WeightValue);
             }
-            builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TMSAlgorithmSettingsProperties.AlgorithmId, OperatorType.Equal, entity.AlgorithmId));
-            builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TMSAlgorithmSettingsProperties.TopWeightType, OperatorType.Equal, entity.TopWeightType));
-            builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TMSAlgorithmSettingsProperties.SubWeightType, OperatorType.Equal, entity.SubWeightType));
-            query.SelectBuilders.Add(builder);
-            return IDbQueryOperator.GetQueryOperator(session).Select<TMSAlgorithmSettings>(session, query);
-        }
-        public static List<TMSAlgorithmSettings> DbSelect(this List<TMSAlgorithmSettings> entities, DbSession session, params string[] fields)
-        {
-            var query = IDbQueryBuilder.GetDbQueryBuilder(session);
-            SelectBuilder builder = new SelectBuilder();
-            foreach (var field in fields)
+            else
             {
-                builder.ComponentFieldAliases.FieldAliases.Add(new FieldAlias(field));
+                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.AlgorithmId);
+                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.TopWeightType);
+                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.SubWeightType);
+                foreach (var field in fields)
+                {
+                    builder.ComponentSelect.Values.Add(field);
+                }
+            }
+            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId, LocateType.Equal));
+            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType, LocateType.Equal));
+            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType, LocateType.Equal));
+            query.SelectBuilders.Add(builder);
+            return IORMProvider.GetQueryOperator(session).Select<TMSAlgorithmSettings>(session, query);
+        }
+        public static List<TMSAlgorithmSettings> DbSelect(this List<TMSAlgorithmSettings> entities, DbSession session, params PDMDbProperty[] fields)
+        {
+            var query = IORMProvider.GetDbQueryBuilder(session);
+            SelectBuilder builder = new SelectBuilder();
+            if (fields.Count() == 0)
+            {
+                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.AlgorithmId);
+                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.TopWeightType);
+                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.SubWeightType);
+                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.ResultType);
+                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.WeightValue);
+            }
+            else
+            {
+                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.AlgorithmId);
+                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.TopWeightType);
+                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.SubWeightType);
+                foreach (var field in fields)
+                {
+                    builder.ComponentSelect.Values.Add(field);
+                }
             }
             var Ids = entities.Select(c =>c.AlgorithmId );
-            builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TMSAlgorithmSettingsProperties.AlgorithmId, OperatorType.In, Ids));
+            if (Ids.Count() != 0)
+            {
+                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.AlgorithmId, Ids, LocateType.In));
+            }
             query.SelectBuilders.Add(builder);
-            return IDbQueryOperator.GetQueryOperator(session).SelectAll<TMSAlgorithmSettings>(session, query);
+            return IORMProvider.GetQueryOperator(session).SelectAll<TMSAlgorithmSettings>(session, query);
+        }
+        public static void DbLoad(this TMSAlgorithmSettings entity, DbSession session, params PDMDbProperty[] fields)
+        {
+            var result = entity.DbSelect(session, fields);
+            if (fields.Contains(TMSAlgorithmSettingsProperties.ResultType))
+            {
+                entity.ResultType = result.ResultType;
+            }
+            if (fields.Contains(TMSAlgorithmSettingsProperties.WeightValue))
+            {
+                entity.WeightValue = result.WeightValue;
+            }
+        }
+        public static void DbLoad(this List<TMSAlgorithmSettings> entities, DbSession session, params PDMDbProperty[] fields)
+        {
+            foreach (var entity in entities)
+            {
+                entity.DbLoad(session, fields);
+            }
         }
         #endregion
         #endregion

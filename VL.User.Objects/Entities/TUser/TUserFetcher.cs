@@ -13,7 +13,18 @@ namespace VL.User.Objects.Entities
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             SelectBuilder builder = new SelectBuilder();
-            builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TUserBasicInfoProperties.UserId, OperatorType.Equal, tUser.UserId));
+            if (tUser.UserId == Guid.Empty)
+            {
+                var subselect = new SelectBuilder();
+                subselect.TableName = nameof(TUser);
+                subselect.ComponentSelect.Values.Add(TUserProperties.UserId);
+                subselect.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TUserProperties.UserId, tUser.UserId, LocateType.Equal));
+                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TUserBasicInfoProperties.UserId, subselect, LocateType.Equal));
+            }
+            else
+            {
+                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TUserBasicInfoProperties.UserId, tUser.UserId, LocateType.Equal));
+            }
             query.SelectBuilders.Add(builder);
             tUser.UserBasicInfo = IORMProvider.GetQueryOperator(session).Select<TUserBasicInfo>(session, query);
             if (tUser.UserBasicInfo == null)
