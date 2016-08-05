@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VL.Spider.Manipulator.Entities;
+using VL.Spider.Manipulator.Entities.GrabConfigs;
 
 namespace VL.Spider.Manipulator
 {
@@ -148,30 +149,37 @@ namespace VL.Spider.Manipulator
         #region 有效方法
         public void DisplayCurrentValue()
         {
-            SpiderRequestConfig requestConfig = RequestConfig;
-            SpiderManagerConfig managerConfig = ManagerConfig;
+            RequestConfig requestConfig = Spider.RequestConfig;
+            SpiderManageConfig managerConfig = Spider.ManageConfig;
             tb_MaxConnection.Text = managerConfig.MaxConnectionNumber.ToString();
 
         }
-        SpiderRequestConfig RequestConfig { set; get; } = new SpiderRequestConfig()
+        SpiderEntity Spider { set; get; } = new SpiderEntity()
         {
-            Method = WebRequestMethods.Http.Get,
-            UserAgent = "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)",
+            GrabConfig = new FileGrabConfig()
         };
-        SpiderManagerConfig ManagerConfig { set; get; } = new SpiderManagerConfig()
-        {
-            MaxConnectionNumber=1,
-        };
-
         private void CheckAccessibility(object sender, RoutedEventArgs e)
+        {
+            CheckAccessibility();
+        }
+
+        private void CheckAccessibility()
         {
             var url = tb_Source.Text;
             if (!string.IsNullOrEmpty(url))
             {
-                RequestConfig.URL = url;
-                new SpiderManager().CheckAccessibility(RequestConfig);
+                Spider.RequestConfig.URL = url;
+                if (Spider.CheckAccessibility() == CheckAccessibilityResult.Success)
+                {
+                    MessageBox.Show("URL验证通过");
+                }
+                else
+                {
+                    MessageBox.Show("URL验证失败");
+                }
             }
         }
+
         private void SetOutputFilePath(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.FolderBrowserDialog fdlg = new System.Windows.Forms.FolderBrowserDialog();
@@ -180,13 +188,12 @@ namespace VL.Spider.Manipulator
             var result = fdlg.ShowDialog();
             if (result == System.Windows.Forms.DialogResult.OK)
             {
-                string path = fdlg.SelectedPath;
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                }
-                ManagerConfig.OutputPath = path;
+                (Spider.GrabConfig as FileGrabConfig).DirectoryName = fdlg.SelectedPath;
             }
+        }
+        private void tb_FileOutput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            (Spider.GrabConfig as FileGrabConfig).DirectoryName = tb_FileOutput.Text;
         }
         private void ChangeMaxConnection(object sender, TextChangedEventArgs e)
         {
@@ -194,7 +201,7 @@ namespace VL.Spider.Manipulator
             int maxConnection;
             if (Int32.TryParse(value, out maxConnection))
             {
-                ManagerConfig.MaxConnectionNumber = maxConnection;
+                Spider.ManageConfig.MaxConnectionNumber = maxConnection;
             }
             else
             {
@@ -203,18 +210,15 @@ namespace VL.Spider.Manipulator
         }
         private void StartDownload(object sender, RoutedEventArgs e)
         {
-
+            CheckAccessibility();
+            Spider.StartGrabbing();
         }
-
         private void StopDownload(object sender, RoutedEventArgs e)
         {
-
         }
         #endregion
 
-
-
-
+        #region backup
         private string _method = "GET";
         private string _accept = "text/html";
         private string _userAgent = "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)";
@@ -470,8 +474,7 @@ namespace VL.Spider.Manipulator
                 ContentsSaved(path, url);
             }
         }
-
-
+        #endregion
 
     }
 }

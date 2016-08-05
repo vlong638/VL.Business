@@ -57,7 +57,7 @@
                 </StackPanel>
                 <StackPanel Grid.Row="1" Orientation="Horizontal">
                     <TextBlock Text="File Path"/>
-                    <TextBox Name="tb_FileOutput" Width="600"/>
+                    <TextBox Name="tb_FileOutput" Width="600" TextChanged="tb_FileOutput_TextChanged"/>
                     <Button Content="..." Style="{StaticResource ResourceKey=MiniButton}" Click="SetOutputFilePath"/>
                 </StackPanel>
             </Grid>

@@ -6,68 +6,60 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using VL.Spider.Manipulator.Entities.GrabConfigs;
+using VL.Spider.Manipulator.Utilities;
 
 namespace VL.Spider.Manipulator.Entities
 {
+    #region Configs
     /// <summary>
     /// 数据源-管理配置
     /// 主要负责管理器调度及输出方面的配置
     /// </summary>
-    public class SpiderManagerConfig
+    public class SpiderManageConfig
     {
         /// <summary>
         /// 最大线程数
         /// </summary>
         public int MaxConnectionNumber { set; get; }
-        /// <summary>
-        /// 输出文件路径
-        /// </summary>
-        public string OutputPath { set; get; }
     }
-    /// <summary>
-    /// 数据源-请求配置
-    /// 主要负责请求时的Http参数配置
-    /// </summary>
-    public class SpiderRequestConfig
-    {
-        public string URL{ set; get; }
-        public string Method{ set; get; }
-        public string UserAgent{ set; get; }
-
-        public HttpWebRequest GetRequest()
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
-            request.Method = Method;
-            request.UserAgent = UserAgent;
-            return request;
-        }
-    }
-    /// <summary>
-    /// 抓取规则配置
-    /// 主要负责如何抓取的内容的配置
-    /// </summary>
-    public class SpiderScrabeConfig
-    {
-    }
-
-    public enum CheckAccessibilityResult
-    {
-        Success,
-        Unaccessible,
-        Error,
-    }
+    #endregion
     /// <summary>
     /// 爬虫
     /// </summary>
-    public class Spider
+    public class SpiderEntity
     {
-        public CheckAccessibilityResult CheckAccessibility(SpiderRequestConfig requestConfig)
+        public ServiceContextOfSpider Context { set; get; } = new ServiceContextOfSpider();
+        public RequestConfig RequestConfig { set; get; } = new RequestConfig()
         {
+            Method = WebRequestMethods.Http.Get,
+            UserAgent = "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)",
+        };
+        public SpiderManageConfig ManageConfig { set; get; } = new SpiderManageConfig()
+        {
+            MaxConnectionNumber = 1,
+        };
+        public HTTPGrabConfig GrabConfig { set; get; }
+
+
+        public bool CheckConfig()
+        {
+            //TODO
+            return true;
+        }
+
+        public CheckAccessibilityResult CheckAccessibility()
+        {
+            if (!CheckConfig())
+            {
+                return CheckAccessibilityResult.ConfigNotReady;
+            }
+
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestConfig.URL);
-                request.Method = requestConfig.Method;
-                request.UserAgent = requestConfig.UserAgent;
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(RequestConfig.URL);
+                request.Method = RequestConfig.Method;
+                request.UserAgent = RequestConfig.UserAgent;
                 using (WebResponse response = request.GetResponse())
                 {
                     StreamReader reader = new StreamReader(response.GetResponseStream());
@@ -83,18 +75,37 @@ namespace VL.Spider.Manipulator.Entities
             }
             catch (Exception ex)
             {
+                Context.ServiceLogger.Error(ex.ToString());
                 return CheckAccessibilityResult.Error;
             }
         }
-    }
-    /// <summary>
-    /// 爬虫管理中心
-    /// </summary>
-    public class SpiderManager
-    {
-        public CheckAccessibilityResult CheckAccessibility(SpiderRequestConfig requestConfig)
+        public StartGrabbingResult StartGrabbing()
         {
-            return new Spider().CheckAccessibility(requestConfig);
+            if (!CheckConfig())
+            {
+                return StartGrabbingResult.ConfigNotReady;
+            }
+            Task.Factory.StartNew(() =>
+            {
+                GrabConfig.StartGrabbing(RequestConfig);
+            });
+            return StartGrabbingResult.ThreadStarted;
         }
     }
+
+
+    #region Results
+    public enum CheckAccessibilityResult
+    {
+        Success,
+        Unaccessible,
+        Error,
+        ConfigNotReady,
+    }
+    public enum StartGrabbingResult
+    {
+        ConfigNotReady,
+        ThreadStarted,
+    }
+    #endregion
 }
