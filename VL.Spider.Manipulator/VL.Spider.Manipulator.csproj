@@ -54,7 +54,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization">
-      <HintPath>..\packages\VL.Common.Protocol.1.0.1608031120.1\lib\net452\System.Runtime.Serialization.dll</HintPath>
+      <HintPath>..\packages\VL.Common.Protocol.1.0.1608081724.1\lib\net452\System.Runtime.Serialization.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Windows.Forms" />
@@ -67,12 +67,12 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="VL.Common.Configurator, Version=1.1.5947.26749, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Common.Configurator.1.1.1604131452.1\lib\net452\VL.Common.Configurator.dll</HintPath>
+    <Reference Include="VL.Common.Configurator, Version=1.1.6064.30635, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.Configurator.1.1.1608081701.1\lib\net452\VL.Common.Configurator.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="VL.Common.DAS, Version=1.0.5947.27705, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Common.DAS.1.0.1604131525.1\lib\net452\VL.Common.DAS.dll</HintPath>
+    <Reference Include="VL.Common.DAS, Version=1.0.6064.26264, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.DAS.1.0.1608081438.1\lib\net452\VL.Common.DAS.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="VL.Common.Logger, Version=1.0.5946.30246, Culture=neutral, processorArchitecture=MSIL">
@@ -83,8 +83,8 @@
       <HintPath>..\packages\VL.Common.ORM.1.0.1608031119.1\lib\net452\VL.Common.ORM.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="VL.Common.Protocol, Version=1.0.6059.20399, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Common.Protocol.1.0.1608031120.1\lib\net452\VL.Common.Protocol.dll</HintPath>
+    <Reference Include="VL.Common.Protocol, Version=1.0.6064.30164, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.Protocol.1.0.1608081724.1\lib\net452\VL.Common.Protocol.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="WindowsBase" />
@@ -96,10 +96,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Entities\GrabConfigs\FileGrabConfig.cs" />
-    <Compile Include="Entities\GrabConfigs\HTTPGrabConfig.cs" />
-    <Compile Include="Entities\GrabConfigs\RequestConfig.cs" />
-    <Compile Include="Entities\GrabConfigs\SpiderConfig.cs" />
+    <Compile Include="Configs\ConfigOfManage.cs" />
+    <Compile Include="Configs\GrabConfigOfDListContent.cs" />
+    <Compile Include="Configs\GrabConfigOfSListContent.cs" />
+    <Compile Include="Configs\GrabConfigOfFile.cs" />
+    <Compile Include="Configs\IGrabConfig.cs" />
+    <Compile Include="Configs\ConfigOfRequest.cs" />
+    <Compile Include="Configs\ConfigOfSpider.cs" />
+    <Compile Include="Configs\IConfig.cs" />
+    <Compile Include="SubWindows\FileGrabConfigManage.xaml.cs">
+      <DependentUpon>FileGrabConfigManage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\RequestConfigManage.xaml.cs">
+      <DependentUpon>RequestConfigManage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\DbConfigOfSpider.cs" />
     <Compile Include="Utilities\GrabNamingHelper.cs" />
     <Compile Include="Utilities\ServiceContextOfSpider.cs" />
@@ -117,6 +127,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MyStyle\Style0722.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SubWindows\FileGrabConfigManage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SubWindows\RequestConfigManage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

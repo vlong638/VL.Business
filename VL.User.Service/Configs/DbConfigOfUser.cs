@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Xml.Linq;
 using VL.Common.DAS.Utilities;
 
 namespace VL.User.Service.Configs
@@ -7,6 +9,11 @@ namespace VL.User.Service.Configs
     {
         public DbConfigOfUser(string fileName) : base(fileName)
         {
+        }
+
+        public override IEnumerable<XElement> ToXElements()
+        {
+            throw new NotImplementedException();
         }
 
         protected override List<DbConfigItem> GetDbConfigItems()
