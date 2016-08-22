@@ -10,7 +10,7 @@ namespace VL.Spider.Manipulator.Utilities
     {
         public static string GetNameForFile(string tag)
         {
-            return tag + DateTime.Now.ToString("hhMMss") + ".txt";
+            return tag + DateTime.Now.ToString("dd_HHmmss") + ".xml";
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Xml.Linq;
+using VL.Common.Logger.Objects;
 using VL.Spider.Manipulator.Utilities;
 
 namespace VL.Spider.Manipulator.Configs
@@ -22,31 +23,32 @@ namespace VL.Spider.Manipulator.Configs
         /// <summary>
         /// 文件名称
         /// </summary>
-        public string FileName
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(fileName))
-                {
-                    fileName = GrabNamingHelper.GetNameForFile(FileNameTag);
-                }
-                return fileName;
-            }
-            set
-            {
-                fileName = value;
-            }
-        }
-        private string fileName;
+        public string FileName { set; get; } = "";
+        //public string FileName
+        //{
+        //    get
+        //    {
+        //        if (string.IsNullOrEmpty(fileName))
+        //        {
+        //            fileName = GrabNamingHelper.GetNameForFile(FileNameTag);
+        //        }
+        //        return fileName;
+        //    }
+        //    set
+        //    {
+        //        fileName = value;
+        //    }
+        //}
+        //private string fileName;
 
-        public GrabConfigOfFile(XElement element) : base(element)
+        public GrabConfigOfFile(ConfigOfSpider spiderConfig, XElement element) : base(element, spiderConfig)
         {
         }
-        public GrabConfigOfFile()
+        public GrabConfigOfFile(ConfigOfSpider spiderConfig) : base(spiderConfig)
         {
         }
 
-        public override bool CheckAvailable()
+        public override bool CheckAvailable(ILogger logger)
         {
             if (string.IsNullOrEmpty(DirectoryPath))
             {
@@ -56,13 +58,21 @@ namespace VL.Spider.Manipulator.Configs
             {
                 Directory.CreateDirectory(DirectoryPath);
             }
-
             return true;
         }
-        protected override void GrabbingContent(string pageContent)
+        protected override GrabResult GrabbingContent(string pageContent, string pageName = "")
         {
-            string path = Path.Combine(DirectoryPath, FileName);
+            string path;
+            if (pageName != "")
+            {
+                path = Path.Combine(DirectoryPath, pageName);
+            }
+            else
+            {
+                path = Path.Combine(DirectoryPath, string.IsNullOrEmpty(FileName) ? GrabNamingHelper.GetNameForFile(FileNameTag) : FileName);
+            }
             File.WriteAllText(path, pageContent);
+            return new GrabResult(true, "抓取成功,文件输出于" + path);
         }
 
         public override EGrabType GetGrabType()

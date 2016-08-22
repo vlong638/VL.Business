@@ -96,7 +96,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Configs\ConfigOfManage.cs" />
+    <Compile Include="Configs\ConfigOfProcess.cs" />
     <Compile Include="Configs\GrabConfigOfDListContent.cs" />
     <Compile Include="Configs\GrabConfigOfSListContent.cs" />
     <Compile Include="Configs\GrabConfigOfFile.cs" />
@@ -104,11 +104,14 @@
     <Compile Include="Configs\ConfigOfRequest.cs" />
     <Compile Include="Configs\ConfigOfSpider.cs" />
     <Compile Include="Configs\IConfig.cs" />
-    <Compile Include="SubWindows\FileGrabConfigManage.xaml.cs">
-      <DependentUpon>FileGrabConfigManage.xaml</DependentUpon>
+    <Compile Include="SubWindows\GrabManageOfSListContent.xaml.cs">
+      <DependentUpon>GrabManageOfSListContent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SubWindows\RequestConfigManage.xaml.cs">
-      <DependentUpon>RequestConfigManage.xaml</DependentUpon>
+    <Compile Include="SubWindows\GrabManageOfFileGrab.xaml.cs">
+      <DependentUpon>GrabManageOfFileGrab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\ManageOfRequest.xaml.cs">
+      <DependentUpon>ManageOfRequest.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\DbConfigOfSpider.cs" />
     <Compile Include="Utilities\GrabNamingHelper.cs" />
@@ -130,11 +133,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SubWindows\FileGrabConfigManage.xaml">
+    <Page Include="SubWindows\GrabManageOfSListContent.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SubWindows\RequestConfigManage.xaml">
+    <Page Include="SubWindows\GrabManageOfFileGrab.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SubWindows\ManageOfRequest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -169,6 +176,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="备注\多表查询.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Default14.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

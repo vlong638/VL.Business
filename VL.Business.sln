@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VL.Spider.Objects", "VL.Spi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VL.Spider.Manipulator", "VL.Spider.Manipulator\VL.Spider.Manipulator.csproj", "{13F71802-F422-40FC-9F0E-110A63E0C2B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTest", "ConsoleTest\ConsoleTest.csproj", "{F9CC4900-85E9-46CD-8884-7D260739051B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,10 @@ Global
 		{13F71802-F422-40FC-9F0E-110A63E0C2B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13F71802-F422-40FC-9F0E-110A63E0C2B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13F71802-F422-40FC-9F0E-110A63E0C2B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9CC4900-85E9-46CD-8884-7D260739051B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9CC4900-85E9-46CD-8884-7D260739051B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9CC4900-85E9-46CD-8884-7D260739051B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9CC4900-85E9-46CD-8884-7D260739051B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

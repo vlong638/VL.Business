@@ -165,7 +165,7 @@ namespace VL.Spider.Manipulator
                 OnSpiderConfigSourceChanged(newSpiderConfig);
             }
             //删除 已有的 爬虫
-            if (e.Key == System.Windows.Input.Key.Delete)
+            if (e.Key == System.Windows.Input.Key.Delete || e.Key == System.Windows.Input.Key.Back)
             {
                 if (string.IsNullOrEmpty(cb_Solution.Text))
                 {
@@ -173,7 +173,7 @@ namespace VL.Spider.Manipulator
                     return;
                 }
                 var spiderConfig = Spider.ConfigOfSpiders.Configs.FirstOrDefault(c => c.SpiderName == cb_Solution.Text);
-                if (spiderConfig==null)
+                if (spiderConfig == null)
                 {
                     MessageBox.Show("未找到对应名称的爬虫");
 
@@ -197,7 +197,7 @@ namespace VL.Spider.Manipulator
         private void cb_Solution_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //爬虫配置变更 无爬虫时终止
-            if (cb_Solution.SelectedValue==null)
+            if (cb_Solution.SelectedValue == null)
             {
                 return;
             }
@@ -221,7 +221,7 @@ namespace VL.Spider.Manipulator
             //加载配置内容
             ConfigOfRequest requestConfig = spiderConfig.RequestConfig;
             tb_SourceURL.Text = requestConfig.URL;
-            SpiderManageConfig managerConfig = spiderConfig.ManageConfig;
+            ConfigOfProcess managerConfig = spiderConfig.ManageConfig;
             List<IGrabConfig> grabConfigs = new List<IGrabConfig>();
             grabConfigs.AddRange(spiderConfig.GrabConfigs);
             var grabTypeStrings = Enum.GetNames(typeof(EGrabType));
@@ -230,7 +230,7 @@ namespace VL.Spider.Manipulator
                 if (!grabConfigs.Exists(c => c.GetGrabType().ToString() == grabTypeString))
                 {
                     var grabType = (EGrabType)Enum.Parse(typeof(EGrabType), grabTypeString);
-                    grabConfigs.Add(IGrabConfig.GetGrabConfig(grabType));
+                    grabConfigs.Add(IGrabConfig.GetGrabConfig(grabType, spiderConfig));
                 }
             }
             lb_GrabConfigs.ItemsSource = grabConfigs;
@@ -248,23 +248,31 @@ namespace VL.Spider.Manipulator
             var spiderConfig = Spider.ConfigOfSpiders.Configs.First(c => c.SpiderName == spiderName);
             ConfigOfRequest requestConfig = spiderConfig.RequestConfig;
             requestConfig.URL = tb_SourceURL.Text;
-            SpiderManageConfig managerConfig = spiderConfig.ManageConfig;
+            ConfigOfProcess managerConfig = spiderConfig.ManageConfig;
             //spiderConfig.GrabConfigs
         }
         private void SaveConfig(object sender, RoutedEventArgs e)
         {
-            SaveConfig();
+            if (SaveConfig())
+            {
+                MessageBox.Show("保存配置成功");
+            }
+            else
+            {
+                MessageBox.Show("保存配置时出错");
+            }
         }
-        private void SaveConfig()
+        private bool SaveConfig()
         {
             try
             {
                 Spider.ConfigOfSpiders.Save();
-                MessageBox.Show("保存配置成功");
+                return true;
             }
-            catch
+            catch(Exception ex)
             {
-                MessageBox.Show("保存配置时出错");
+                MessageBox.Show(ex.ToString());
+                return false;
             }
         }
         #endregion
@@ -279,17 +287,19 @@ namespace VL.Spider.Manipulator
                 return;
             }
             Spider.CurrentConfigOfSpider.RequestConfig.URL = tb_SourceURL.Text;
-            Spider.CurrentConfigOfSpider.RequestConfig.CheckAccessibility(Spider.Context);
+            if (!CheckAccessibility(Spider.CurrentConfigOfSpider.RequestConfig.URL))
+            {
+                MessageBox.Show("URL校验未通过");
+                return;
+            }
         }
-        private void CheckAccessibility(string url)
+        private bool CheckAccessibility(string url)
         {
             if (!string.IsNullOrEmpty(url))
             {
-                if (Spider.CurrentConfigOfSpider.RequestConfig.CheckAccessibility(Spider.Context) != CheckAccessibilityResult.Success)
-                {
-                    MessageBox.Show("URL验证失败");
-                }
+                return Spider.CurrentConfigOfSpider.RequestConfig.CheckAccessibility(url);
             }
+            return true;
         }
         private void SetDetailForRequestConfig(object sender, RoutedEventArgs e)
         {
@@ -298,7 +308,7 @@ namespace VL.Spider.Manipulator
                 MessageBox.Show("请先设置新爬虫的名称");
                 return;
             }
-            SubWindows.RequestConfigManage win = new SubWindows.RequestConfigManage(this, Spider, Spider.CurrentConfigOfSpider.RequestConfig);
+            SubWindows.ManageOfRequest win = new SubWindows.ManageOfRequest(this, Spider, Spider.CurrentConfigOfSpider.RequestConfig);
             win.Show();
         }
         #endregion
@@ -334,9 +344,47 @@ namespace VL.Spider.Manipulator
         }
         private void StartDownload(object sender, RoutedEventArgs e)
         {
-            CheckAccessibility(Spider.CurrentConfigOfSpider.RequestConfig.URL);
-            SaveConfig();
-            Spider.StartGrabbing();
+            if (!CheckAccessibility(Spider.CurrentConfigOfSpider.RequestConfig.URL))
+            {
+                MessageBox.Show("URL校验未通过");
+                return;
+
+            }
+
+            //var config = Spider.CurrentConfigOfSpider.GrabConfigs.First(c => c.GetGrabType() == EGrabType.File) as GrabConfigOfFile;
+            //var outPutPath = Path.Combine(config.DirectoryPath, config.FileName ?? Utilities.GrabNamingHelper.GetNameForFile(config.FileNameTag));
+            //File.WriteAllText(outPutPath, "123");
+
+
+
+            foreach (var grabConfig in Spider.CurrentConfigOfSpider.GrabConfigs)
+            {
+                if (grabConfig.OnGrabFinish == null)
+                {
+                    grabConfig.OnGrabFinish += (isSuccess, message) =>
+                    {
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            var item = new
+                            {
+                                GrabStatus = isSuccess,
+                                GrabType = grabConfig.GrabType.ToString(),
+                                URL = Spider.CurrentConfigOfSpider.RequestConfig.URL,
+                                Message = message
+                            };
+                            ListDownload.Items.Add(item);
+                            ListDownload.SelectedIndex = ListDownload.Items.Count - 1;
+                            ListDownload.UpdateLayout();
+                            ListDownload.ScrollIntoView(ListDownload.SelectedItem);//TODO失效
+                        });
+                        if (isSuccess)
+                        {
+                            SaveConfig();
+                        };
+                    };
+                }
+                grabConfig.StartGrabbing(Spider.CurrentConfigOfSpider.RequestConfig);
+            }
         }
         private void StopDownload(object sender, RoutedEventArgs e)
         {
@@ -382,7 +430,7 @@ namespace VL.Spider.Manipulator
         private readonly object _locker = new object();
         private Dictionary<string, int> _urlsLoaded = new Dictionary<string, int>();
         private Dictionary<string, int> _urlsUnload = new Dictionary<string, int>();
-        private WorkingUnitCollection _workingSignals;
+        private WorkingUnitCollection _workingSignals = null;
         private int _maxTime = 2 * 60 * 1000;
         private void RequestResource(int index)
         {
@@ -607,16 +655,17 @@ namespace VL.Spider.Manipulator
         {
             string type = (e.OriginalSource as Button).Content.ToString();
             EGrabType grabType = (EGrabType)Enum.Parse(typeof(EGrabType), type);
-            var grabConfig =Spider.CurrentConfigOfSpider.GrabConfigs.FirstOrDefault(c => c.GrabType == type);
+            var grabConfig = Spider.CurrentConfigOfSpider.GrabConfigs.FirstOrDefault(c => c.GrabType == type);
             switch (grabType)
             {
                 case EGrabType.File:
-                    new FileGrabConfigManage(this, Spider, grabConfig == null ? new GrabConfigOfFile() : grabConfig as GrabConfigOfFile).Show();
+                    new GrabManageOfFileGrab(this, Spider, grabConfig == null ? new GrabConfigOfFile(Spider.CurrentConfigOfSpider) : grabConfig as GrabConfigOfFile).Show();
                     break;
                 case EGrabType.SListContent:
                 case EGrabType.DListContent:
                 default:
-                    throw new NotImplementedException("未实现该类型的编辑窗口");
+                    MessageBox.Show("未实现该类型的编辑窗口");
+                    break;
             }
         }
 

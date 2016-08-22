@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VL.Spider.Manipulator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="900">
+        Title="MainWindow" Height="700" Width="1200">
     <Window.Resources>
         <Style TargetType="{x:Type Button}" x:Key="MiniButton">
             <Setter Property="Margin" Value="5"/>
@@ -15,26 +15,8 @@
     </Window.Resources>
     <Grid Margin="10">
         <Grid.Resources>
-            <Style TargetType="Label">
-                <Setter Property="FontSize" Value="10"/>
-            </Style>
-            <Style TargetType="TextBlock">
-                <Setter Property="Margin" Value="0,10"/>
-                <Setter Property="Width" Value="80"/>
-            </Style>
-            <Style TargetType="TextBox">
-                <Setter Property="Margin" Value="10,5"/>
-            </Style>
             <Style TargetType="StackPanel">
                 <Setter Property="Orientation" Value="Horizontal"/>
-            </Style>
-            <Style TargetType="Button">
-                <Setter Property="Margin" Value="5"/>
-            </Style>
-            <Style TargetType="Button" x:Key="MiniButton">
-                <Setter Property="Margin" Value="5"/>
-                <Setter Property="Height" Value="28"/>
-                <Setter Property="Width" Value="28"/>
             </Style>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
@@ -53,8 +35,8 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Horizontal">
-                    <TextBlock Text="Source Url"/>
-                    <TextBox Name="tb_SourceURL" Width="400" LostFocus="tb_SourceURL_LostFocus"/>
+                    <TextBlock Text="Source Url" Width="80" Margin="0,10"/>
+                    <TextBox Name="tb_SourceURL" Width="400" Margin="10,5" LostFocus="tb_SourceURL_LostFocus"/>
                     <!--<TextBlock Text="Max Connection" Width="100"/>
                     <TextBox Name="tb_MaxConnection" Width="80" TextChanged="ChangeMaxConnection"/>-->
                     <Button Content="..." Style="{StaticResource MiniButton}" Click="SetDetailForRequestConfig"/>
@@ -62,11 +44,13 @@
                 <StackPanel Grid.Row="1" Orientation="Horizontal"/>
             </Grid>
         </Border>
-        <ListView x:Name="ListDownload" Margin="5,20" Padding="5" Grid.Row="1" Grid.Column="1">
+        <ListView x:Name="ListDownload" Margin="5,20" Grid.Row="1" Grid.Column="1">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Download Url" DisplayMemberBinding="{Binding Url}" Width="430"/>
-                    <GridViewColumn Header="Saved file" DisplayMemberBinding="{Binding File}" Width="430"/>
+                    <GridViewColumn Header="GrabStatus" DisplayMemberBinding="{Binding GrabStatus}" Width="80"/>
+                    <GridViewColumn Header="GrabType" DisplayMemberBinding="{Binding GrabType}" Width="80"/>
+                    <GridViewColumn Header="Download Url" DisplayMemberBinding="{Binding URL}" Width="230"/>
+                    <GridViewColumn Header="Message" DisplayMemberBinding="{Binding Message}" Width="auto"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -89,7 +73,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Label x:Name="label" Content="方案" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label" Content="方案" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="cb_Solution" HorizontalAlignment="Left" Margin="45,29,0,0" VerticalAlignment="Top" Width="165" KeyDown="cb_Solution_KeyDown" SelectionChanged="cb_Solution_SelectionChanged" IsEditable="True"/>
     </Grid>
 </Window>

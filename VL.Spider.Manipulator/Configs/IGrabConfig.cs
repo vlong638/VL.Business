@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Xml.Linq;
 using VL.Common.Configurator.Objects.ConfigEntities;
+using VL.Common.Logger.Objects;
 
 namespace VL.Spider.Manipulator.Configs
 {
@@ -25,70 +26,132 @@ namespace VL.Spider.Manipulator.Configs
     /// 抓取规则配置
     /// 主要负责如何抓取的内容的配置
     /// </summary>
-    public abstract class IGrabConfig : XMLConfigItem,IConfig
+    public abstract class IGrabConfig : XMLConfigItem, IConfig
     {
-        public static IGrabConfig GetGrabConfig(XElement element)
+        public ConfigOfSpider SpiderConfig { set; get; }
+        public static IGrabConfig GetGrabConfig(XElement element, ConfigOfSpider spiderConfig)
         {
             EGrabType grabType = (EGrabType)Enum.Parse(typeof(EGrabType), element.Attribute(nameof(GrabType)).Value);
             switch (grabType)
             {
                 case EGrabType.File:
-                    return new GrabConfigOfFile(element);
+                    return new GrabConfigOfFile(spiderConfig, element);
                 case EGrabType.SListContent:
-                    return new GrabConfigOfSListContent(element);
+                    return new GrabConfigOfSListContent(spiderConfig, element);
                 case EGrabType.DListContent:
-                    return new GrabConfigOfDListContent(element);
+                    return new GrabConfigOfDListContent(spiderConfig, element);
                 default:
                     throw new NotImplementedException("暂未实现该类型的抓取配置" + grabType);
             }
         }
-        public static IGrabConfig GetGrabConfig(EGrabType grabType)
+        public static IGrabConfig GetGrabConfig(EGrabType grabType, ConfigOfSpider spiderConfig)
         {
             switch (grabType)
             {
                 case EGrabType.File:
-                    return new GrabConfigOfFile();
+                    return new GrabConfigOfFile(spiderConfig);
                 case EGrabType.SListContent:
-                    return new GrabConfigOfSListContent();
+                    return new GrabConfigOfSListContent(spiderConfig);
                 case EGrabType.DListContent:
-                    return new GrabConfigOfDListContent();
+                    return new GrabConfigOfDListContent(spiderConfig);
                 default:
                     throw new NotImplementedException("暂未实现该类型的抓取配置" + grabType);
             }
         }
 
-
-        public IGrabConfig()
+        public IGrabConfig(ConfigOfSpider spiderConfig)
         {
+            SpiderConfig = spiderConfig;
         }
-        public IGrabConfig(XElement element) : base(element)
+        public IGrabConfig(XElement element, ConfigOfSpider spiderConfig) : base(element)
         {
+            SpiderConfig = spiderConfig;
         }
 
         public bool IsOn { set; get; }
-        public abstract bool CheckAvailable();
+        public abstract bool CheckAvailable(ILogger logger);
         public string GrabType { get { return GetGrabType().ToString(); } }
         public abstract EGrabType GetGrabType();
+        public delegate void GrabbingDelegate(bool isSuccess, string message);
+        public GrabbingDelegate OnGrabFinish;//event
 
         public void StartGrabbing(ConfigOfRequest requestConfig)
         {
             if (!IsOn)
                 return;
-            //校验
-            if (!CheckAvailable())
-            {
-                throw new NotImplementedException("校验未通过,抓取已终止");
-            }
+
             //抓取内容
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestConfig.URL);
-            request.Method = requestConfig.Method;
-            request.UserAgent = requestConfig.UserAgent;
-            using (WebResponse response = request.GetResponse())
+            switch (requestConfig.URLStrategy)
             {
-                StreamReader reader = new StreamReader(response.GetResponseStream());
-                GrabbingContent(reader.ReadToEnd());
+                case URLStrategy.Default:
+                    HttpWebRequest request = GetHttpWebRequest(requestConfig.URL, requestConfig);
+                    using (WebResponse response = request.GetResponse())
+                    {
+                        StreamReader reader = new StreamReader(response.GetResponseStream());
+                        try
+                        {
+                            var grabResult = GrabbingContent(reader.ReadToEnd());
+                            OnGrabFinish(grabResult.IsSuccess, grabResult.Message);
+                        }
+                        catch (Exception ex)
+                        {
+                            OnGrabFinish(false, "抓取出现异常:" + ex.ToString());
+                        }
+                    }
+                    break;
+                case URLStrategy.IncreaseByValue:
+                    int stopBy = requestConfig.StopWhenLT;
+                    int increaseValue = requestConfig.StartAt;
+                    while (true)
+                    {
+                        string increaseURL = string.Format(requestConfig.URL, increaseValue);
+                        increaseValue += requestConfig.IncreaseBy;
+                        request = GetHttpWebRequest(increaseURL, requestConfig);
+                        using (WebResponse response = request.GetResponse())
+                        {
+                            StreamReader reader = new StreamReader(response.GetResponseStream());
+                            try
+                            {
+                                var resultString = reader.ReadToEnd();
+                                if (resultString.Length <= stopBy)
+                                {
+                                    break;
+                                }
+                                var grabResult = GrabbingContent(resultString, SpiderConfig.SpiderName + increaseValue);
+                                OnGrabFinish(grabResult.IsSuccess, grabResult.Message);
+                            }
+                            catch (Exception ex)
+                            {
+                                OnGrabFinish(false, "抓取出现异常:" + ex.ToString());
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    break;
             }
         }
-        protected abstract void GrabbingContent(string pageContent);
+
+        private static HttpWebRequest GetHttpWebRequest(string url, ConfigOfRequest requestConfig)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = requestConfig.Method;
+            request.UserAgent = requestConfig.UserAgent;
+            return request;
+        }
+
+        protected abstract GrabResult GrabbingContent(string pageContent, string pageName = "");
+    }
+
+    public class GrabResult
+    {
+        public bool IsSuccess { set; get; }
+        public string Message { set; get; }
+
+        public GrabResult(bool isSuccess, string message = "")
+        {
+            IsSuccess = isSuccess;
+            Message = message;
+        }
     }
 }

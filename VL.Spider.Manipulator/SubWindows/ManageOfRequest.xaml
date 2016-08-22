@@ -1,0 +1,144 @@
+﻿<Window x:Class="VL.Spider.Manipulator.SubWindows.ManageOfRequest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VL.Spider.Manipulator.SubWindows"
+        mc:Ignorable="d"
+        Title="ManageOfRequest" Height="300" Width="560">
+    <StackPanel Orientation="Vertical" Name="container">
+        <StackPanel.Resources>
+            <Style TargetType="{x:Type StackPanel}" x:Key="StackItem">
+                <Setter Property="Orientation" Value="Horizontal"/>
+                <Setter Property="Margin" Value="5"/>
+            </Style>
+            <Style TargetType="{x:Type TextBlock}" >
+                <Setter Property="Width" Value="80"/>
+            </Style>
+            <Style TargetType="{x:Type TextBox}" >
+                <Setter Property="Width" Value="400"/>
+            </Style>
+            <Style TargetType="{x:Type ComboBox}" >
+                <Setter Property="Width" Value="400"/>
+            </Style>
+        </StackPanel.Resources>
+        <StackPanel Style="{DynamicResource StackItem}">
+            <TextBlock Text="URL"/>
+            <TextBox x:Name="tb_URL"/>
+        </StackPanel>
+        <StackPanel Orientation="Vertical">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Setter Property="Orientation" Value="Horizontal"/>
+                </Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="FontSize" Value="8"/>
+                </Style>
+                <Style TargetType="{x:Type CheckBox}">
+                    <Setter Property="Margin" Value="3"/>
+                </Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Height" Value="16"/>
+                    <Setter Property="Width" Value="38"/>
+                </Style>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="BorderThickness" Value="2"/>
+                    <Setter Property="BorderBrush" Value="BurlyWood"/>
+                </Style>
+                <Style TargetType="{x:Type RadioButton}">
+                    <Setter Property="Margin" Value="3"/>
+                </Style>
+            </StackPanel.Resources>
+            <Border>
+                <StackPanel>
+                    <RadioButton Name="rb_URLStrategy_Classic" GroupName="URLStrategy" Content="Classic"/>
+                </StackPanel>
+            </Border>
+            <Border>
+                <StackPanel>
+                    <RadioButton Name="rb_URLStrategy_Increase" GroupName="URLStrategy" Content="Increase"/>
+                    <Label Content="StartAt"/>
+                    <TextBox x:Name="tb_StartValue"/>
+                    <Label Content="IncreaseBy"/>
+                    <TextBox x:Name="tb_IncreaseValue"/>
+                    <Label Content="StopWhenPageSize&lt;="/>
+                    <TextBox x:Name="tb_StopSize"/>
+                </StackPanel>
+            </Border>
+            <!--<Border>
+                <StackPanel>
+                    <Label Content="IsOn"/>
+                    <CheckBox x:Name="tb_IsIncreaseByValueOn2" />
+                    <Label Content="StartAt"/>
+                    <TextBox x:Name="tb_StartValue2"/>
+                    <Label Content="IncreaseBy"/>
+                    <TextBox x:Name="tb_IncreaseValue2"/>
+                    <Label Content="StopWhenPageSize&lt;="/>
+                    <TextBox x:Name="tb_StopSize2"/>
+                </StackPanel>
+            </Border>-->
+        </StackPanel>
+        <StackPanel Style="{DynamicResource StackItem}">
+            <TextBlock Text="Method"/>
+            <ComboBox x:Name="cb_Method"/>
+        </StackPanel>
+        <StackPanel Style="{DynamicResource StackItem}">
+            <TextBlock Text="UserAgent"/>
+            <TextBox x:Name="tb_Agent"/>
+        </StackPanel>
+        <StackPanel Style="{DynamicResource StackItem}">
+            <Button Content="Save" Click="button_Click"/>
+        </StackPanel>
+    </StackPanel>
+    <!--<Grid Margin="0">
+        <Label x:Name="label" Content="URL" HorizontalAlignment="Left" Margin="34,16,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.765,0.477"/>
+        <Label x:Name="label_Copy" Content="Method" HorizontalAlignment="Left" Margin="34,100,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy1" Content="UserAgent" HorizontalAlignment="Left" Margin="34,130,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tb_URL" HorizontalAlignment="Left" Height="25" Margin="110,16,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="399"/>
+        <TextBox x:Name="tb_Agent" HorizontalAlignment="Left" Height="27" Margin="110,130,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="399"/>
+        <Button x:Name="button" Content="Save" HorizontalAlignment="Left" Margin="34,160,0,-6" Width="75" Click="button_Click" Height="19" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cb_Method" HorizontalAlignment="Left" Margin="110,104,0,0" VerticalAlignment="Top" Width="399"/>
+
+        <Border BorderThickness="2" BorderBrush="BurlyWood" Margin="34,46,48,82" >
+            <Grid>
+                <Grid.Resources>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="FontSize" Value="8"/>
+                    </Style>
+                    <Style TargetType="{x:Type CheckBox}">
+                        <Setter Property="Margin" Value="3"/>
+                    </Style>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="Height" Value="16"/>
+                        <Setter Property="Width" Value="38"/>
+                    </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="64"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="IsOn"/>
+                        <CheckBox x:Name="tb_IsIncreaseByValueOn" />
+                        <Label Content="StartAt"/>
+                        <TextBox x:Name="tb_StartValue"/>
+                        <Label Content="IncreaseBy"/>
+                        <TextBox x:Name="tb_IncreaseValue"/>
+                        <Label Content="StopWhenPageSize&lt;="/>
+                        <TextBox x:Name="tb_StopSize"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="IsOn"/>
+                        <CheckBox x:Name="tb_IsIncreaseByValueOn2" />
+                        <Label Content="StartAt"/>
+                        <TextBox x:Name="tb_StartValue2"/>
+                        <Label Content="IncreaseBy"/>
+                        <TextBox x:Name="tb_IncreaseValue2"/>
+                        <Label Content="StopWhenPageSize&lt;="/>
+                        <TextBox x:Name="tb_StopSize2"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>-->
+</Window>

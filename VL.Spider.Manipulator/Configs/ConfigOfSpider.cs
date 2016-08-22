@@ -10,14 +10,11 @@ namespace VL.Spider.Manipulator.Configs
     {
         public string SpiderName { set; get; } = "";
         public ConfigOfRequest RequestConfig { set; get; } = new ConfigOfRequest();
-        public SpiderManageConfig ManageConfig { set; get; } = new SpiderManageConfig()
+        public ConfigOfProcess ManageConfig { set; get; } = new ConfigOfProcess()
         {
             MaxConnectionNumber = 1,
         };
-        public List<IGrabConfig> GrabConfigs { set; get; } = new List<IGrabConfig>()
-        {
-            new GrabConfigOfFile(),
-        };
+        public List<IGrabConfig> GrabConfigs { set; get; } = new List<IGrabConfig>();
 
 
         public ConfigOfSpider(XElement element):base(element)
@@ -44,7 +41,7 @@ namespace VL.Spider.Manipulator.Configs
             GrabConfigs = new List<IGrabConfig>();
             foreach (var grabConfig in element.Descendants(nameof(IGrabConfig)))
             {
-                GrabConfigs.Add(IGrabConfig.GetGrabConfig(grabConfig));
+                GrabConfigs.Add(IGrabConfig.GetGrabConfig(grabConfig, this));
             }
         }
     }

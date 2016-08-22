@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Xml.Linq;
+using VL.Common.Logger.Objects;
 using VL.Spider.Manipulator.Utilities;
 
 namespace VL.Spider.Manipulator.Configs
@@ -11,21 +12,22 @@ namespace VL.Spider.Manipulator.Configs
     /// </summary>
     public class GrabConfigOfSListContent : IGrabConfig
     {
-        public GrabConfigOfSListContent(XElement element) : base(element)
+        public GrabConfigOfSListContent(ConfigOfSpider spiderConfig, XElement element) : base(element, spiderConfig)
         {
         }
-        public GrabConfigOfSListContent()
+        public GrabConfigOfSListContent(ConfigOfSpider spiderConfig) : base(spiderConfig)
         {
         }
 
-        public override bool CheckAvailable()
+        public override bool CheckAvailable(ILogger logger)
         {
             //TODO
             return true;
         }
-        protected override void GrabbingContent(string pageContent)
+        protected override GrabResult GrabbingContent(string pageContent, string pageName = "")
         {
             //TODO
+            return new GrabResult(true);
         }
 
         public override EGrabType GetGrabType()

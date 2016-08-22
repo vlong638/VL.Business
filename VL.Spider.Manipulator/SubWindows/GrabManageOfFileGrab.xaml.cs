@@ -19,16 +19,19 @@ namespace VL.Spider.Manipulator.SubWindows
     /// <summary>
     /// RequestConfigManage.xaml 的交互逻辑
     /// </summary>
-    public partial class FileGrabConfigManage : Window
+    public partial class GrabManageOfFileGrab : Window
     {
         public MainWindow MainWindow { set; get; }
         public SpiderManager Spider { set; get; }
         public GrabConfigOfFile GrabConfig { set; get; }
 
-        public FileGrabConfigManage(MainWindow mainWindow, SpiderManager spider,GrabConfigOfFile grabConfig)
+        public GrabManageOfFileGrab(MainWindow mainWindow, SpiderManager spider,GrabConfigOfFile grabConfig)
         {
             InitializeComponent();
 
+            MainWindow = mainWindow;
+            Spider = spider;
+            GrabConfig = grabConfig;
             InitData(grabConfig);
         }
 
