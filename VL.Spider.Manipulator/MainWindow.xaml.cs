@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using VL.Spider.Manipulator.Entities;
 using VL.Spider.Manipulator.Configs;
 using VL.Spider.Manipulator.SubWindows;
+using System.Threading.Tasks;
 
 namespace VL.Spider.Manipulator
 {
@@ -383,7 +384,10 @@ namespace VL.Spider.Manipulator
                         };
                     };
                 }
-                grabConfig.StartGrabbing(Spider.CurrentConfigOfSpider.RequestConfig);
+                Task.Factory.StartNew(() =>
+                {
+                    grabConfig.StartGrabbing(Spider.CurrentConfigOfSpider.RequestConfig);
+                });
             }
         }
         private void StopDownload(object sender, RoutedEventArgs e)
