@@ -25,7 +25,7 @@ namespace VL.Spider.Manipulator.Configs
     /// 数据源-请求配置
     /// 主要负责请求时的Http参数配置
     /// </summary>
-    public class ConfigOfRequest : XMLConfigItem,IConfig
+    public class ConfigOfRequest : XMLConfigItem,IConfig, IGeneticCloneable<ConfigOfRequest>
     {
         public ConfigOfRequest()
         {
@@ -131,14 +131,19 @@ namespace VL.Spider.Manipulator.Configs
                 StreamReader reader = new StreamReader(response.GetResponseStream());
                 return reader.Read() != -1;
             }
-            //try
-            //{
-            //}
-            //catch (Exception ex)
-            //{
-            //    logger.Error(ex.ToString());
-            //    return CheckAccessibilityResult.Error;
-            //}
+        }
+        public ConfigOfRequest Clone()
+        {
+            return new ConfigOfRequest()
+            {
+                URL = this.URL,
+                Method = this.Method,
+                UserAgent = this.UserAgent,
+                URLStrategy = this.URLStrategy,
+                StartAt = this.StartAt,
+                IncreaseBy = this.IncreaseBy,
+                StopWhenLT = this.StopWhenLT,
+            };
         }
     }
 }

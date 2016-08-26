@@ -6,7 +6,7 @@ using VL.Common.Configurator.Objects.ConfigEntities;
 
 namespace VL.Spider.Manipulator.Configs
 {
-    public class ConfigOfSpider:XMLConfigItem
+    public class ConfigOfSpider:XMLConfigItem, IGeneticCloneable<ConfigOfSpider>
     {
         public string SpiderName { set; get; } = "";
         public ConfigOfRequest RequestConfig { set; get; } = new ConfigOfRequest();
@@ -43,6 +43,19 @@ namespace VL.Spider.Manipulator.Configs
             {
                 GrabConfigs.Add(IGrabConfig.GetGrabConfig(grabConfig, this));
             }
+        }
+
+        public ConfigOfSpider Clone()
+        {
+            var spider = new ConfigOfSpider(SpiderName);
+            spider.RequestConfig = RequestConfig.Clone();
+            spider.ManageConfig = ManageConfig.Clone();
+            spider.GrabConfigs = new List<IGrabConfig>();
+            foreach (var grabConfig in GrabConfigs)
+            {
+                spider.GrabConfigs.Add(grabConfig.Clone(spider));
+            }
+            return spider;
         }
     }
     public class ConfigOfSpiders : XMLConfigEntity

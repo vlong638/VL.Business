@@ -5,18 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VL.Spider.Manipulator.SubWindows"
         mc:Ignorable="d"
-        Title="GrabManageOfFileGrab" Height="200" Width="533.333">
+        Title="GrabManageOfFileGrab" Height="200" Width="555">
     <Window.Resources>
-        <Style TargetType="{x:Type Button}" x:Key="MiniButton">
-            <Setter Property="Height" Value="25"/>
-            <Setter Property="Width" Value="25"/>
-        </Style>
+        <!--<Style TargetType="{x:Type Button}" x:Key="MiniButton">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="30"/>
+        </Style>-->
     </Window.Resources>
-    <Grid Margin="0,0,2,0">
+    <Grid>
         <Label x:Name="label" Content="Directory" HorizontalAlignment="Left" Margin="12,48,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.765,0.477"/>
         <TextBox x:Name="tb_Directory" HorizontalAlignment="Left" Height="25" Margin="80,48,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="343"/>
         <Button x:Name="button" Content="Save" HorizontalAlignment="Left" Margin="80,109,0,0" Width="75" Click="button_Click" Height="19" VerticalAlignment="Top"/>
-        <Button Content="..." Style="{StaticResource MiniButton}" Click="SelectPath" Margin="428,48,70,96"/>
+        <Button Content="..." Click="SelectPath" Margin="428,48,94,96"/>
         <Label x:Name="label_Copy" Content="FileTag" HorizontalAlignment="Left" Margin="15,14,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.765,0.477"/>
         <TextBox x:Name="tb_FileTag" HorizontalAlignment="Left" Height="23" Margin="80,16,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <Label x:Name="label_Copy1" Content="FileName" HorizontalAlignment="Left" Margin="234,14,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.765,0.477"/>

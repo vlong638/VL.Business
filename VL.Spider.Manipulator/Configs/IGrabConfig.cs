@@ -26,7 +26,7 @@ namespace VL.Spider.Manipulator.Configs
     /// 抓取规则配置
     /// 主要负责如何抓取的内容的配置
     /// </summary>
-    public abstract class IGrabConfig : XMLConfigItem, IConfig
+    public abstract class IGrabConfig : XMLConfigItem, IConfig, IGeneticCloneable<IGrabConfig, ConfigOfSpider>
     {
         public ConfigOfSpider SpiderConfig { set; get; }
         public static IGrabConfig GetGrabConfig(XElement element, ConfigOfSpider spiderConfig)
@@ -140,7 +140,9 @@ namespace VL.Spider.Manipulator.Configs
             return request;
         }
 
-        protected abstract GrabResult GrabbingContent(string pageContent, string pageName = "");
+        protected abstract GrabResult GrabbingContent(string pageContent, string pageName = "Default");
+
+        public abstract IGrabConfig Clone(ConfigOfSpider spider);
     }
 
     public class GrabResult

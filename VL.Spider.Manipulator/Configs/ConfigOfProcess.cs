@@ -1,14 +1,24 @@
-﻿namespace VL.Spider.Manipulator.Configs
+﻿using System;
+
+namespace VL.Spider.Manipulator.Configs
 {
     /// <summary>
     /// 数据源-管理配置
     /// 主要负责管理器调度及输出方面的配置
     /// </summary>
-    public class ConfigOfProcess
+    public class ConfigOfProcess: IGeneticCloneable<ConfigOfProcess>
     {
         /// <summary>
         /// 最大线程数
         /// </summary>
         public int MaxConnectionNumber { set; get; } = 1;
+
+        public ConfigOfProcess Clone()
+        {
+            return new ConfigOfProcess()
+            {
+                MaxConnectionNumber = this.MaxConnectionNumber,
+            };
+        }
     }
 }

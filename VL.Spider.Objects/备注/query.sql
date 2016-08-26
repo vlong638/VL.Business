@@ -35,9 +35,10 @@ create table TSpider (
 go
 
 -------------------------Êý¾Ý¿â²éÑ¯------------------------------------------
+use [VL.Spider]
 select * from TSpider;
 select * from TGrabList;
-
+delete from TSpider where spiderid='3381D0C0-20B7-4C31-A6AC-31F8B76AA30F';
 
 
 

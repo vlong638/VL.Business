@@ -188,7 +188,7 @@ namespace VL.Spider.Manipulator
             {
                 PreviousKey = e.Key;
             }
-            if (e.Key == Key.D && PreviousKey == Key.LeftCtrl)
+            else if (e.Key == Key.D && PreviousKey == Key.LeftCtrl)
             {
                 if (string.IsNullOrEmpty(cb_Solution.Text))
                 {
@@ -208,7 +208,27 @@ namespace VL.Spider.Manipulator
                 }
                 OnSpiderConfigSourceChanged();
             }
-            if (e.Key == Key.F2)
+            else if (e.Key == Key.S && PreviousKey == Key.LeftCtrl)
+            {
+                if (string.IsNullOrEmpty(cb_Solution.Text))
+                {
+                    MessageBox.Show("请输入有效的爬虫名称");
+                    return;
+                }
+                var spiderConfig = SpiderManager.ConfigOfSpiders.Configs.FirstOrDefault(c => c.SpiderName == cb_Solution.Text);
+                if (spiderConfig == null)
+                {
+                    MessageBox.Show("未找到对应名称的爬虫");
+                }
+                var copyResult = SpiderManager.CopySpider(spiderConfig.SpiderName);
+                if (copyResult.ResultCode != EResultCode.Success)
+                {
+                    MessageBox.Show(copyResult.Message);
+                    return;
+                }
+                OnSpiderConfigSourceChanged();
+            }
+            else if (e.Key == Key.F2)
             {
                 SpiderManager.ChangeCurrentSpiderName(cb_Solution.Text);
                 OnSpiderConfigSourceChanged();
@@ -265,8 +285,9 @@ namespace VL.Spider.Manipulator
                 }
             }
             lb_GrabConfigs.ItemsSource = grabConfigs;
-            //加载 LatestSpiderConfigName
-            cb_Solution.SelectedValue = SpiderManager.ConfigOfSpiders.LatestSpiderConfigName;
+            //加载选中项
+            //cb_Solution.SelectedValue = SpiderManager.ConfigOfSpiders.LatestSpiderConfigName;
+            cb_Solution.SelectedIndex = SpiderManager.ConfigOfSpiders.Configs.Select(c => c.SpiderName).ToList().IndexOf(SpiderManager.ConfigOfSpiders.LatestSpiderConfigName);
         }
         public void UpdateConfig()
         {

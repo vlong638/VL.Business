@@ -97,5 +97,15 @@ namespace VL.Spider.Manipulator.Configs
             FileName = element.Attribute(nameof(FileName)).Value;
             IsOn = Convert.ToBoolean(element.Attribute(nameof(IsOn)).Value);
         }
+        public override IGrabConfig Clone(ConfigOfSpider spider)
+        {
+            return new GrabConfigOfFile(spider)
+            {
+                IsOn = this.IsOn,
+                DirectoryPath = this.DirectoryPath,
+                FileNameTag = this.FileNameTag,
+                FileName = this.FileName,
+            };
+        }
     }
 }

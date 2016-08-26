@@ -99,31 +99,6 @@ namespace VL.Spider.Manipulator.Entities
                 ResultCode = EResultCode.Success,
             };
         }
-        public Result<TSpider> AddSpider(string spiderName)
-        {
-            return ServiceContext.ServiceDelegator.HandleTransactionEvent(DbName, (session) =>
-            {
-                var spider = new TSpider();
-                //数据库新增
-                if (spider.Create(session, spiderName))
-                {
-                    //配置文件新增
-                    var newSpiderConfig = new ConfigOfSpider(spiderName);
-                    ConfigOfSpiders.Configs.Add(newSpiderConfig);
-                    ConfigOfSpiders.LatestSpiderConfigName = spiderName;
-                    //变更当前选项
-                    Spiders.Add(spider);
-                    ChangeCurrentSpider(spider.SpiderName);
-                    ConfigOfSpiders.Save();
-                    //缓存删除
-                    return new Result<TSpider>() { Data = spider };
-                }
-                else
-                {
-                    return new Result<TSpider>();
-                }
-            });
-        }
         public Result<ConfigOfSpider> DeleteSpider(string spiderName)
         {
             return ServiceContext.ServiceDelegator.HandleTransactionEvent(DbName, (session) =>
@@ -148,6 +123,75 @@ namespace VL.Spider.Manipulator.Entities
                 else
                 {
                     return new Result<ConfigOfSpider>() { ResultCode = EResultCode.Failure };
+                }
+            });
+        }
+        public string GetAvailableSpiderName(string orientSpiderName)
+        {
+            string spiderName = orientSpiderName + "副本";
+            if (!ConfigOfSpiders.Configs.Exists(c => c.SpiderName == spiderName))
+            {
+                return spiderName;
+            }
+            else
+            {
+                int i = 0;
+                do
+                {
+                    spiderName = orientSpiderName + "副本" + i.ToString();
+                    i++;
+                }
+                while (ConfigOfSpiders.Configs.Exists(c => c.SpiderName == spiderName));
+                return spiderName;
+            }
+        }
+        public Result<TSpider> AddSpider(string spiderName)
+        {
+            return ServiceContext.ServiceDelegator.HandleTransactionEvent(DbName, (session) =>
+            {
+                //数据库新增
+                var spider = new TSpider();
+                if (spider.Create(session, spiderName))
+                {
+                    //配置文件新增
+                    var newSpiderConfig = new ConfigOfSpider(spiderName);
+                    ConfigOfSpiders.Configs.Add(newSpiderConfig);
+                    ConfigOfSpiders.LatestSpiderConfigName = spiderName;
+                    //变更当前选项
+                    Spiders.Add(spider);
+                    ChangeCurrentSpider(spider.SpiderName);
+                    ConfigOfSpiders.Save();
+                    return new Result<TSpider>() { Data = spider, ResultCode = EResultCode.Success };
+                }
+                else
+                {
+                    return new Result<TSpider>() { ResultCode = EResultCode.Failure };
+                }
+            });
+        }
+        public Result CopySpider(string orientSpiderName)
+        {
+            return ServiceContext.ServiceDelegator.HandleTransactionEvent(DbName, (session) =>
+            {
+                //配置文件新增
+                var config = ConfigOfSpiders.Configs.First(c => c.SpiderName == orientSpiderName).Clone();
+                config.SpiderName = GetAvailableSpiderName(orientSpiderName);
+                //数据库新增
+                var spider = new TSpider();
+                if (spider.Create(session, config.SpiderName))
+                {
+                    //配置文件新增
+                    ConfigOfSpiders.Configs.Add(config);
+                    //ConfigOfSpiders.LatestSpiderConfigName = config.SpiderName;
+                    //变更当前选项
+                    Spiders.Add(spider);
+                    //ChangeCurrentSpider(spider.SpiderName);
+                    ConfigOfSpiders.Save();
+                    return new Result() { ResultCode = EResultCode.Success };
+                }
+                else
+                {
+                    return new Result() { ResultCode = EResultCode.Failure };
                 }
             });
         }

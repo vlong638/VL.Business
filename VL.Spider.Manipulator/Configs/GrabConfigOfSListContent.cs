@@ -46,5 +46,12 @@ namespace VL.Spider.Manipulator.Configs
         {
             IsOn = Convert.ToBoolean(element.Attribute(nameof(IsOn)).Value);
         }
+        public override IGrabConfig Clone(ConfigOfSpider spider)
+        {
+            return new GrabConfigOfSListContent(spider)
+            {
+                IsOn = this.IsOn,
+            };
+        }
     }
 }
