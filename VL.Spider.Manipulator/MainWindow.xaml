@@ -20,7 +20,7 @@
             </Style>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="240"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -37,11 +37,13 @@
                 <StackPanel Grid.Row="0" Orientation="Horizontal">
                     <TextBlock Text="Source Url" Width="80" Margin="0,10"/>
                     <TextBox Name="tb_SourceURL" Width="400" Margin="10,5" LostFocus="tb_SourceURL_LostFocus"/>
-                    <!--<TextBlock Text="Max Connection" Width="100"/>
-                    <TextBox Name="tb_MaxConnection" Width="80" TextChanged="ChangeMaxConnection"/>-->
                     <Button Content="..." Style="{StaticResource MiniButton}" Click="SetDetailForRequestConfig"/>
                 </StackPanel>
-                <StackPanel Grid.Row="1" Orientation="Horizontal"/>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <TextBlock Text="Proxy Url" Width="80" Margin="0,10"/>
+                    <TextBox Name="tb_ProxyURL" Width="400" Margin="10,5" LostFocus="tb_SourceURL_LostFocus"/>
+                    <Button Content="..." Style="{StaticResource MiniButton}"/>
+                </StackPanel>
             </Grid>
         </Border>
         <ListView x:Name="ListDownload" Margin="5,20" Grid.Row="1" Grid.Column="1">
@@ -63,7 +65,7 @@
             <Button x:Name="btnStop" Content="Stop" Grid.Column="1" Margin="30,3" Click="StopDownload"/>
             <Button x:Name="btnSave" Content="Save" Grid.Column="0" Margin="-117,3,377,3" Click="SaveConfig"/>
         </Grid>
-        <ListBox x:Name="lb_GrabConfigs" HorizontalAlignment="Left" Height="449" VerticalAlignment="Top" Width="220" Margin="0,20,0,0" Grid.Row="1">
+        <ListBox x:Name="lb_GrabConfigs" HorizontalAlignment="Left" Height="469" VerticalAlignment="Top" Width="230" Margin="0,20,0,0" Grid.Row="1">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -74,6 +76,9 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Label x:Name="label" Content="方案" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cb_Solution" HorizontalAlignment="Left" Margin="45,29,0,0" VerticalAlignment="Top" Width="165" KeyDown="cb_Solution_KeyDown" SelectionChanged="cb_Solution_SelectionChanged" IsEditable="True"/>
+        <ComboBox x:Name="cb_Solution" HorizontalAlignment="Left" Margin="45,29,0,0" VerticalAlignment="Top" Width="185" KeyDown="cb_Solution_KeyDown" KeyUp="cb_Solution_KeyUp" SelectionChanged="cb_Solution_SelectionChanged" IsEditable="True"/>
+        <Label Content="Enter:创建新的方案 " HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top"/>
+        <Label Content="Ctrl+D:删除方案 " HorizontalAlignment="Left" Margin="10,76,0,0" VerticalAlignment="Top"/>
+        <Label Content="F2:方案更名 " HorizontalAlignment="Left" Margin="10,96,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

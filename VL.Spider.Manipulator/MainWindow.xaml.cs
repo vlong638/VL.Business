@@ -12,6 +12,11 @@ using VL.Spider.Manipulator.Entities;
 using VL.Spider.Manipulator.Configs;
 using VL.Spider.Manipulator.SubWindows;
 using System.Threading.Tasks;
+using VL.Spider.Manipulator.Utilities;
+using VL.Common.Protocol.IService;
+using VL.Common.Logger.Utilities;
+using VL.Spider.Objects.Objects.Entities;
+using System.Windows.Input;
 
 namespace VL.Spider.Manipulator
 {
@@ -131,68 +136,89 @@ namespace VL.Spider.Manipulator
     /// </summary>
     public partial class MainWindow : Window
     {
-        SpiderManager Spider { set; get; } = new SpiderManager();
+        SpiderManager SpiderManager { set; get; } = new SpiderManager();
 
         public MainWindow()
         {
             InitializeComponent();
 
-            //加载所有配置
-            if (!File.Exists(Spider.ConfigOfSpiders.OutputFilePath))
+            var result = SpiderManager.Init();
+            if (result.ResultCode != EResultCode.Success)
             {
-                Spider.ConfigOfSpiders.Save();
+                MessageBox.Show(result.Message);
             }
-            Spider.ConfigOfSpiders.Load();
-            cb_Solution.ItemsSource = Spider.ConfigOfSpiders.Configs.Select(c => c.SpiderName);
-            //加载最近一项处理的配置
-            Spider.CurrentConfigOfSpider = Spider.ConfigOfSpiders.Configs.FirstOrDefault(c => c.SpiderName == Spider.ConfigOfSpiders.LatestSpiderConfigName);
-            cb_Solution.SelectedValue = Spider.ConfigOfSpiders.LatestSpiderConfigName;
-            LoadConfig(Spider.CurrentConfigOfSpider);
+            else
+            {
+                cb_Solution.ItemsSource = SpiderManager.ConfigOfSpiders.Configs.Select(c => c.SpiderName);
+                cb_Solution.SelectedValue = SpiderManager.ConfigOfSpiders.LatestSpiderConfigName;
+                LoadConfig(SpiderManager.CurrentConfigOfSpider);
+            }
         }
 
         #region 配置管理
+        Key PreviousKey { set; get; }
+
+        private void cb_Solution_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.LeftCtrl)
+            {
+                PreviousKey = Key.None;
+            }
+        }
         private void cb_Solution_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             //添加 未有的 爬虫
-            if (e.Key == System.Windows.Input.Key.Enter)
+            if (e.Key == Key.Enter)
             {
                 if (string.IsNullOrEmpty(cb_Solution.Text))
                 {
                     MessageBox.Show("请输入有效的爬虫名称");
                     return;
                 }
-                var newSpiderConfig = new ConfigOfSpider(cb_Solution.Text);
-                Spider.ConfigOfSpiders.Configs.Add(newSpiderConfig);
-                OnSpiderConfigSourceChanged(newSpiderConfig);
+                SpiderManager.AddSpider(cb_Solution.Text);
+                SpiderManager.ChangeCurrentSpider(cb_Solution.Text);
+                OnSpiderConfigSourceChanged();
+
+                //var newSpiderConfig = new ConfigOfSpider(cb_Solution.Text);
+                //SpiderManager.ConfigOfSpiders.Configs.Add(newSpiderConfig);
+                //OnSpiderConfigSourceChanged(newSpiderConfig);
             }
             //删除 已有的 爬虫
-            if (e.Key == System.Windows.Input.Key.Delete || e.Key == System.Windows.Input.Key.Back)
+            if (e.Key == Key.LeftCtrl)//Back常用于修改过程
+            {
+                PreviousKey = e.Key;
+            }
+            if (e.Key == Key.D && PreviousKey == Key.LeftCtrl)
             {
                 if (string.IsNullOrEmpty(cb_Solution.Text))
                 {
                     MessageBox.Show("请输入有效的爬虫名称");
                     return;
                 }
-                var spiderConfig = Spider.ConfigOfSpiders.Configs.FirstOrDefault(c => c.SpiderName == cb_Solution.Text);
+                var spiderConfig = SpiderManager.ConfigOfSpiders.Configs.FirstOrDefault(c => c.SpiderName == cb_Solution.Text);
                 if (spiderConfig == null)
                 {
                     MessageBox.Show("未找到对应名称的爬虫");
-
                 }
-                Spider.ConfigOfSpiders.Configs.Remove(spiderConfig);
-                var newSpiderConfig = Spider.ConfigOfSpiders.Configs.FirstOrDefault(c => c.SpiderName == cb_Solution.Text);
-                OnSpiderConfigSourceChanged(newSpiderConfig ?? new ConfigOfSpider(""));
+                var deleteResult = SpiderManager.DeleteSpider(spiderConfig.SpiderName);
+                if (deleteResult.ResultCode != EResultCode.Success)
+                {
+                    MessageBox.Show(deleteResult.Message);
+                    return;
+                }
+                OnSpiderConfigSourceChanged();
             }
-            if (e.Key == System.Windows.Input.Key.F2)
+            if (e.Key == Key.F2)
             {
-                Spider.CurrentConfigOfSpider.SpiderName = cb_Solution.Text;
-                MessageBox.Show("更名成功");
+                SpiderManager.ChangeCurrentSpiderName(cb_Solution.Text);
+                OnSpiderConfigSourceChanged();
+                //MessageBox.Show("更名成功");
             }
         }
-        private void OnSpiderConfigSourceChanged(ConfigOfSpider newSpiderConfig)
+        private void OnSpiderConfigSourceChanged()
         {
-            LoadConfig(newSpiderConfig);
-            cb_Solution.ItemsSource = Spider.ConfigOfSpiders.Configs.Select(c => c.SpiderName);
+            cb_Solution.ItemsSource = SpiderManager.ConfigOfSpiders.Configs.Select(c => c.SpiderName);
+            LoadConfig(SpiderManager.CurrentConfigOfSpider);
         }
 
         private void cb_Solution_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -209,7 +235,8 @@ namespace VL.Spider.Manipulator
                 MessageBox.Show("配置的爬虫名称不可为空");
                 return;
             }
-            var spiderConfig = Spider.ConfigOfSpiders.Configs.First(c => c.SpiderName == spiderName);
+            SpiderManager.ChangeCurrentSpider(spiderName);
+            var spiderConfig = SpiderManager.ConfigOfSpiders.Configs.First(c => c.SpiderName == spiderName);
             LoadConfig(spiderConfig);
         }
         public void LoadConfig(ConfigOfSpider spiderConfig)
@@ -217,12 +244,15 @@ namespace VL.Spider.Manipulator
             if (spiderConfig == null)
                 return;
 
-            Spider.CurrentConfigOfSpider = spiderConfig;
-            Spider.ConfigOfSpiders.LatestSpiderConfigName = spiderConfig.SpiderName;
+            //SpiderManager.CurrentConfigOfSpider = spiderConfig;
+            //SpiderManager.ConfigOfSpiders.LatestSpiderConfigName = spiderConfig.SpiderName;
             //加载配置内容
+            //加载 RequestConfig
             ConfigOfRequest requestConfig = spiderConfig.RequestConfig;
             tb_SourceURL.Text = requestConfig.URL;
+            //加载 ManageConfig
             ConfigOfProcess managerConfig = spiderConfig.ManageConfig;
+            //加载 List<IGrabConfig>
             List<IGrabConfig> grabConfigs = new List<IGrabConfig>();
             grabConfigs.AddRange(spiderConfig.GrabConfigs);
             var grabTypeStrings = Enum.GetNames(typeof(EGrabType));
@@ -235,6 +265,8 @@ namespace VL.Spider.Manipulator
                 }
             }
             lb_GrabConfigs.ItemsSource = grabConfigs;
+            //加载 LatestSpiderConfigName
+            cb_Solution.SelectedValue = SpiderManager.ConfigOfSpiders.LatestSpiderConfigName;
         }
         public void UpdateConfig()
         {
@@ -246,7 +278,7 @@ namespace VL.Spider.Manipulator
                 return;
             }
             //更新对应的配置
-            var spiderConfig = Spider.ConfigOfSpiders.Configs.First(c => c.SpiderName == spiderName);
+            var spiderConfig = SpiderManager.ConfigOfSpiders.Configs.First(c => c.SpiderName == spiderName);
             ConfigOfRequest requestConfig = spiderConfig.RequestConfig;
             requestConfig.URL = tb_SourceURL.Text;
             ConfigOfProcess managerConfig = spiderConfig.ManageConfig;
@@ -263,14 +295,30 @@ namespace VL.Spider.Manipulator
                 MessageBox.Show("保存配置时出错");
             }
         }
+
+
+
         private bool SaveConfig()
         {
+            //Result result = ServiceContext.ServiceDelegator.HandleTransactionEvent("dbName", (session) =>
+            //{
+            //    Result r = new Result();
+            //    Spiders.First(c=>)
+            //    spider
+
+            //    Spider.ConfigOfSpiders.Save();
+
+            //    return r;
+            //});
+
+
+
             try
             {
-                Spider.ConfigOfSpiders.Save();
+                SpiderManager.ConfigOfSpiders.Save();
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
                 return false;
@@ -281,14 +329,14 @@ namespace VL.Spider.Manipulator
         #region 配置参数项变更
         private void tb_SourceURL_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (Spider.CurrentConfigOfSpider == null)
+            if (SpiderManager.CurrentConfigOfSpider == null)
             {
                 tb_SourceURL.Text = "";
                 MessageBox.Show("请先设置新爬虫的名称");
                 return;
             }
-            Spider.CurrentConfigOfSpider.RequestConfig.URL = tb_SourceURL.Text;
-            if (!CheckAccessibility(Spider.CurrentConfigOfSpider.RequestConfig.URL))
+            SpiderManager.CurrentConfigOfSpider.RequestConfig.URL = tb_SourceURL.Text;
+            if (!CheckAccessibility(SpiderManager.CurrentConfigOfSpider.RequestConfig.URL))
             {
                 MessageBox.Show("URL校验未通过");
                 return;
@@ -298,18 +346,18 @@ namespace VL.Spider.Manipulator
         {
             if (!string.IsNullOrEmpty(url))
             {
-                return Spider.CurrentConfigOfSpider.RequestConfig.CheckAccessibility(url);
+                return SpiderManager.CurrentConfigOfSpider.RequestConfig.CheckAccessibility(url);
             }
             return true;
         }
         private void SetDetailForRequestConfig(object sender, RoutedEventArgs e)
         {
-            if (Spider.CurrentConfigOfSpider == null)
+            if (SpiderManager.CurrentConfigOfSpider == null)
             {
                 MessageBox.Show("请先设置新爬虫的名称");
                 return;
             }
-            SubWindows.ManageOfRequest win = new SubWindows.ManageOfRequest(this, Spider, Spider.CurrentConfigOfSpider.RequestConfig);
+            SubWindows.ManageOfRequest win = new SubWindows.ManageOfRequest(this, SpiderManager, SpiderManager.CurrentConfigOfSpider.RequestConfig);
             win.Show();
         }
         #endregion
@@ -345,7 +393,7 @@ namespace VL.Spider.Manipulator
         }
         private void StartDownload(object sender, RoutedEventArgs e)
         {
-            if (!CheckAccessibility(Spider.CurrentConfigOfSpider.RequestConfig.URL))
+            if (!CheckAccessibility(SpiderManager.CurrentConfigOfSpider.RequestConfig.URL))
             {
                 MessageBox.Show("URL校验未通过");
                 return;
@@ -358,7 +406,7 @@ namespace VL.Spider.Manipulator
 
 
 
-            foreach (var grabConfig in Spider.CurrentConfigOfSpider.GrabConfigs)
+            foreach (var grabConfig in SpiderManager.CurrentConfigOfSpider.GrabConfigs)
             {
                 if (grabConfig.OnGrabFinish == null)
                 {
@@ -370,7 +418,7 @@ namespace VL.Spider.Manipulator
                             {
                                 GrabStatus = isSuccess,
                                 GrabType = grabConfig.GrabType.ToString(),
-                                URL = Spider.CurrentConfigOfSpider.RequestConfig.URL,
+                                URL = SpiderManager.CurrentConfigOfSpider.RequestConfig.URL,
                                 Message = message
                             };
                             ListDownload.Items.Add(item);
@@ -386,7 +434,7 @@ namespace VL.Spider.Manipulator
                 }
                 Task.Factory.StartNew(() =>
                 {
-                    grabConfig.StartGrabbing(Spider.CurrentConfigOfSpider.RequestConfig);
+                    grabConfig.StartGrabbing(SpiderManager.CurrentConfigOfSpider.RequestConfig);
                 });
             }
         }
@@ -659,11 +707,11 @@ namespace VL.Spider.Manipulator
         {
             string type = (e.OriginalSource as Button).Content.ToString();
             EGrabType grabType = (EGrabType)Enum.Parse(typeof(EGrabType), type);
-            var grabConfig = Spider.CurrentConfigOfSpider.GrabConfigs.FirstOrDefault(c => c.GrabType == type);
+            var grabConfig = SpiderManager.CurrentConfigOfSpider.GrabConfigs.FirstOrDefault(c => c.GrabType == type);
             switch (grabType)
             {
                 case EGrabType.File:
-                    new GrabManageOfFileGrab(this, Spider, grabConfig == null ? new GrabConfigOfFile(Spider.CurrentConfigOfSpider) : grabConfig as GrabConfigOfFile).Show();
+                    new GrabManageOfFileGrab(this, SpiderManager, grabConfig == null ? new GrabConfigOfFile(SpiderManager.CurrentConfigOfSpider) : grabConfig as GrabConfigOfFile).Show();
                     break;
                 case EGrabType.SListContent:
                 case EGrabType.DListContent:

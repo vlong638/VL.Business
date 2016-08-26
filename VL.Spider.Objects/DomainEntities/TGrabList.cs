@@ -8,9 +8,9 @@ using VL.Common.Protocol.IService;
 
 namespace VL.Spider.Objects.Objects.Entities
 {
-    public partial class TTopic
+    public partial class TGrabList
     {
-        //public void Create(DbSession session, TTopic tTopic)
+        //public void Create(DbSession session, TGrabList tGrabList)
         //{
         //}
     }
