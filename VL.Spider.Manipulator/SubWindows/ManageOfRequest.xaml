@@ -87,6 +87,10 @@
             <TextBox x:Name="tb_Agent"/>
         </StackPanel>
         <StackPanel Style="{DynamicResource StackItem}">
+            <TextBlock Text="Encoding"/>
+            <ComboBox x:Name="cb_Encoding"/>
+        </StackPanel>
+        <StackPanel Style="{DynamicResource StackItem}">
             <Button Content="Save" Click="button_Click"/>
         </StackPanel>
     </StackPanel>

@@ -43,6 +43,10 @@ namespace VL.Spider.Manipulator.Configs
         public int StartAt { set; get; } = 1;
         public int IncreaseBy { set; get; } = 1;
         public int StopWhenLT { set; get; } = 500;
+        /// <summary>
+        /// 数据编码
+        /// </summary>
+        public EEncoding Encoding { set; get; } = EEncoding.Auto;
         #endregion
         #endregion
 
@@ -90,6 +94,7 @@ namespace VL.Spider.Manipulator.Configs
                 , new XAttribute(nameof(StartAt), (int)StartAt)
                 , new XAttribute(nameof(IncreaseBy), (int)IncreaseBy)
                 , new XAttribute(nameof(StopWhenLT), (int)StopWhenLT)
+                , new XAttribute(nameof(Encoding), Encoding)
                 );
         }
         public override void LoadXElement(XElement element)
@@ -112,6 +117,11 @@ namespace VL.Spider.Manipulator.Configs
             if (element.Attribute(nameof(StopWhenLT)) != null)
             {
                 StopWhenLT = Convert.ToInt32(element.Attribute(nameof(StopWhenLT)).Value);
+            }
+            var encodingAttr = element.Attribute(nameof(Encoding));
+            if (encodingAttr != null)
+            {
+                Encoding = (EEncoding)Enum.Parse(typeof(EEncoding), encodingAttr.Value);
             }
         }
 

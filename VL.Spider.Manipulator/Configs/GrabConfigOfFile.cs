@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Xml.Linq;
 using VL.Common.Logger.Objects;
+using VL.Spider.Manipulator.Entities;
 using VL.Spider.Manipulator.Utilities;
 
 namespace VL.Spider.Manipulator.Configs
@@ -24,6 +26,9 @@ namespace VL.Spider.Manipulator.Configs
         /// 文件名称
         /// </summary>
         public string FileName { set; get; } = "";
+
+
+
         //public string FileName
         //{
         //    get
@@ -60,7 +65,7 @@ namespace VL.Spider.Manipulator.Configs
             }
             return true;
         }
-        protected override GrabResult GrabbingContent(string pageContent, string pageName = "")
+        protected override GrabResult GrabbingContent(string pageString, string pageName = "")
         {
             string path;
             if (pageName != "")
@@ -75,7 +80,29 @@ namespace VL.Spider.Manipulator.Configs
                 }
                 path = Path.Combine(DirectoryPath, string.IsNullOrEmpty(FileName) ? GrabNamingHelper.GetNameForFile(FileNameTag) : FileName);
             }
-            File.WriteAllText(path, pageContent);
+            if (!path.EndsWith(".xml"))
+            {
+                path += ".xml";
+            }
+            //Encoding encoding = System.Text.Encoding.Unicode;
+            //switch (Encoding)
+            //{
+            //    case EEncoding.Auto:
+            //        //TODO 从页面中分析出Encoding格式
+            //        break;
+            //    case EEncoding.ASCII:
+            //    case EEncoding.Unicode:
+            //    case EEncoding.GBK:
+            //        encoding = System.Text.Encoding.GetEncoding(Encoding.ToString());
+            //        break;
+            //    case EEncoding.UTF8:
+            //        encoding = System.Text.Encoding.UTF8;
+            //        break;
+            //    default:
+            //        break;
+            //}
+            //File.WriteAllText(path, new StreamReader(pageString, encoding).ReadToEnd());
+            File.WriteAllText(path, pageString);
             return new GrabResult(true, "抓取成功,文件输出于" + path);
         }
 

@@ -435,9 +435,8 @@ namespace VL.Spider.Manipulator
                     {
                         this.Dispatcher.Invoke(() =>
                         {
-                            var item = new GrabResult()
+                            var item = new GrabResult(isSuccess)
                             {
-                                GrabStatus = isSuccess,
                                 GrabType = grabConfig.GrabType.ToString(),
                                 URL = url,
                                 Message = message
@@ -458,13 +457,6 @@ namespace VL.Spider.Manipulator
                     grabConfig.StartGrabbing(SpiderManager.CurrentConfigOfSpider.RequestConfig);
                 });
             }
-        }
-        class GrabResult
-        {
-            public bool GrabStatus { set; get; }
-            public string GrabType { set; get; }
-            public string URL { set; get; }
-            public string Message { set; get; }
         }
 
         private void StopDownload(object sender, RoutedEventArgs e)

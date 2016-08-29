@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Text;
 using System.Xml.Linq;
 using VL.Common.Configurator.Objects.ConfigEntities;
 using VL.Common.Logger.Objects;
+using VL.Spider.Manipulator.Entities;
 
 namespace VL.Spider.Manipulator.Configs
 {
@@ -88,11 +90,12 @@ namespace VL.Spider.Manipulator.Configs
                     HttpWebRequest request = GetHttpWebRequest(orientURL, requestConfig);
                     using (WebResponse response = request.GetResponse())
                     {
-                        StreamReader reader = new StreamReader(response.GetResponseStream());
                         try
                         {
-                            var grabResult = GrabbingContent(reader.ReadToEnd());
-                            OnGrabFinish(orientURL, grabResult.IsSuccess, grabResult.Message);
+                            var encoding = System.Text.Encoding.GetEncoding("ISO-8859-1");
+                            var pageString = new StreamReader(response.GetResponseStream(), encoding).ReadToEnd();
+                            var grabResult = GrabbingContent(pageString);
+                            OnGrabFinish(orientURL, grabResult.GrabStatus, grabResult.Message);
                         }
                         catch (Exception ex)
                         {
@@ -110,17 +113,42 @@ namespace VL.Spider.Manipulator.Configs
                         request = GetHttpWebRequest(increaseURL, requestConfig);
                         using (WebResponse response = request.GetResponse())
                         {
-                            StreamReader reader = new StreamReader(response.GetResponseStream());
                             try
                             {
-                                var resultString = reader.ReadToEnd();
-                                if (resultString.Length <= stopBy)
+                                //var pageStream = response.GetResponseStream(); 
+                                //if (pageStream.Length <= stopBy)
+                                //{
+                                //    OnGrabFinish(increaseURL, false, "抓取达成终止条件而终止:页面数据长度(" + pageStream.Length + ")未达到设定标准(" + stopBy + ")");
+                                //    break;
+                                //}
+                                //var grabResult = GrabbingContent(pageStream, SpiderConfig.SpiderName + increaseValue);
+                                //OnGrabFinish(increaseURL, grabResult.GrabStatus, grabResult.Message);
+
+                                Encoding encoding = Encoding.Unicode;
+                                switch (requestConfig.Encoding)
                                 {
-                                    OnGrabFinish(increaseURL, false, "抓取达成终止条件而终止:页面数据长度(" + resultString.Length + ")未达到设定标准(" + stopBy + ")");
+                                    case EEncoding.Auto:
+                                        //TODO 从页面中分析出Encoding格式
+                                        break;
+                                    case EEncoding.ASCII:
+                                    case EEncoding.Unicode:
+                                    case EEncoding.GBK:
+                                        encoding = Encoding.GetEncoding(requestConfig.Encoding.ToString());
+                                        break;
+                                    case EEncoding.UTF8:
+                                        encoding = Encoding.UTF8;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                var pageString = new StreamReader(response.GetResponseStream(), encoding).ReadToEnd();
+                                if (pageString.Length <= stopBy)
+                                {
+                                    OnGrabFinish(increaseURL, false, "抓取达成终止条件而终止:页面数据长度(" + pageString.Length + ")未达到设定标准(" + stopBy + ")");
                                     break;
                                 }
-                                var grabResult = GrabbingContent(resultString, SpiderConfig.SpiderName + increaseValue);
-                                OnGrabFinish(increaseURL, grabResult.IsSuccess, grabResult.Message);
+                                var grabResult = GrabbingContent(pageString, SpiderConfig.SpiderName + increaseValue);
+                                OnGrabFinish(increaseURL, grabResult.GrabStatus, grabResult.Message);
                             }
                             catch (Exception ex)
                             {
@@ -143,20 +171,20 @@ namespace VL.Spider.Manipulator.Configs
             return request;
         }
 
-        protected abstract GrabResult GrabbingContent(string pageContent, string pageName = "Default");
+        protected abstract GrabResult GrabbingContent(string pageString, string pageName = "Default");
 
         public abstract IGrabConfig Clone(ConfigOfSpider spider);
     }
 
-    public class GrabResult
-    {
-        public bool IsSuccess { set; get; }
-        public string Message { set; get; }
+    //public class GrabResult
+    //{
+    //    public bool IsSuccess { set; get; }
+    //    public string Message { set; get; }
 
-        public GrabResult(bool isSuccess, string message = "")
-        {
-            IsSuccess = isSuccess;
-            Message = message;
-        }
-    }
+    //    public GrabResult(bool isSuccess, string message = "")
+    //    {
+    //        IsSuccess = isSuccess;
+    //        Message = message;
+    //    }
+    //}
 }

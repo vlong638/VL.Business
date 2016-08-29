@@ -2,6 +2,7 @@
 using System.IO;
 using System.Xml.Linq;
 using VL.Common.Logger.Objects;
+using VL.Spider.Manipulator.Entities;
 using VL.Spider.Manipulator.Utilities;
 
 namespace VL.Spider.Manipulator.Configs
@@ -24,7 +25,7 @@ namespace VL.Spider.Manipulator.Configs
             //TODO
             return true;
         }
-        protected override GrabResult GrabbingContent(string pageContent, string pageName = "")
+        protected override GrabResult GrabbingContent(string pageStream, string pageName = "")
         {
             //TODO
             return new GrabResult(true);

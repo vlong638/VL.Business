@@ -81,6 +81,8 @@ namespace VL.Spider.Manipulator.SubWindows
                 default:
                     break;
             }
+            cb_Encoding.ItemsSource = Enum.GetNames(typeof(EEncoding));
+            cb_Encoding.SelectedValue = RequestConfig.Encoding.ToString();
         }
         private void button_Click(object sender, RoutedEventArgs e)
         {
@@ -96,6 +98,7 @@ namespace VL.Spider.Manipulator.SubWindows
             RequestConfig.IncreaseBy = increaseBy;
             int.TryParse(tb_StopSize.Text, out StopWhenLT);
             RequestConfig.StopWhenLT = StopWhenLT;
+            RequestConfig.Encoding = (EEncoding)Enum.Parse(typeof(EEncoding), cb_Encoding.Text);
             MainWindow.LoadConfig(Spider.CurrentConfigOfSpider);
             this.Close();
         }
