@@ -69,6 +69,10 @@ namespace VL.Spider.Manipulator.Configs
             }
             else
             {
+                if (string.IsNullOrEmpty(FileNameTag))
+                {
+                    throw new NotImplementedException(nameof(FileName) + "和" + nameof(FileNameTag) + "之间至少设置一项值");
+                }
                 path = Path.Combine(DirectoryPath, string.IsNullOrEmpty(FileName) ? GrabNamingHelper.GetNameForFile(FileNameTag) : FileName);
             }
             File.WriteAllText(path, pageContent);

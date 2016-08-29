@@ -109,10 +109,10 @@ namespace VL.Spider.Manipulator.Entities
                 {
                     //配置文件删除
                     ConfigOfSpiders.Configs.Remove(config);
-                    var currentSpider = ConfigOfSpiders.Configs.FirstOrDefault();
                     //缓存删除
                     Spiders.Remove(spider);
                     //变更当前选项
+                    var currentSpider = ConfigOfSpiders.Configs.LastOrDefault();
                     if (currentSpider!=null)
                     {
                         ChangeCurrentSpider(currentSpider.SpiderName);
@@ -182,9 +182,10 @@ namespace VL.Spider.Manipulator.Entities
                 {
                     //配置文件新增
                     ConfigOfSpiders.Configs.Add(config);
-                    //ConfigOfSpiders.LatestSpiderConfigName = config.SpiderName;
-                    //变更当前选项
+                    //缓存新增
                     Spiders.Add(spider);
+                    ////变更当前选项
+                    //ConfigOfSpiders.LatestSpiderConfigName = config.SpiderName;
                     //ChangeCurrentSpider(spider.SpiderName);
                     ConfigOfSpiders.Save();
                     return new Result() { ResultCode = EResultCode.Success };

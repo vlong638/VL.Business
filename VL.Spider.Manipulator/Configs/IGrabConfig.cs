@@ -72,7 +72,7 @@ namespace VL.Spider.Manipulator.Configs
         public abstract bool CheckAvailable(ILogger logger);
         public string GrabType { get { return GetGrabType().ToString(); } }
         public abstract EGrabType GetGrabType();
-        public delegate void GrabbingDelegate(bool isSuccess, string message);
+        public delegate void GrabbingDelegate(string url, bool isSuccess, string message);
         public GrabbingDelegate OnGrabFinish;//event
 
         public void StartGrabbing(ConfigOfRequest requestConfig)
@@ -84,18 +84,19 @@ namespace VL.Spider.Manipulator.Configs
             switch (requestConfig.URLStrategy)
             {
                 case URLStrategy.Default:
-                    HttpWebRequest request = GetHttpWebRequest(requestConfig.URL, requestConfig);
+                    var orientURL = requestConfig.URL;
+                    HttpWebRequest request = GetHttpWebRequest(orientURL, requestConfig);
                     using (WebResponse response = request.GetResponse())
                     {
                         StreamReader reader = new StreamReader(response.GetResponseStream());
                         try
                         {
                             var grabResult = GrabbingContent(reader.ReadToEnd());
-                            OnGrabFinish(grabResult.IsSuccess, grabResult.Message);
+                            OnGrabFinish(orientURL, grabResult.IsSuccess, grabResult.Message);
                         }
                         catch (Exception ex)
                         {
-                            OnGrabFinish(false, "抓取出现异常:" + ex.ToString());
+                            OnGrabFinish(orientURL, false, "抓取出现异常:" + ex.ToString());
                         }
                     }
                     break;
@@ -115,14 +116,16 @@ namespace VL.Spider.Manipulator.Configs
                                 var resultString = reader.ReadToEnd();
                                 if (resultString.Length <= stopBy)
                                 {
+                                    OnGrabFinish(increaseURL, false, "抓取达成终止条件而终止:页面数据长度(" + resultString.Length + ")未达到设定标准(" + stopBy + ")");
                                     break;
                                 }
                                 var grabResult = GrabbingContent(resultString, SpiderConfig.SpiderName + increaseValue);
-                                OnGrabFinish(grabResult.IsSuccess, grabResult.Message);
+                                OnGrabFinish(increaseURL, grabResult.IsSuccess, grabResult.Message);
                             }
                             catch (Exception ex)
                             {
-                                OnGrabFinish(false, "抓取出现异常:" + ex.ToString());
+                                OnGrabFinish(increaseURL, false, "抓取出现异常:" + ex.ToString());
+                                break;
                             }
                         }
                     }

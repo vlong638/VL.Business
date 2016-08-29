@@ -431,15 +431,15 @@ namespace VL.Spider.Manipulator
             {
                 if (grabConfig.OnGrabFinish == null)
                 {
-                    grabConfig.OnGrabFinish += (isSuccess, message) =>
+                    grabConfig.OnGrabFinish += (url, isSuccess, message) =>
                     {
                         this.Dispatcher.Invoke(() =>
                         {
-                            var item = new
+                            var item = new GrabResult()
                             {
                                 GrabStatus = isSuccess,
                                 GrabType = grabConfig.GrabType.ToString(),
-                                URL = SpiderManager.CurrentConfigOfSpider.RequestConfig.URL,
+                                URL = url,
                                 Message = message
                             };
                             ListDownload.Items.Add(item);
@@ -459,6 +459,14 @@ namespace VL.Spider.Manipulator
                 });
             }
         }
+        class GrabResult
+        {
+            public bool GrabStatus { set; get; }
+            public string GrabType { set; get; }
+            public string URL { set; get; }
+            public string Message { set; get; }
+        }
+
         private void StopDownload(object sender, RoutedEventArgs e)
         {
             //TODO
@@ -741,6 +749,29 @@ namespace VL.Spider.Manipulator
                     break;
             }
         }
-
+        private void ListDownload_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.LeftCtrl)
+            {
+                PreviousKey = Key.LeftCtrl;
+            }
+            if (e.Key == Key.C && PreviousKey == Key.LeftCtrl)
+            {
+                var grabResult = ListDownload.SelectedItem as GrabResult;
+                if (grabResult == null)
+                {
+                    MessageBox.Show("缺少选中项");
+                    return;
+                }
+                Clipboard.SetDataObject(grabResult.URL);
+            }
+        }
+        private void ListDownload_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.LeftCtrl)
+            {
+                PreviousKey = Key.None;
+            }
+        }
     }
 }

@@ -46,7 +46,7 @@
                 </StackPanel>
             </Grid>
         </Border>
-        <ListView x:Name="ListDownload" Margin="5,20" Grid.Row="1" Grid.Column="1">
+        <ListView x:Name="ListDownload" Margin="5,20" Grid.Row="1" Grid.Column="1" KeyDown="ListDownload_KeyDown" KeyUp="ListDownload_KeyUp">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="GrabStatus" DisplayMemberBinding="{Binding GrabStatus}" Width="80"/>
