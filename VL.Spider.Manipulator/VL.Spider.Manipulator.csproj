@@ -97,8 +97,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Configs\ConfigOfProcess.cs" />
-    <Compile Include="Configs\GrabConfigOfDListContent.cs" />
-    <Compile Include="Configs\GrabConfigOfSListContent.cs" />
+    <Compile Include="Configs\GrabConfigOfDynamicList.cs" />
+    <Compile Include="Configs\GrabConfigOfDetail.cs" />
+    <Compile Include="Configs\GrabConfigOfStaticList.cs" />
     <Compile Include="Configs\GrabConfigOfFile.cs" />
     <Compile Include="Configs\IGeneticCloneable.cs" />
     <Compile Include="Configs\IGrabConfig.cs" />

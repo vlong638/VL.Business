@@ -82,14 +82,19 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="DomainEntities\TGrabList.cs" />
+    <Compile Include="DomainEntities\TGrabRequest.cs" />
     <Compile Include="DomainEntities\TSpider.cs" />
     <Compile Include="Entities\TGrabList\TGrabList.cs" />
     <Compile Include="Entities\TGrabList\TGrabListOperator.cs" />
     <Compile Include="Entities\TGrabList\TGrabListProperties.cs" />
+    <Compile Include="Entities\TGrabRequest\TGrabRequest.cs" />
+    <Compile Include="Entities\TGrabRequest\TGrabRequestOperator.cs" />
+    <Compile Include="Entities\TGrabRequest\TGrabRequestProperties.cs" />
     <Compile Include="Entities\TSpider\TSpider.cs" />
     <Compile Include="Entities\TSpider\TSpiderOperator.cs" />
     <Compile Include="Entities\TSpider\TSpiderProperties.cs" />
     <Compile Include="Enums\EAnalysisPattern.cs" />
+    <Compile Include="Enums\EGrabType.cs" />
     <Compile Include="Enums\ESourceAndSetting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -101,6 +106,7 @@
     <Content Include="备注\query.sql" />
     <Content Include="备注\多表查询.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -8,24 +8,10 @@ using VL.Common.DAS.Objects;
 using VL.Common.Logger.Objects;
 using VL.Common.Protocol.IService;
 using VL.Spider.Manipulator.Entities;
+using VL.Spider.Objects.Enums;
 
 namespace VL.Spider.Manipulator.Configs
 {
-    public enum EGrabType
-    {
-        /// <summary>
-        /// 全文件保存
-        /// </summary>
-        File,
-        /// <summary>
-        /// 静态页面列表项
-        /// </summary>
-        SListContent,
-        /// <summary>
-        /// 动态页面列表项
-        /// </summary>
-        DListContent
-    }
     /// <summary>
     /// 抓取规则配置
     /// 主要负责如何抓取的内容的配置
@@ -40,10 +26,10 @@ namespace VL.Spider.Manipulator.Configs
             {
                 case EGrabType.File:
                     return new GrabConfigOfFile(spiderConfig, element);
-                case EGrabType.SListContent:
-                    return new GrabConfigOfSListContent(spiderConfig, element);
-                case EGrabType.DListContent:
-                    return new GrabConfigOfDListContent(spiderConfig, element);
+                case EGrabType.StaticList:
+                    return new GrabConfigOfStaticList(spiderConfig, element);
+                case EGrabType.DynamicList:
+                    return new GrabConfigOfDynamicList(spiderConfig, element);
                 default:
                     throw new NotImplementedException("暂未实现该类型的抓取配置" + grabType);
             }
@@ -54,18 +40,20 @@ namespace VL.Spider.Manipulator.Configs
             {
                 case EGrabType.File:
                     return new GrabConfigOfFile(spiderConfig);
-                case EGrabType.SListContent:
-                    return new GrabConfigOfSListContent(spiderConfig);
-                case EGrabType.DListContent:
-                    return new GrabConfigOfDListContent(spiderConfig);
+                case EGrabType.StaticList:
+                    return new GrabConfigOfStaticList(spiderConfig);
+                case EGrabType.DynamicList:
+                    return new GrabConfigOfDynamicList(spiderConfig);
+                case EGrabType.Detail:
+                    return new GrabConfigOfDetail(spiderConfig);
                 default:
                     throw new NotImplementedException("暂未实现该类型的抓取配置" + grabType);
             }
         }
         public bool IsOn { set; get; }
         public abstract bool CheckAvailable(ILogger logger);
-        public string GrabType { get { return GetGrabType().ToString(); } }
-        public abstract EGrabType GetGrabType();
+        public abstract EGrabType GrabType { get; }
+
         public delegate void GrabbingDelegate(string url, bool isSuccess, string message);
         public GrabbingDelegate OnGrabFinish;//event
 
@@ -144,13 +132,13 @@ namespace VL.Spider.Manipulator.Configs
         private Result GrabContentByGrabType(string pageString, string pageName = null)
         {
             Result result = null;
-            switch (GetGrabType())
+            switch (GrabType)
             {
                 case EGrabType.File:
                     result = GrabbingContent(pageString, pageName);
                     break;
-                case EGrabType.SListContent:
-                case EGrabType.DListContent:
+                case EGrabType.StaticList:
+                case EGrabType.DynamicList:
                     result = Constraints.ServiceContext.ServiceDelegator.HandleTransactionEvent(Constraints.DbName, (session) =>
                     {
                         return GrabbingContent(session, pageString, pageName);

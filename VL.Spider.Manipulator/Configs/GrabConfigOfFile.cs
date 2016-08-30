@@ -1,12 +1,11 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 using System.Xml.Linq;
 using VL.Common.DAS.Objects;
 using VL.Common.Logger.Objects;
 using VL.Common.Protocol.IService;
-using VL.Spider.Manipulator.Entities;
 using VL.Spider.Manipulator.Utilities;
+using VL.Spider.Objects.Enums;
 
 namespace VL.Spider.Manipulator.Configs
 {
@@ -29,25 +28,6 @@ namespace VL.Spider.Manipulator.Configs
         /// </summary>
         public string FileName { set; get; } = "";
 
-
-
-        //public string FileName
-        //{
-        //    get
-        //    {
-        //        if (string.IsNullOrEmpty(fileName))
-        //        {
-        //            fileName = GrabNamingHelper.GetNameForFile(FileNameTag);
-        //        }
-        //        return fileName;
-        //    }
-        //    set
-        //    {
-        //        fileName = value;
-        //    }
-        //}
-        //private string fileName;
-
         public GrabConfigOfFile(ConfigOfSpider spiderConfig, XElement element) : base(element, spiderConfig)
         {
         }
@@ -68,15 +48,18 @@ namespace VL.Spider.Manipulator.Configs
             return true;
         }
 
-        public override EGrabType GetGrabType()
+        public override EGrabType GrabType
         {
-            return EGrabType.File;
+            get
+            {
+                return EGrabType.File;
+            }
         }
 
         public override XElement ToXElement()
         {
             return new XElement(nameof(IGrabConfig)
-                , new XAttribute(nameof(GrabType), GetGrabType())
+                , new XAttribute(nameof(GrabType), GrabType)
                 , new XAttribute(nameof(IsOn), IsOn)
                 , new XAttribute(nameof(DirectoryPath), DirectoryPath)
                 , new XAttribute(nameof(FileNameTag), FileNameTag)

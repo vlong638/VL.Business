@@ -1,11 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Xml.Linq;
 using VL.Common.DAS.Objects;
 using VL.Common.Logger.Objects;
 using VL.Common.Protocol.IService;
-using VL.Spider.Manipulator.Entities;
-using VL.Spider.Manipulator.Utilities;
+using VL.Spider.Objects.Enums;
 
 namespace VL.Spider.Manipulator.Configs
 {
@@ -13,12 +11,12 @@ namespace VL.Spider.Manipulator.Configs
     /// 抓取规则配置
     /// 主要负责如何抓取的内容的配置
     /// </summary>
-    public class GrabConfigOfDListContent : IGrabConfig
+    public class GrabConfigOfStaticList : IGrabConfig
     {
-        public GrabConfigOfDListContent(ConfigOfSpider spiderConfig, XElement element) : base(element, spiderConfig)
+        public GrabConfigOfStaticList(ConfigOfSpider spiderConfig, XElement element) : base(element, spiderConfig)
         {
         }
-        public GrabConfigOfDListContent(ConfigOfSpider spiderConfig) : base(spiderConfig)
+        public GrabConfigOfStaticList(ConfigOfSpider spiderConfig) : base(spiderConfig)
         {
         }
 
@@ -27,25 +25,28 @@ namespace VL.Spider.Manipulator.Configs
             //TODO
             return true;
         }
-        public override EGrabType GetGrabType()
+        public override EGrabType GrabType
         {
-            return EGrabType.DListContent;
+            get
+            {
+                return EGrabType.StaticList;
+            }
         }
+
         public override XElement ToXElement()
         {
             return new XElement(nameof(IGrabConfig)
-                , new XAttribute(nameof(GrabType), GetGrabType())
+                , new XAttribute(nameof(GrabType), GrabType)
                 , new XAttribute(nameof(IsOn), IsOn)
-            );
+                );
         }
         public override void LoadXElement(XElement element)
         {
             IsOn = Convert.ToBoolean(element.Attribute(nameof(IsOn)).Value);
         }
-
         public override IGrabConfig Clone(ConfigOfSpider spider)
         {
-            return new GrabConfigOfDListContent(spider)
+            return new GrabConfigOfStaticList(spider)
             {
                 IsOn = this.IsOn,
             };
@@ -56,6 +57,9 @@ namespace VL.Spider.Manipulator.Configs
         }
         protected override Result GrabbingContent(DbSession session, string pageString, string pageName = "Default")
         {
+            //<a test="a" href='http://business.sohu.com/20160825/n465882932.shtml' target='_blank'>干货！2016新成立基金破千及规模排名</a><span> (08/25 09:10)</span><span class='star'>
+
+
             throw new NotImplementedException("该类型暂不支持保存于数据库的抓取");
         }
     }

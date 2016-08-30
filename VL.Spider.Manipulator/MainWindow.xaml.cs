@@ -6,17 +6,15 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using VL.Spider.Manipulator.Entities;
-using VL.Spider.Manipulator.Configs;
-using VL.Spider.Manipulator.SubWindows;
-using System.Threading.Tasks;
-using VL.Spider.Manipulator.Utilities;
-using VL.Common.Protocol.IService;
-using VL.Common.Logger.Utilities;
-using VL.Spider.Objects.Objects.Entities;
 using System.Windows.Input;
+using VL.Common.Protocol.IService;
+using VL.Spider.Manipulator.Configs;
+using VL.Spider.Manipulator.Entities;
+using VL.Spider.Manipulator.SubWindows;
+using VL.Spider.Objects.Enums;
 
 namespace VL.Spider.Manipulator
 {
@@ -278,7 +276,7 @@ namespace VL.Spider.Manipulator
             var grabTypeStrings = Enum.GetNames(typeof(EGrabType));
             foreach (var grabTypeString in grabTypeStrings)
             {
-                if (!grabConfigs.Exists(c => c.GetGrabType().ToString() == grabTypeString))
+                if (!grabConfigs.Exists(c => c.GrabType.ToString() == grabTypeString))
                 {
                     var grabType = (EGrabType)Enum.Parse(typeof(EGrabType), grabTypeString);
                     grabConfigs.Add(IGrabConfig.GetGrabConfig(grabType, spiderConfig));
@@ -726,14 +724,14 @@ namespace VL.Spider.Manipulator
         {
             string type = (e.OriginalSource as Button).Content.ToString();
             EGrabType grabType = (EGrabType)Enum.Parse(typeof(EGrabType), type);
-            var grabConfig = SpiderManager.CurrentConfigOfSpider.GrabConfigs.FirstOrDefault(c => c.GrabType == type);
+            var grabConfig = SpiderManager.CurrentConfigOfSpider.GrabConfigs.FirstOrDefault(c => c.GrabType == grabType);
             switch (grabType)
             {
                 case EGrabType.File:
                     new GrabManageOfFileGrab(this, SpiderManager, grabConfig == null ? new GrabConfigOfFile(SpiderManager.CurrentConfigOfSpider) : grabConfig as GrabConfigOfFile).Show();
                     break;
-                case EGrabType.SListContent:
-                case EGrabType.DListContent:
+                case EGrabType.StaticList:
+                case EGrabType.DynamicList:
                 default:
                     MessageBox.Show("未实现该类型的编辑窗口");
                     break;
@@ -768,7 +766,7 @@ namespace VL.Spider.Manipulator
         {
             var checkBox = (sender as CheckBox);
             var grabType = checkBox.Tag.ToString();
-            var grabConfig = SpiderManager.CurrentConfigOfSpider.GrabConfigs.FirstOrDefault(c => c.GetGrabType().ToString() == grabType);
+            var grabConfig = SpiderManager.CurrentConfigOfSpider.GrabConfigs.FirstOrDefault(c => c.GrabType.ToString() == grabType);
             if (grabConfig==null)
             {
                 SpiderManager.CurrentConfigOfSpider.GrabConfigs.Add(IGrabConfig.GetGrabConfig((EGrabType)Enum.Parse(typeof(EGrabType), grabType), SpiderManager.CurrentConfigOfSpider));

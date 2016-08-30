@@ -3,14 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using VL.Common.ORM.Objects;
-using VL.Spider.Objects.Objects.Enums;
+using VL.Spider.Objects.Enums;
 
-namespace VL.Spider.Objects.Objects.Entities
+namespace VL.Spider.Objects.Entities
 {
     [DataContract]
     public partial class TGrabList : IPDMTBase
     {
         #region Properties
+        [DataMember]
+        public Guid ListItemId { get; set; }
         [DataMember]
         public Guid SpiderId { get; set; }
         [DataMember]
@@ -29,10 +31,9 @@ namespace VL.Spider.Objects.Objects.Entities
         public TGrabList()
         {
         }
-        public TGrabList(DateTime issueTime, Int16 orderNumber)
+        public TGrabList(Guid listItemId)
         {
-            IssueTime = issueTime;
-            OrderNumber = orderNumber;
+            ListItemId = listItemId;
         }
         public TGrabList(IDataReader reader) : base(reader)
         {
@@ -42,6 +43,7 @@ namespace VL.Spider.Objects.Objects.Entities
         #region Methods
         public override void Init(IDataReader reader)
         {
+            this.ListItemId = new Guid(reader[nameof(this.ListItemId)].ToString());
             this.SpiderId = new Guid(reader[nameof(this.SpiderId)].ToString());
             this.IssueTime = Convert.ToDateTime(reader[nameof(this.IssueTime)]);
             this.OrderNumber = Convert.ToInt16(reader[nameof(this.OrderNumber)]);
@@ -51,6 +53,10 @@ namespace VL.Spider.Objects.Objects.Entities
         }
         public override void Init(IDataReader reader, List<string> fields)
         {
+            if (fields.Contains(nameof(ListItemId)))
+            {
+                this.ListItemId = new Guid(reader[nameof(this.ListItemId)].ToString());
+            }
             if (fields.Contains(nameof(SpiderId)))
             {
                 this.SpiderId = new Guid(reader[nameof(this.SpiderId)].ToString());

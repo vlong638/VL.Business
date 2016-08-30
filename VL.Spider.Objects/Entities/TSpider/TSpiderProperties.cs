@@ -1,6 +1,6 @@
 using VL.Common.ORM.Objects;
 
-namespace VL.Spider.Objects.Objects.Entities
+namespace VL.Spider.Objects.Entities
 {
     public class TSpiderProperties
     {

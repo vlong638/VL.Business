@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using VL.Common.Logger.Utilities;
 using VL.Common.Protocol.IService;
 using VL.Spider.Manipulator.Configs;
-using VL.Spider.Manipulator.Utilities;
-using VL.Spider.Objects.Objects.Entities;
+using VL.Spider.Objects.Entities;
 
 namespace VL.Spider.Manipulator.Entities
 {

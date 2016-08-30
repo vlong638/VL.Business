@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using VL.Common.ORM.Objects;
-using VL.Spider.Objects.Objects.Enums;
+using VL.Spider.Objects.Enums;
 
-namespace VL.Spider.Objects.Objects.Entities
+namespace VL.Spider.Objects.Entities
 {
     [DataContract]
     public partial class TSpider : IPDMTBase

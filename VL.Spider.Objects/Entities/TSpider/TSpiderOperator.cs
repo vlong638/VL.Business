@@ -6,7 +6,7 @@ using VL.Common.ORM.Objects;
 using VL.Common.ORM.Utilities.QueryBuilders;
 using VL.Common.Protocol.IService.IORM;
 
-namespace VL.Spider.Objects.Objects.Entities
+namespace VL.Spider.Objects.Entities
 {
     public static partial class EntityOperator
     {

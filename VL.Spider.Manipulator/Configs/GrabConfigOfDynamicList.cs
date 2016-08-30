@@ -1,11 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Xml.Linq;
 using VL.Common.DAS.Objects;
 using VL.Common.Logger.Objects;
 using VL.Common.Protocol.IService;
-using VL.Spider.Manipulator.Entities;
-using VL.Spider.Manipulator.Utilities;
+using VL.Spider.Objects.Enums;
 
 namespace VL.Spider.Manipulator.Configs
 {
@@ -13,12 +11,12 @@ namespace VL.Spider.Manipulator.Configs
     /// 抓取规则配置
     /// 主要负责如何抓取的内容的配置
     /// </summary>
-    public class GrabConfigOfSListContent : IGrabConfig
+    public class GrabConfigOfDynamicList : IGrabConfig
     {
-        public GrabConfigOfSListContent(ConfigOfSpider spiderConfig, XElement element) : base(element, spiderConfig)
+        public GrabConfigOfDynamicList(ConfigOfSpider spiderConfig, XElement element) : base(element, spiderConfig)
         {
         }
-        public GrabConfigOfSListContent(ConfigOfSpider spiderConfig) : base(spiderConfig)
+        public GrabConfigOfDynamicList(ConfigOfSpider spiderConfig) : base(spiderConfig)
         {
         }
 
@@ -27,25 +25,29 @@ namespace VL.Spider.Manipulator.Configs
             //TODO
             return true;
         }
-        public override EGrabType GetGrabType()
+        public override EGrabType GrabType
         {
-            return EGrabType.SListContent;
+            get
+            {
+                return EGrabType.DynamicList;
+            }
         }
 
         public override XElement ToXElement()
         {
             return new XElement(nameof(IGrabConfig)
-                , new XAttribute(nameof(GrabType), GetGrabType())
+                , new XAttribute(nameof(GrabType), GrabType)
                 , new XAttribute(nameof(IsOn), IsOn)
-                );
+            );
         }
         public override void LoadXElement(XElement element)
         {
             IsOn = Convert.ToBoolean(element.Attribute(nameof(IsOn)).Value);
         }
+
         public override IGrabConfig Clone(ConfigOfSpider spider)
         {
-            return new GrabConfigOfSListContent(spider)
+            return new GrabConfigOfDynamicList(spider)
             {
                 IsOn = this.IsOn,
             };
