@@ -96,8 +96,8 @@ namespace VL.Spider.Manipulator.Configs
                         {
                             Encoding encoding = GetEncoding(requestConfig);
                             var pageString = new StreamReader(response.GetResponseStream(), encoding).ReadToEnd();
-                            var grabResult = GrabbingContent(pageString);
-                            OnGrabFinish(orientURL, grabResult.ResultCode==EResultCode.Success, grabResult.Message);
+                            Result result = GrabContentByGrabType(pageString);
+                            OnGrabFinish(orientURL, result.ResultCode == EResultCode.Success, result.Message);
                         }
                         catch (Exception ex)
                         {
@@ -124,12 +124,7 @@ namespace VL.Spider.Manipulator.Configs
                                     OnGrabFinish(increaseURL, false, "抓取达成终止条件而终止:页面数据长度(" + pageString.Length + ")未达到设定标准(" + stopBy + ")");
                                     break;
                                 }
-                                var result=Constraints.ServiceContext.ServiceDelegator.HandleTransactionEvent(Constraints.DbName, (session) =>
-                                 {
-                                     return GrabbingContent(session, pageString, SpiderConfig.SpiderName + increaseValue);
-                                 });
-
-                                //TODO使用Session
+                                Result result = GrabContentByGrabType(pageString, SpiderConfig.SpiderName + increaseValue);
                                 OnGrabFinish(increaseURL, result.ResultCode == EResultCode.Success, result.Message);
                             }
                             catch (Exception ex)
@@ -140,9 +135,32 @@ namespace VL.Spider.Manipulator.Configs
                         }
                     }
                     break;
+
                 default:
                     break;
             }
+        }
+
+        private Result GrabContentByGrabType(string pageString, string pageName = null)
+        {
+            Result result = null;
+            switch (GetGrabType())
+            {
+                case EGrabType.File:
+                    result = GrabbingContent(pageString, pageName);
+                    break;
+                case EGrabType.SListContent:
+                case EGrabType.DListContent:
+                    result = Constraints.ServiceContext.ServiceDelegator.HandleTransactionEvent(Constraints.DbName, (session) =>
+                    {
+                        return GrabbingContent(session, pageString, pageName);
+                    });
+                    break;
+                default:
+                    throw new NotImplementedException("暂不支持该类型的GrabType抓取处理");
+            }
+
+            return result;
         }
 
         private static Encoding GetEncoding(ConfigOfRequest requestConfig)
