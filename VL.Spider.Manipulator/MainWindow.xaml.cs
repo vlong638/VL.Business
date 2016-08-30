@@ -317,8 +317,6 @@ namespace VL.Spider.Manipulator
             }
         }
 
-
-
         private bool SaveConfig()
         {
             //Result result = ServiceContext.ServiceDelegator.HandleTransactionEvent("dbName", (session) =>
@@ -763,6 +761,21 @@ namespace VL.Spider.Manipulator
             if (e.Key == Key.LeftCtrl)
             {
                 PreviousKey = Key.None;
+            }
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            var checkBox = (sender as CheckBox);
+            var grabType = checkBox.Tag.ToString();
+            var grabConfig = SpiderManager.CurrentConfigOfSpider.GrabConfigs.FirstOrDefault(c => c.GetGrabType().ToString() == grabType);
+            if (grabConfig==null)
+            {
+                SpiderManager.CurrentConfigOfSpider.GrabConfigs.Add(IGrabConfig.GetGrabConfig((EGrabType)Enum.Parse(typeof(EGrabType), grabType), SpiderManager.CurrentConfigOfSpider));
+            }
+            else
+            {
+                grabConfig.IsOn = checkBox.IsChecked.Value;
             }
         }
     }

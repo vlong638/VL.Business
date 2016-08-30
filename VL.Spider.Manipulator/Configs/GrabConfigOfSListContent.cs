@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Xml.Linq;
+using VL.Common.DAS.Objects;
 using VL.Common.Logger.Objects;
+using VL.Common.Protocol.IService;
 using VL.Spider.Manipulator.Entities;
 using VL.Spider.Manipulator.Utilities;
 
@@ -25,12 +27,6 @@ namespace VL.Spider.Manipulator.Configs
             //TODO
             return true;
         }
-        protected override GrabResult GrabbingContent(string pageStream, string pageName = "")
-        {
-            //TODO
-            return new GrabResult(true);
-        }
-
         public override EGrabType GetGrabType()
         {
             return EGrabType.SListContent;
@@ -53,6 +49,14 @@ namespace VL.Spider.Manipulator.Configs
             {
                 IsOn = this.IsOn,
             };
+        }
+        protected override Result GrabbingContent(string pageStream, string pageName = "")
+        {
+            throw new NotImplementedException("该类型暂不支持保存于文件的抓取");
+        }
+        protected override Result GrabbingContent(DbSession session, string pageString, string pageName = "Default")
+        {
+            throw new NotImplementedException("该类型暂不支持保存于数据库的抓取");
         }
     }
 }

@@ -105,6 +105,7 @@
     <Compile Include="Configs\ConfigOfRequest.cs" />
     <Compile Include="Configs\ConfigOfSpider.cs" />
     <Compile Include="Configs\IConfig.cs" />
+    <Compile Include="Entities\Constraints.cs" />
     <Compile Include="Entities\EEncoding.cs" />
     <Compile Include="Entities\GrabResult.cs" />
     <Compile Include="SubWindows\GrabManageOfSListContent.xaml.cs">

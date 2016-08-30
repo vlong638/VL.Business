@@ -4,7 +4,9 @@ using System.Net;
 using System.Text;
 using System.Xml.Linq;
 using VL.Common.Configurator.Objects.ConfigEntities;
+using VL.Common.DAS.Objects;
 using VL.Common.Logger.Objects;
+using VL.Common.Protocol.IService;
 using VL.Spider.Manipulator.Entities;
 
 namespace VL.Spider.Manipulator.Configs
@@ -60,6 +62,12 @@ namespace VL.Spider.Manipulator.Configs
                     throw new NotImplementedException("暂未实现该类型的抓取配置" + grabType);
             }
         }
+        public bool IsOn { set; get; }
+        public abstract bool CheckAvailable(ILogger logger);
+        public string GrabType { get { return GetGrabType().ToString(); } }
+        public abstract EGrabType GetGrabType();
+        public delegate void GrabbingDelegate(string url, bool isSuccess, string message);
+        public GrabbingDelegate OnGrabFinish;//event
 
         public IGrabConfig(ConfigOfSpider spiderConfig)
         {
@@ -70,12 +78,6 @@ namespace VL.Spider.Manipulator.Configs
             SpiderConfig = spiderConfig;
         }
 
-        public bool IsOn { set; get; }
-        public abstract bool CheckAvailable(ILogger logger);
-        public string GrabType { get { return GetGrabType().ToString(); } }
-        public abstract EGrabType GetGrabType();
-        public delegate void GrabbingDelegate(string url, bool isSuccess, string message);
-        public GrabbingDelegate OnGrabFinish;//event
 
         public void StartGrabbing(ConfigOfRequest requestConfig)
         {
@@ -92,10 +94,10 @@ namespace VL.Spider.Manipulator.Configs
                     {
                         try
                         {
-                            var encoding = System.Text.Encoding.GetEncoding("ISO-8859-1");
+                            Encoding encoding = GetEncoding(requestConfig);
                             var pageString = new StreamReader(response.GetResponseStream(), encoding).ReadToEnd();
                             var grabResult = GrabbingContent(pageString);
-                            OnGrabFinish(orientURL, grabResult.GrabStatus, grabResult.Message);
+                            OnGrabFinish(orientURL, grabResult.ResultCode==EResultCode.Success, grabResult.Message);
                         }
                         catch (Exception ex)
                         {
@@ -115,40 +117,20 @@ namespace VL.Spider.Manipulator.Configs
                         {
                             try
                             {
-                                //var pageStream = response.GetResponseStream(); 
-                                //if (pageStream.Length <= stopBy)
-                                //{
-                                //    OnGrabFinish(increaseURL, false, "抓取达成终止条件而终止:页面数据长度(" + pageStream.Length + ")未达到设定标准(" + stopBy + ")");
-                                //    break;
-                                //}
-                                //var grabResult = GrabbingContent(pageStream, SpiderConfig.SpiderName + increaseValue);
-                                //OnGrabFinish(increaseURL, grabResult.GrabStatus, grabResult.Message);
-
-                                Encoding encoding = Encoding.Unicode;
-                                switch (requestConfig.Encoding)
-                                {
-                                    case EEncoding.Auto:
-                                        //TODO 从页面中分析出Encoding格式
-                                        break;
-                                    case EEncoding.ASCII:
-                                    case EEncoding.Unicode:
-                                    case EEncoding.GBK:
-                                        encoding = Encoding.GetEncoding(requestConfig.Encoding.ToString());
-                                        break;
-                                    case EEncoding.UTF8:
-                                        encoding = Encoding.UTF8;
-                                        break;
-                                    default:
-                                        break;
-                                }
+                                Encoding encoding = GetEncoding(requestConfig);
                                 var pageString = new StreamReader(response.GetResponseStream(), encoding).ReadToEnd();
                                 if (pageString.Length <= stopBy)
                                 {
                                     OnGrabFinish(increaseURL, false, "抓取达成终止条件而终止:页面数据长度(" + pageString.Length + ")未达到设定标准(" + stopBy + ")");
                                     break;
                                 }
-                                var grabResult = GrabbingContent(pageString, SpiderConfig.SpiderName + increaseValue);
-                                OnGrabFinish(increaseURL, grabResult.GrabStatus, grabResult.Message);
+                                var result=Constraints.ServiceContext.ServiceDelegator.HandleTransactionEvent(Constraints.DbName, (session) =>
+                                 {
+                                     return GrabbingContent(session, pageString, SpiderConfig.SpiderName + increaseValue);
+                                 });
+
+                                //TODO使用Session
+                                OnGrabFinish(increaseURL, result.ResultCode == EResultCode.Success, result.Message);
                             }
                             catch (Exception ex)
                             {
@@ -163,6 +145,29 @@ namespace VL.Spider.Manipulator.Configs
             }
         }
 
+        private static Encoding GetEncoding(ConfigOfRequest requestConfig)
+        {
+            Encoding encoding = Encoding.Unicode;
+            switch (requestConfig.Encoding)
+            {
+                case EEncoding.Auto:
+                    //TODO 从页面中分析出Encoding格式
+                    break;
+                case EEncoding.ASCII:
+                case EEncoding.Unicode:
+                case EEncoding.GBK:
+                    encoding = Encoding.GetEncoding(requestConfig.Encoding.ToString());
+                    break;
+                case EEncoding.UTF8:
+                    encoding = Encoding.UTF8;
+                    break;
+                default:
+                    break;
+            }
+
+            return encoding;
+        }
+
         private static HttpWebRequest GetHttpWebRequest(string url, ConfigOfRequest requestConfig)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
@@ -170,21 +175,8 @@ namespace VL.Spider.Manipulator.Configs
             request.UserAgent = requestConfig.UserAgent;
             return request;
         }
-
-        protected abstract GrabResult GrabbingContent(string pageString, string pageName = "Default");
-
+        protected abstract Result GrabbingContent(string pageString, string pageName = "Default");
+        protected abstract Result GrabbingContent(DbSession session, string pageString, string pageName = "Default");
         public abstract IGrabConfig Clone(ConfigOfSpider spider);
     }
-
-    //public class GrabResult
-    //{
-    //    public bool IsSuccess { set; get; }
-    //    public string Message { set; get; }
-
-    //    public GrabResult(bool isSuccess, string message = "")
-    //    {
-    //        IsSuccess = isSuccess;
-    //        Message = message;
-    //    }
-    //}
 }

@@ -2,7 +2,9 @@
 using System.IO;
 using System.Text;
 using System.Xml.Linq;
+using VL.Common.DAS.Objects;
 using VL.Common.Logger.Objects;
+using VL.Common.Protocol.IService;
 using VL.Spider.Manipulator.Entities;
 using VL.Spider.Manipulator.Utilities;
 
@@ -65,46 +67,6 @@ namespace VL.Spider.Manipulator.Configs
             }
             return true;
         }
-        protected override GrabResult GrabbingContent(string pageString, string pageName = "")
-        {
-            string path;
-            if (pageName != "")
-            {
-                path = Path.Combine(DirectoryPath, pageName);
-            }
-            else
-            {
-                if (string.IsNullOrEmpty(FileNameTag))
-                {
-                    throw new NotImplementedException(nameof(FileName) + "和" + nameof(FileNameTag) + "之间至少设置一项值");
-                }
-                path = Path.Combine(DirectoryPath, string.IsNullOrEmpty(FileName) ? GrabNamingHelper.GetNameForFile(FileNameTag) : FileName);
-            }
-            if (!path.EndsWith(".xml"))
-            {
-                path += ".xml";
-            }
-            //Encoding encoding = System.Text.Encoding.Unicode;
-            //switch (Encoding)
-            //{
-            //    case EEncoding.Auto:
-            //        //TODO 从页面中分析出Encoding格式
-            //        break;
-            //    case EEncoding.ASCII:
-            //    case EEncoding.Unicode:
-            //    case EEncoding.GBK:
-            //        encoding = System.Text.Encoding.GetEncoding(Encoding.ToString());
-            //        break;
-            //    case EEncoding.UTF8:
-            //        encoding = System.Text.Encoding.UTF8;
-            //        break;
-            //    default:
-            //        break;
-            //}
-            //File.WriteAllText(path, new StreamReader(pageString, encoding).ReadToEnd());
-            File.WriteAllText(path, pageString);
-            return new GrabResult(true, "抓取成功,文件输出于" + path);
-        }
 
         public override EGrabType GetGrabType()
         {
@@ -137,6 +99,37 @@ namespace VL.Spider.Manipulator.Configs
                 FileNameTag = this.FileNameTag,
                 FileName = this.FileName,
             };
+        }
+
+        protected override Result GrabbingContent(string pageString, string pageName = "")
+        {
+            string path;
+            if (pageName != "")
+            {
+                path = Path.Combine(DirectoryPath, pageName);
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(FileNameTag))
+                {
+                    throw new NotImplementedException(nameof(FileName) + "和" + nameof(FileNameTag) + "之间至少设置一项值");
+                }
+                path = Path.Combine(DirectoryPath, string.IsNullOrEmpty(FileName) ? GrabNamingHelper.GetNameForFile(FileNameTag) : FileName);
+            }
+            if (!path.EndsWith(".xml"))
+            {
+                path += ".xml";
+            }
+            File.WriteAllText(path, pageString);
+            return new Result(nameof(GrabConfigOfFile) + "." + nameof(GrabbingContent))
+            {
+                ResultCode = EResultCode.Success,
+                Message = "抓取成功,文件输出于" + path,
+            };
+        }
+        protected override Result GrabbingContent(DbSession session, string pageString, string pageName = "Default")
+        {
+            throw new NotImplementedException("该类型暂不支持保存于数据库的抓取");
         }
     }
 }

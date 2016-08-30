@@ -20,52 +20,27 @@ namespace VL.Spider.Manipulator.Entities
     public class SpiderManager
     {
         #region 配置文件存储
-        public ServiceContextOfSpider Context { set; get; } = new ServiceContextOfSpider();
         public ConfigOfSpider CurrentConfigOfSpider { set; get; } = new ConfigOfSpider("Default");
         public ConfigOfSpiders ConfigOfSpiders { set; get; } = new ConfigOfSpiders(nameof(ConfigOfSpiders) + ".config");
         #endregion
         #region 数据库存储
-        ServiceContextOfSpider ServiceContext { set; get; }
-        DependencyResult DependencyResult { set; get; }
         public TSpider CurrentSpider { set; get; }
         public List<TSpider> Spiders { set; get; }
 
         private Result LoadSpiders()
         {
-            return ServiceContext.ServiceDelegator.HandleTransactionEvent(DbName, (session) =>
+            return Constraints.ServiceContext.ServiceDelegator.HandleTransactionEvent(Constraints.DbName, (session) =>
             {
                 Spiders = new List<TSpider>().DbSelect(session);
                 return new Result() { ResultCode = EResultCode.Success };
             });
-        }
-        public bool CheckAlive()
-        {
-            var result = CheckNodeReferences();
-            return result.IsAllDependenciesAvailable;
-        }
-        public DependencyResult CheckNodeReferences()
-        {
-            try
-            {
-                if (DependencyResult == null)
-                {
-                    ServiceContext = new ServiceContextOfSpider();
-                }
-                DependencyResult = ServiceContext.Init();
-            }
-            catch (Exception ex)
-            {
-                //TODO Default Log
-                LoggerProvider.GetLog4netLogger("Default").Error(ex.ToString());
-            }
-            return DependencyResult;
         }
         #endregion
 
         public Result Init()
         {
             //检测服务依赖项
-            var checkResult = CheckNodeReferences();
+            var checkResult = Constraints.CheckNodeReferences();
             if (!checkResult.IsAllDependenciesAvailable)
             {
                 return new Result()
@@ -101,7 +76,7 @@ namespace VL.Spider.Manipulator.Entities
         }
         public Result<ConfigOfSpider> DeleteSpider(string spiderName)
         {
-            return ServiceContext.ServiceDelegator.HandleTransactionEvent(DbName, (session) =>
+            return Constraints.ServiceContext.ServiceDelegator.HandleTransactionEvent(Constraints.DbName, (session) =>
             {
                 var config= ConfigOfSpiders.Configs.First(c => c.SpiderName == spiderName);
                 var spider = Spiders.First(c => c.SpiderName == config.SpiderName);
@@ -147,7 +122,7 @@ namespace VL.Spider.Manipulator.Entities
         }
         public Result<TSpider> AddSpider(string spiderName)
         {
-            return ServiceContext.ServiceDelegator.HandleTransactionEvent(DbName, (session) =>
+            return Constraints.ServiceContext.ServiceDelegator.HandleTransactionEvent(Constraints.DbName, (session) =>
             {
                 //数据库新增
                 var spider = new TSpider();
@@ -171,7 +146,7 @@ namespace VL.Spider.Manipulator.Entities
         }
         public Result CopySpider(string orientSpiderName)
         {
-            return ServiceContext.ServiceDelegator.HandleTransactionEvent(DbName, (session) =>
+            return Constraints.ServiceContext.ServiceDelegator.HandleTransactionEvent(Constraints.DbName, (session) =>
             {
                 //配置文件新增
                 var config = ConfigOfSpiders.Configs.First(c => c.SpiderName == orientSpiderName).Clone();
@@ -196,7 +171,6 @@ namespace VL.Spider.Manipulator.Entities
                 }
             });
         }
-        public string DbName = nameof(VL.Spider);
         public Result ChangeCurrentSpider(string spiderName)
         {
             var currentSpider = Spiders.FirstOrDefault(c => c.SpiderName == spiderName);
@@ -219,7 +193,7 @@ namespace VL.Spider.Manipulator.Entities
         }
         public Result ChangeCurrentSpiderName(string spiderName)
         {
-            return ServiceContext.ServiceDelegator.HandleTransactionEvent(DbName, (session) =>
+            return Constraints.ServiceContext.ServiceDelegator.HandleTransactionEvent(Constraints.DbName, (session) =>
             {
                 var config = ConfigOfSpiders.Configs.First(c => c.SpiderName == CurrentConfigOfSpider.SpiderName);
                 var spider = Spiders.First(c => c.SpiderName == CurrentConfigOfSpider.SpiderName);
