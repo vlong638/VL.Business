@@ -6,20 +6,40 @@
         xmlns:local="clr-namespace:VL.Spider.Manipulator.SubWindows"
         mc:Ignorable="d"
         Title="GrabManageOfSListContent" Height="200" Width="533.333">
-    <Window.Resources>
-        <Style TargetType="{x:Type Button}" x:Key="MiniButton">
-            <Setter Property="Height" Value="25"/>
-            <Setter Property="Width" Value="25"/>
-        </Style>
-    </Window.Resources>
-    <Grid Margin="0,0,2,0">
-        <Label x:Name="label" Content="Directory" HorizontalAlignment="Left" Margin="12,48,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.765,0.477"/>
-        <TextBox x:Name="tb_Directory" HorizontalAlignment="Left" Height="25" Margin="80,48,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="343"/>
-        <Button x:Name="button" Content="Save" HorizontalAlignment="Left" Margin="80,109,0,0" Width="75" Click="button_Click" Height="19" VerticalAlignment="Top"/>
-        <Button Content="..." Style="{StaticResource MiniButton}" Click="SelectPath" Margin="428,48,70,96"/>
-        <Label x:Name="label_Copy" Content="FileTag" HorizontalAlignment="Left" Margin="15,14,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.765,0.477"/>
-        <TextBox x:Name="tb_FileTag" HorizontalAlignment="Left" Height="23" Margin="80,16,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="label_Copy1" Content="FileName" HorizontalAlignment="Left" Margin="234,14,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.765,0.477"/>
-        <TextBox x:Name="tb_FileName" HorizontalAlignment="Left" Height="23" Margin="303,16,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-    </Grid>
+    <StackPanel Orientation="Vertical" Name="container">
+        <StackPanel.Resources>
+            <Style TargetType="{x:Type StackPanel}" x:Key="StackItem">
+                <Setter Property="Orientation" Value="Horizontal"/>
+                <Setter Property="Margin" Value="5"/>
+            </Style>
+            <Style TargetType="{x:Type TextBlock}" >
+                <Setter Property="Width" Value="80"/>
+                <Setter Property="Padding" Value="5,0,0,0"/>
+            </Style>
+            <Style TargetType="{x:Type TextBox}" x:Key="LongTextBox"  >
+                <Setter Property="Width" Value="400"/>
+            </Style>
+            <Style TargetType="{x:Type TextBox}" x:Key="ShortTextBox" >
+                <Setter Property="Width" Value="80"/>
+            </Style>
+            <Style TargetType="{x:Type ComboBox}" >
+                <Setter Property="Width" Value="400"/>
+            </Style>
+        </StackPanel.Resources>
+        <StackPanel Style="{DynamicResource StackItem}">
+            <TextBlock Text="Pattern"/>
+            <TextBox x:Name="tb_Pattern" Style="{DynamicResource LongTextBox}"/>
+        </StackPanel>
+        <StackPanel Style="{DynamicResource StackItem}">
+            <TextBlock Text="IndexOfTitle"/>
+            <TextBox x:Name="tb_IndexOfTitle" Style="{DynamicResource ShortTextBox}"/>
+            <TextBlock Text="IndexOfURL"/>
+            <TextBox x:Name="tb_IndexOfURL" Style="{DynamicResource ShortTextBox}"/>
+        </StackPanel>
+        <StackPanel Style="{DynamicResource StackItem}">
+        </StackPanel>
+        <StackPanel Style="{DynamicResource StackItem}">
+            <Button Content="Save" Click="button_Click"/>
+        </StackPanel>
+    </StackPanel>
 </Window>

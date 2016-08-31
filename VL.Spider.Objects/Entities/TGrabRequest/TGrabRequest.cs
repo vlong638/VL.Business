@@ -18,7 +18,7 @@ namespace VL.Spider.Objects.Entities
         [DataMember]
         public EGrabType GrabType { get; set; }
         [DataMember]
-        public DateTime IssueTime { get; set; }
+        public String IssueName { get; set; }
         [DataMember]
         public String SpiderName { get; set; }
         [DataMember]
@@ -29,9 +29,11 @@ namespace VL.Spider.Objects.Entities
         public TGrabRequest()
         {
         }
-        public TGrabRequest(Guid requestId)
+        public TGrabRequest(Guid spiderId, EGrabType grabType, String issueName)
         {
-            RequestId = requestId;
+            SpiderId = spiderId;
+            GrabType = grabType;
+            IssueName = issueName;
         }
         public TGrabRequest(IDataReader reader) : base(reader)
         {
@@ -44,7 +46,7 @@ namespace VL.Spider.Objects.Entities
             this.RequestId = new Guid(reader[nameof(this.RequestId)].ToString());
             this.SpiderId = new Guid(reader[nameof(this.SpiderId)].ToString());
             this.GrabType = (EGrabType)Enum.Parse(typeof(EGrabType), reader[nameof(this.GrabType)].ToString());
-            this.IssueTime = Convert.ToDateTime(reader[nameof(this.IssueTime)]);
+            this.IssueName = Convert.ToString(reader[nameof(this.IssueName)]);
             this.SpiderName = Convert.ToString(reader[nameof(this.SpiderName)]);
             this.IsSuccess = Convert.ToBoolean(reader[nameof(this.IsSuccess)]);
         }
@@ -62,9 +64,9 @@ namespace VL.Spider.Objects.Entities
             {
                 this.GrabType = (EGrabType)Enum.Parse(typeof(EGrabType), reader[nameof(this.GrabType)].ToString());
             }
-            if (fields.Contains(nameof(IssueTime)))
+            if (fields.Contains(nameof(IssueName)))
             {
-                this.IssueTime = Convert.ToDateTime(reader[nameof(this.IssueTime)]);
+                this.IssueName = Convert.ToString(reader[nameof(this.IssueName)]);
             }
             if (fields.Contains(nameof(SpiderName)))
             {

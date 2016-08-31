@@ -16,7 +16,7 @@ namespace VL.Spider.Objects.Entities
         [DataMember]
         public Guid SpiderId { get; set; }
         [DataMember]
-        public DateTime IssueTime { get; set; }
+        public String IssueName { get; set; }
         [DataMember]
         public Int16 OrderNumber { get; set; }
         [DataMember]
@@ -31,9 +31,11 @@ namespace VL.Spider.Objects.Entities
         public TGrabList()
         {
         }
-        public TGrabList(Guid listItemId)
+        public TGrabList(Guid spiderId, String issueName, Int16 orderNumber)
         {
-            ListItemId = listItemId;
+            SpiderId = spiderId;
+            IssueName = issueName;
+            OrderNumber = orderNumber;
         }
         public TGrabList(IDataReader reader) : base(reader)
         {
@@ -45,7 +47,7 @@ namespace VL.Spider.Objects.Entities
         {
             this.ListItemId = new Guid(reader[nameof(this.ListItemId)].ToString());
             this.SpiderId = new Guid(reader[nameof(this.SpiderId)].ToString());
-            this.IssueTime = Convert.ToDateTime(reader[nameof(this.IssueTime)]);
+            this.IssueName = Convert.ToString(reader[nameof(this.IssueName)]);
             this.OrderNumber = Convert.ToInt16(reader[nameof(this.OrderNumber)]);
             this.Title = Convert.ToString(reader[nameof(this.Title)]);
             this.URL = Convert.ToString(reader[nameof(this.URL)]);
@@ -61,9 +63,9 @@ namespace VL.Spider.Objects.Entities
             {
                 this.SpiderId = new Guid(reader[nameof(this.SpiderId)].ToString());
             }
-            if (fields.Contains(nameof(IssueTime)))
+            if (fields.Contains(nameof(IssueName)))
             {
-                this.IssueTime = Convert.ToDateTime(reader[nameof(this.IssueTime)]);
+                this.IssueName = Convert.ToString(reader[nameof(this.IssueName)]);
             }
             if (fields.Contains(nameof(OrderNumber)))
             {

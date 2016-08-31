@@ -47,8 +47,7 @@ namespace VL.Spider.Manipulator.SubWindows
             }
         }
 
-
-        public ManageOfRequest(MainWindow mainWindow, SpiderManager spider,ConfigOfRequest requestConfig)
+        public ManageOfRequest(MainWindow mainWindow, SpiderManager spider, ConfigOfRequest requestConfig)
         {
             InitializeComponent();
 

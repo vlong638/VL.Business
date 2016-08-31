@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using VL.Common.Configurator.Objects.ConfigEntities;
+using VL.Spider.Objects.Entities;
 
 namespace VL.Spider.Manipulator.Configs
 {
@@ -15,6 +16,7 @@ namespace VL.Spider.Manipulator.Configs
             MaxConnectionNumber = 1,
         };
         public List<IGrabConfig> GrabConfigs { set; get; } = new List<IGrabConfig>();
+        public TSpider Spider { set; get; }
 
 
         public ConfigOfSpider(XElement element):base(element)

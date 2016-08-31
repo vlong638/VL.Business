@@ -184,6 +184,7 @@ namespace VL.Spider.Manipulator.Entities
                 CurrentSpider = currentSpider;
             }
             CurrentConfigOfSpider = ConfigOfSpiders.Configs.FirstOrDefault(c => c.SpiderName == spiderName);
+            CurrentConfigOfSpider.Spider = currentSpider;
             ConfigOfSpiders.LatestSpiderConfigName = CurrentConfigOfSpider.SpiderName;
             return new Result() { ResultCode = EResultCode.Success };
         }

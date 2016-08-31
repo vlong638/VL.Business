@@ -15,14 +15,16 @@ namespace VL.Spider.Objects.Entities
         public static bool DbDelete(this TGrabList entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabListProperties.ListItemId, entity.ListItemId, LocateType.Equal));
+            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabListProperties.SpiderId, entity.SpiderId, LocateType.Equal));
+            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabListProperties.IssueName, entity.IssueName, LocateType.Equal));
+            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabListProperties.OrderNumber, entity.OrderNumber, LocateType.Equal));
             return IORMProvider.GetQueryOperator(session).Delete<TGrabList>(session, query);
         }
         public static bool DbDelete(this List<TGrabList> entities, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
-            var Ids = entities.Select(c =>c.ListItemId );
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabListProperties.ListItemId, Ids, LocateType.In));
+            var Ids = entities.Select(c =>c.SpiderId );
+            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabListProperties.SpiderId, Ids, LocateType.In));
             return IORMProvider.GetQueryOperator(session).Delete<TGrabList>(session, query);
         }
         public static bool DbInsert(this TGrabList entity, DbSession session)
@@ -31,7 +33,11 @@ namespace VL.Spider.Objects.Entities
             InsertBuilder builder = new InsertBuilder();
             builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabListProperties.ListItemId, entity.ListItemId));
             builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabListProperties.SpiderId, entity.SpiderId));
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabListProperties.IssueTime, entity.IssueTime));
+            if (entity.IssueName == null)
+            {
+                throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.IssueName));
+            }
+            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabListProperties.IssueName, entity.IssueName));
             builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabListProperties.OrderNumber, entity.OrderNumber));
             if (entity.Title == null)
             {
@@ -59,7 +65,11 @@ namespace VL.Spider.Objects.Entities
                 InsertBuilder builder = new InsertBuilder();
                 builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabListProperties.ListItemId, entity.ListItemId));
                 builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabListProperties.SpiderId, entity.SpiderId));
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabListProperties.IssueTime, entity.IssueTime));
+            if (entity.IssueName == null)
+            {
+                throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.IssueName));
+            }
+                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabListProperties.IssueName, entity.IssueName));
                 builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabListProperties.OrderNumber, entity.OrderNumber));
             if (entity.Title == null)
             {
@@ -84,12 +94,14 @@ namespace VL.Spider.Objects.Entities
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             UpdateBuilder builder = new UpdateBuilder();
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabListProperties.ListItemId, entity.ListItemId, LocateType.Equal));
+            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabListProperties.SpiderId, entity.SpiderId, LocateType.Equal));
+            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabListProperties.IssueName, entity.IssueName, LocateType.Equal));
+            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabListProperties.OrderNumber, entity.OrderNumber, LocateType.Equal));
             if (fields==null|| fields.Length==0)
             {
                 builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.ListItemId, entity.ListItemId));
                 builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.SpiderId, entity.SpiderId));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.IssueTime, entity.IssueTime));
+                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.IssueName, entity.IssueName));
                 builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.OrderNumber, entity.OrderNumber));
                 builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.Title, entity.Title));
                 builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.URL, entity.URL));
@@ -97,17 +109,9 @@ namespace VL.Spider.Objects.Entities
             }
             else
             {
-                if (fields.Contains(TGrabListProperties.SpiderId))
+                if (fields.Contains(TGrabListProperties.ListItemId))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.SpiderId, entity.SpiderId));
-                }
-                if (fields.Contains(TGrabListProperties.IssueTime))
-                {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.IssueTime, entity.IssueTime));
-                }
-                if (fields.Contains(TGrabListProperties.OrderNumber))
-                {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.OrderNumber, entity.OrderNumber));
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.ListItemId, entity.ListItemId));
                 }
                 if (fields.Contains(TGrabListProperties.Title))
                 {
@@ -131,12 +135,14 @@ namespace VL.Spider.Objects.Entities
             foreach (var entity in entities)
             {
                 UpdateBuilder builder = new UpdateBuilder();
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabListProperties.ListItemId, entity.ListItemId, LocateType.Equal));
+                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabListProperties.SpiderId, entity.SpiderId, LocateType.Equal));
+                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabListProperties.IssueName, entity.IssueName, LocateType.Equal));
+                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabListProperties.OrderNumber, entity.OrderNumber, LocateType.Equal));
                 if (fields==null|| fields.Length==0)
                 {
                     builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.ListItemId, entity.ListItemId));
                     builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.SpiderId, entity.SpiderId));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.IssueTime, entity.IssueTime));
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.IssueName, entity.IssueName));
                     builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.OrderNumber, entity.OrderNumber));
                     builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.Title, entity.Title));
                     builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.URL, entity.URL));
@@ -144,17 +150,9 @@ namespace VL.Spider.Objects.Entities
                 }
                 else
                 {
-                    if (fields.Contains(TGrabListProperties.SpiderId))
+                    if (fields.Contains(TGrabListProperties.ListItemId))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.SpiderId, entity.SpiderId));
-                    }
-                    if (fields.Contains(TGrabListProperties.IssueTime))
-                    {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.IssueTime, entity.IssueTime));
-                    }
-                    if (fields.Contains(TGrabListProperties.OrderNumber))
-                    {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.OrderNumber, entity.OrderNumber));
+                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.ListItemId, entity.ListItemId));
                     }
                     if (fields.Contains(TGrabListProperties.Title))
                     {
@@ -183,7 +181,7 @@ namespace VL.Spider.Objects.Entities
             {
                 builder.ComponentSelect.Values.Add(TGrabListProperties.ListItemId);
                 builder.ComponentSelect.Values.Add(TGrabListProperties.SpiderId);
-                builder.ComponentSelect.Values.Add(TGrabListProperties.IssueTime);
+                builder.ComponentSelect.Values.Add(TGrabListProperties.IssueName);
                 builder.ComponentSelect.Values.Add(TGrabListProperties.OrderNumber);
                 builder.ComponentSelect.Values.Add(TGrabListProperties.Title);
                 builder.ComponentSelect.Values.Add(TGrabListProperties.URL);
@@ -191,13 +189,17 @@ namespace VL.Spider.Objects.Entities
             }
             else
             {
-                builder.ComponentSelect.Values.Add(TGrabListProperties.ListItemId);
+                builder.ComponentSelect.Values.Add(TGrabListProperties.SpiderId);
+                builder.ComponentSelect.Values.Add(TGrabListProperties.IssueName);
+                builder.ComponentSelect.Values.Add(TGrabListProperties.OrderNumber);
                 foreach (var field in fields)
                 {
                     builder.ComponentSelect.Values.Add(field);
                 }
             }
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabListProperties.ListItemId, entity.ListItemId, LocateType.Equal));
+            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabListProperties.SpiderId, entity.SpiderId, LocateType.Equal));
+            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabListProperties.IssueName, entity.IssueName, LocateType.Equal));
+            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabListProperties.OrderNumber, entity.OrderNumber, LocateType.Equal));
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Select<TGrabList>(session, query);
         }
@@ -209,7 +211,7 @@ namespace VL.Spider.Objects.Entities
             {
                 builder.ComponentSelect.Values.Add(TGrabListProperties.ListItemId);
                 builder.ComponentSelect.Values.Add(TGrabListProperties.SpiderId);
-                builder.ComponentSelect.Values.Add(TGrabListProperties.IssueTime);
+                builder.ComponentSelect.Values.Add(TGrabListProperties.IssueName);
                 builder.ComponentSelect.Values.Add(TGrabListProperties.OrderNumber);
                 builder.ComponentSelect.Values.Add(TGrabListProperties.Title);
                 builder.ComponentSelect.Values.Add(TGrabListProperties.URL);
@@ -217,16 +219,18 @@ namespace VL.Spider.Objects.Entities
             }
             else
             {
-                builder.ComponentSelect.Values.Add(TGrabListProperties.ListItemId);
+                builder.ComponentSelect.Values.Add(TGrabListProperties.SpiderId);
+                builder.ComponentSelect.Values.Add(TGrabListProperties.IssueName);
+                builder.ComponentSelect.Values.Add(TGrabListProperties.OrderNumber);
                 foreach (var field in fields)
                 {
                     builder.ComponentSelect.Values.Add(field);
                 }
             }
-            var Ids = entities.Select(c =>c.ListItemId );
+            var Ids = entities.Select(c =>c.SpiderId );
             if (Ids.Count() != 0)
             {
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabListProperties.ListItemId, Ids, LocateType.In));
+                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabListProperties.SpiderId, Ids, LocateType.In));
             }
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).SelectAll<TGrabList>(session, query);
@@ -234,17 +238,9 @@ namespace VL.Spider.Objects.Entities
         public static void DbLoad(this TGrabList entity, DbSession session, params PDMDbProperty[] fields)
         {
             var result = entity.DbSelect(session, fields);
-            if (fields.Contains(TGrabListProperties.SpiderId))
+            if (fields.Contains(TGrabListProperties.ListItemId))
             {
-                entity.SpiderId = result.SpiderId;
-            }
-            if (fields.Contains(TGrabListProperties.IssueTime))
-            {
-                entity.IssueTime = result.IssueTime;
-            }
-            if (fields.Contains(TGrabListProperties.OrderNumber))
-            {
-                entity.OrderNumber = result.OrderNumber;
+                entity.ListItemId = result.ListItemId;
             }
             if (fields.Contains(TGrabListProperties.Title))
             {

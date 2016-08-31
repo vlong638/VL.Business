@@ -27,9 +27,9 @@ namespace VL.Spider.Manipulator.Configs
                 case EGrabType.File:
                     return new GrabConfigOfFile(spiderConfig, element);
                 case EGrabType.StaticList:
-                    return new GrabConfigOfStaticList(spiderConfig, element);
+                    return new GrabConfigOfStaticList(element, spiderConfig);
                 case EGrabType.DynamicList:
-                    return new GrabConfigOfDynamicList(spiderConfig, element);
+                    return new GrabConfigOfDynamicList(element, spiderConfig);
                 default:
                     throw new NotImplementedException("暂未实现该类型的抓取配置" + grabType);
             }
@@ -99,7 +99,6 @@ namespace VL.Spider.Manipulator.Configs
                     while (true)
                     {
                         string increaseURL = string.Format(requestConfig.URL, increaseValue);
-                        increaseValue += requestConfig.IncreaseBy;
                         request = GetHttpWebRequest(increaseURL, requestConfig);
                         using (WebResponse response = request.GetResponse())
                         {
@@ -121,6 +120,7 @@ namespace VL.Spider.Manipulator.Configs
                                 break;
                             }
                         }
+                        increaseValue += requestConfig.IncreaseBy;
                     }
                     break;
 

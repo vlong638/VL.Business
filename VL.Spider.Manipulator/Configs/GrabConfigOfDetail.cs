@@ -29,7 +29,7 @@ namespace VL.Spider.Manipulator.Configs
         {
             get
             {
-                return EGrabType.StaticList;
+                return EGrabType.Detail;
             }
         }
 

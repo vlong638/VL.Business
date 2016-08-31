@@ -13,7 +13,7 @@ namespace VL.Spider.Manipulator.Configs
     /// </summary>
     public class GrabConfigOfDynamicList : IGrabConfig
     {
-        public GrabConfigOfDynamicList(ConfigOfSpider spiderConfig, XElement element) : base(element, spiderConfig)
+        public GrabConfigOfDynamicList(XElement element, ConfigOfSpider spiderConfig) : base(element, spiderConfig)
         {
         }
         public GrabConfigOfDynamicList(ConfigOfSpider spiderConfig) : base(spiderConfig)
