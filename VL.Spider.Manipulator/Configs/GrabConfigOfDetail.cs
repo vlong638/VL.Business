@@ -50,7 +50,7 @@ namespace VL.Spider.Manipulator.Configs
         }
         public override string GetPageNameWhileEmptyOrNull(string issueName)
         {
-            throw new NotImplementedException("该功能暂未实现");
+            throw new NotImplementedException("Detail 的期号必为外界生成,程序存在异常");
         }
         public override Result GrabContent(DbSession session, string pageString, string issueName)
         {

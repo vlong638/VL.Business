@@ -173,7 +173,7 @@ namespace VL.Spider.Manipulator
                     MessageBox.Show("请输入有效的爬虫名称");
                     return;
                 }
-                SpiderManager.AddSpider(cb_Solution.Text);
+                SpiderManager.AddSpider(cb_Solution.Text, true);
                 SpiderManager.ChangeCurrentSpider(cb_Solution.Text);
                 OnSpiderConfigSourceChanged();
 

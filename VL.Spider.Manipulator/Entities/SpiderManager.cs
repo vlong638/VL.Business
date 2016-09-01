@@ -116,7 +116,7 @@ namespace VL.Spider.Manipulator.Entities
                 return spiderName;
             }
         }
-        public Result<TSpider> AddSpider(string spiderName)
+        public Result<TSpider> AddSpider(string spiderName,bool addByEnter=false)
         {
             return Constraints.ServiceContext.ServiceDelegator.HandleTransactionEvent(Constraints.DbName, (session) =>
             {
@@ -126,7 +126,10 @@ namespace VL.Spider.Manipulator.Entities
                 {
                     //配置文件新增
                     var newSpiderConfig = new ConfigOfSpider(spiderName);
-                    ConfigOfSpiders.Configs.Add(newSpiderConfig);
+                    if (addByEnter)
+                    {
+                        ConfigOfSpiders.Configs.Add(newSpiderConfig);
+                    }
                     ConfigOfSpiders.LatestSpiderConfigName = spiderName;
                     //变更当前选项
                     Spiders.Add(spider);
