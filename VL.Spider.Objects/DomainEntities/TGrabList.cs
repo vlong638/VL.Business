@@ -18,7 +18,7 @@ namespace VL.Spider.Objects.Entities
             [EnumMember]
             Existed,
         }
-        public CreateGrabListResult Create(DbSession session, Guid spiderId, string issueName, short orderNumber, string title, string url, string remark = "")
+        public CreateGrabListResult Create(DbSession session, Guid spiderId, string issueName, short orderNumber, string title, string url,string detailFilePath, string remark = "")
         {
             if (CheckExistence(session, spiderId, issueName, orderNumber))
             {
@@ -31,7 +31,7 @@ namespace VL.Spider.Objects.Entities
             Title = title;
             URL = url;
             Remark = remark;
-            DetailFilePath = "";
+            DetailFilePath = detailFilePath;
             return this.DbInsert(session) ? CreateGrabListResult.Success : CreateGrabListResult.DbOperationFailed;
         }
 

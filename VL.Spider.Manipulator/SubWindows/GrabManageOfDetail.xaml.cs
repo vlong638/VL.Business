@@ -19,13 +19,13 @@ namespace VL.Spider.Manipulator.SubWindows
     /// <summary>
     /// RequestConfigManage.xaml 的交互逻辑
     /// </summary>
-    public partial class GrabManageOfFileGrab : Window
+    public partial class GrabManageOfDetail : Window
     {
         public MainWindow MainWindow { set; get; }
         public SpiderManager Spider { set; get; }
-        public GrabConfigOfFile GrabConfig { set; get; }
+        public GrabConfigOfDetail GrabConfig { set; get; }
 
-        public GrabManageOfFileGrab(MainWindow mainWindow, SpiderManager spider,GrabConfigOfFile grabConfig)
+        public GrabManageOfDetail(MainWindow mainWindow, SpiderManager spider, GrabConfigOfDetail grabConfig)
         {
             InitializeComponent();
 
@@ -35,32 +35,17 @@ namespace VL.Spider.Manipulator.SubWindows
             InitData(grabConfig);
         }
 
-        public void InitData(GrabConfigOfFile grabConfig)
+        public void InitData(GrabConfigOfDetail grabConfig)
         {
-            tb_FileName.Text = GrabConfig.FileName;
-            tb_FileTag.Text = GrabConfig.FileNameTag;
-            tb_Directory.Text = GrabConfig.DirectoryPath;
         }
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            GrabConfig.FileName = tb_FileName.Text;
-            GrabConfig.FileNameTag = tb_FileTag.Text;
-            GrabConfig.DirectoryPath= tb_Directory.Text;
             MainWindow.LoadConfig(Spider.CurrentConfigOfSpider);
             this.Close();
         }
 
         private void SelectPath(object sender, RoutedEventArgs e)
         {
-            System.Windows.Forms.FolderBrowserDialog fdlg = new System.Windows.Forms.FolderBrowserDialog();
-            fdlg.RootFolder = Environment.SpecialFolder.Desktop;
-            fdlg.Description = "Contents Root Folder";
-            var result = fdlg.ShowDialog();
-            if (result == System.Windows.Forms.DialogResult.OK)
-            {
-                tb_Directory.Text = fdlg.SelectedPath;
-                GrabConfig.DirectoryPath = tb_Directory.Text;
-            }
         }
     }
 }

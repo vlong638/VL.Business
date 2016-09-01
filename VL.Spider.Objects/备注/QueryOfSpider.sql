@@ -17,7 +17,8 @@ create table TGrabList (
    IssueName            varchar(200)         not null,
    OrderNumber          numeric(16)          not null,
    Title                varchar(200)         not null,
-   URL                  varchar(1000)        not null,
+   URL                  varchar(500)         not null,
+   DetailFilePath       varchar(500)         not null,
    Remark               varchar(2000)        not null,
    constraint PK_TGRABLIST primary key (SpiderId, IssueName, OrderNumber)
 )
@@ -72,5 +73,8 @@ update TGrabRequest set GrabType=1 where RequestId='CB1B4C62-88D1-44D1-98C1-F4AA
 
 
 
+truncate table TSpider;
+truncate table TGrabRequest;
+truncate table TGrabList;
 
 

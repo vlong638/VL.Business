@@ -736,6 +736,7 @@ namespace VL.Spider.Manipulator
                 case EGrabType.StaticList:
                     new GrabManageOfSListContent(this, SpiderManager, grabConfig == null ? new GrabConfigOfStaticList(SpiderManager.CurrentConfigOfSpider) : grabConfig as GrabConfigOfStaticList).Show();
                     break;
+                case EGrabType.Detail:
                 case EGrabType.DynamicList:
                 default:
                     MessageBox.Show("未实现该类型的编辑窗口");

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VL.Spider.Manipulator.SubWindows"
         mc:Ignorable="d"
-        Title="GrabManageOfSListContent" Height="200" Width="533.333">
+        Title="GrabManageOfSListContent" Height="200" Width="680.333">
     <StackPanel Orientation="Vertical" Name="container">
         <StackPanel.Resources>
             <Style TargetType="{x:Type StackPanel}" x:Key="StackItem">
@@ -17,10 +17,13 @@
                 <Setter Property="Padding" Value="5,0,0,0"/>
             </Style>
             <Style TargetType="{x:Type TextBox}" x:Key="LongTextBox"  >
-                <Setter Property="Width" Value="400"/>
+                <Setter Property="Width" Value="580"/>
+            </Style>
+            <Style TargetType="{x:Type TextBox}" x:Key="MedialTextBox"  >
+                <Setter Property="Width" Value="460"/>
             </Style>
             <Style TargetType="{x:Type TextBox}" x:Key="ShortTextBox" >
-                <Setter Property="Width" Value="80"/>
+                <Setter Property="Width" Value="140"/>
             </Style>
             <Style TargetType="{x:Type ComboBox}" >
                 <Setter Property="Width" Value="400"/>
@@ -35,8 +38,15 @@
             <TextBox x:Name="tb_IndexOfTitle" Style="{DynamicResource ShortTextBox}"/>
             <TextBlock Text="IndexOfURL"/>
             <TextBox x:Name="tb_IndexOfURL" Style="{DynamicResource ShortTextBox}"/>
+            <!--<TextBlock Text="IndexOfURL"/>
+            <TextBox x:Name="tb_IndexOfUR2L" Style="{DynamicResource ShortTextBox}"/>-->
         </StackPanel>
         <StackPanel Style="{DynamicResource StackItem}">
+            <TextBlock Text="IsGrabDetail"/>
+            <CheckBox x:Name="cb_IsGrabDetail"/>
+            <TextBlock Text="OutPutPath"/>
+            <TextBox x:Name="tb_DetailOutPutDirectoryPath" Style="{DynamicResource MedialTextBox}"/>
+            <Button Content="..." Width="16" Height="16" Margin="5,2" Click="SelectPath"/>
         </StackPanel>
         <StackPanel Style="{DynamicResource StackItem}">
             <Button Content="Save" Click="button_Click"/>

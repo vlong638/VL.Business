@@ -57,6 +57,11 @@ namespace VL.Spider.Manipulator.Configs
         public string GrabTypeString { get { return GetGrabType().ToString(); } }
         public abstract EGrabType GetGrabType();
 
+        public void TriggerOnGrabFinish(string url, bool isSuccess, string message)
+        {
+            if (OnGrabFinish != null)
+                OnGrabFinish(url, isSuccess, message);
+        }
         public delegate void GrabbingDelegate(string url, bool isSuccess, string message);
         public GrabbingDelegate OnGrabFinish;//event
 
@@ -70,11 +75,12 @@ namespace VL.Spider.Manipulator.Configs
         }
 
 
-        public void StartGrabbing(ConfigOfRequest requestConfig)
+        public bool StartGrabbing(ConfigOfRequest requestConfig)
         {
+            bool isSuccess = true;
             if (!IsOn)
-                return;
-
+                return isSuccess;
+            #region GrabContentByRequestConfig
             //抓取内容
             switch (requestConfig.URLStrategy)
             {
@@ -88,11 +94,13 @@ namespace VL.Spider.Manipulator.Configs
                             Encoding encoding = GetEncoding(requestConfig);
                             var pageString = new StreamReader(response.GetResponseStream(), encoding).ReadToEnd();
                             Result result = GrabContentByGrabType(pageString);
-                            OnGrabFinish(orientURL, result.ResultCode == EResultCode.Success, result.Message);
+                            TriggerOnGrabFinish(orientURL, result.ResultCode == EResultCode.Success, result.Message);
+                            isSuccess = result.ResultCode == EResultCode.Success;
                         }
                         catch (Exception ex)
                         {
-                            OnGrabFinish(orientURL, false, "抓取出现异常:" + ex.ToString());
+                            TriggerOnGrabFinish(orientURL, false, "抓取出现异常:" + ex.ToString());
+                            isSuccess = false;
                         }
                     }
                     break;
@@ -111,47 +119,47 @@ namespace VL.Spider.Manipulator.Configs
                                 var pageString = new StreamReader(response.GetResponseStream(), encoding).ReadToEnd();
                                 if (pageString.Length <= stopBy)
                                 {
-                                    OnGrabFinish(increaseURL, false, "抓取达成终止条件而终止:页面数据长度(" + pageString.Length + ")未达到设定标准(" + stopBy + ")");
+                                    TriggerOnGrabFinish(increaseURL, false, "抓取达成终止条件而终止:页面数据长度(" + pageString.Length + ")未达到设定标准(" + stopBy + ")");
+                                    isSuccess = false;
                                     break;
                                 }
                                 Result result = GrabContentByGrabType(pageString, SpiderConfig.SpiderName + increaseValue);
-                                OnGrabFinish(increaseURL, result.ResultCode == EResultCode.Success, result.Message);
+                                TriggerOnGrabFinish(increaseURL, result.ResultCode == EResultCode.Success, result.Message);
+                                isSuccess = isSuccess && result.ResultCode == EResultCode.Success;
                             }
                             catch (Exception ex)
                             {
-                                OnGrabFinish(increaseURL, false, "抓取出现异常:" + ex.ToString());
+                                TriggerOnGrabFinish(increaseURL, false, "抓取出现异常:" + ex.ToString());
+                                isSuccess = false;
                                 break;
                             }
                         }
                         increaseValue += requestConfig.IncreaseBy;
                     }
                     break;
-
                 default:
                     break;
             }
+            return isSuccess;
+            #endregion
         }
         private Result GrabContentByGrabType(string pageString, string pageName = null)
         {
-            Result result = null;
             switch (GetGrabType())
             {
-                //case EGrabType.File:
-                    //result = GrabbingContent(pageString, pageName);
-                    //break;
                 case EGrabType.File:
                 case EGrabType.StaticList:
                 case EGrabType.DynamicList:
-                    result = Constraints.ServiceContext.ServiceDelegator.HandleTransactionEvent(Constraints.DbName, (session) =>
+                    using (var session= Constraints.ServiceContext.GetDbSession(Constraints.DbName))
                     {
-                        return ProcessingGrab(session, pageString, pageName);
-                    });
-                    break;
+                        session.Open();
+                        var result= ProcessingGrab(session, pageString, pageName);
+                        session.Close();
+                        return result;
+                    }
                 default:
                     throw new NotImplementedException("暂不支持该类型的GrabType抓取处理");
             }
-
-            return result;
         }
         private static Encoding GetEncoding(ConfigOfRequest requestConfig)
         {

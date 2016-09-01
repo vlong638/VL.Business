@@ -109,6 +109,9 @@
     <Compile Include="Entities\Constraints.cs" />
     <Compile Include="Entities\EEncoding.cs" />
     <Compile Include="Entities\GrabResult.cs" />
+    <Compile Include="SubWindows\GrabManageOfDetail.xaml.cs">
+      <DependentUpon>GrabManageOfDetail.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\GrabManageOfSListContent.xaml.cs">
       <DependentUpon>GrabManageOfSListContent.xaml</DependentUpon>
     </Compile>
@@ -138,6 +141,10 @@
     <Page Include="MyStyle\Style0722.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SubWindows\GrabManageOfDetail.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="SubWindows\GrabManageOfSListContent.xaml">
       <Generator>MSBuild:Compile</Generator>

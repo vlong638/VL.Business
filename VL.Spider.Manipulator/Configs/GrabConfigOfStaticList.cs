@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using VL.Common.DAS.Objects;
@@ -19,7 +20,9 @@ namespace VL.Spider.Manipulator.Configs
         public string Pattern { set; get; } = "";
         public int IndexOfTitle { set; get; } = 1;
         public int IndexOfURL { set; get; } = 1;
-        
+        public bool IsGrabDetail { set; get; } = false;
+        public string DetailOutputDirectoryPath { set; get; } = "";
+
         public GrabConfigOfStaticList(XElement element, ConfigOfSpider spiderConfig) : base(element, spiderConfig)
         {
         }
@@ -45,6 +48,8 @@ namespace VL.Spider.Manipulator.Configs
                 , new XAttribute(nameof(Pattern), Pattern)
                 , new XAttribute(nameof(IndexOfTitle), IndexOfTitle)
                 , new XAttribute(nameof(IndexOfURL), IndexOfURL)
+                , new XAttribute(nameof(IsGrabDetail), IsGrabDetail)
+                , new XAttribute(nameof(DetailOutputDirectoryPath), DetailOutputDirectoryPath)
                 );
         }
         public override void LoadXElement(XElement element)
@@ -55,7 +60,7 @@ namespace VL.Spider.Manipulator.Configs
                 IsOn = Convert.ToBoolean(attribute.Value);
             }
             attribute = element.Attribute(nameof(Pattern));
-            if (attribute!=null)
+            if (attribute != null)
             {
                 Pattern = attribute.Value;
             }
@@ -69,6 +74,16 @@ namespace VL.Spider.Manipulator.Configs
             {
                 IndexOfURL = Convert.ToInt32(attribute.Value);
             }
+            attribute = element.Attribute(nameof(IsGrabDetail));
+            if (attribute != null)
+            {
+                IsGrabDetail = Convert.ToBoolean(attribute.Value);
+            }
+            attribute = element.Attribute(nameof(DetailOutputDirectoryPath));
+            if (attribute != null)
+            {
+                DetailOutputDirectoryPath = attribute.Value;
+            }
         }
         public override IGrabConfig Clone(ConfigOfSpider spider)
         {
@@ -78,30 +93,10 @@ namespace VL.Spider.Manipulator.Configs
                 Pattern = this.Pattern,
                 IndexOfTitle = this.IndexOfTitle,
                 IndexOfURL = this.IndexOfURL,
+                IsGrabDetail = this.IsGrabDetail,
+                DetailOutputDirectoryPath = this.DetailOutputDirectoryPath,
             };
         }
-        //protected override Result GrabbingContent(DbSession session, string pageString, string pageName = "Default")
-        //{
-        //    Regex regex = new Regex(Pattern);
-        //    var matches = regex.Matches(pageString);
-        //    short orderNumber = 1;
-        //    foreach (Match match in matches)
-        //    {
-        //        switch (new TGrabList().Create(session, SpiderConfig.Spider.SpiderId, pageName, orderNumber, match.Groups[IndexOfTitle].Value, match.Groups[IndexOfURL].Value))
-        //        {
-        //            case TGrabList.CreateGrabListResult.Success:
-        //                break;
-        //            case TGrabList.CreateGrabListResult.DbOperationFailed:
-        //                return new Result(nameof(GrabbingContent)) { ResultCode = EResultCode.Failure, Message = "插入GrabList数据失败" };
-        //            case TGrabList.CreateGrabListResult.Existed:
-        //                return new Result(nameof(GrabbingContent)) { ResultCode = EResultCode.Failure, Message = "GrabList数据已存在" };
-        //            default:
-        //                throw new NotImplementedException("未实现对该CreateGrabListResult的处理");
-        //        }
-        //        orderNumber++;
-        //    }
-        //    return new Result(nameof(GrabbingContent)) { ResultCode = EResultCode.Success, Message = "解析页面数据成功,共计" + (orderNumber - 1).ToString() + "项数据" };
-        //}
         public override string GetPageNameWhileEmptyOrNull(string issueName)
         {
             throw new NotImplementedException("StaticList 的期号必为外界生成,程序存在异常");
@@ -113,7 +108,14 @@ namespace VL.Spider.Manipulator.Configs
             short orderNumber = 1;
             foreach (Match match in matches)
             {
-                switch (new TGrabList().Create(session, SpiderConfig.Spider.SpiderId, issueName, orderNumber, match.Groups[IndexOfTitle].Value, match.Groups[IndexOfURL].Value))
+                var title = match.Groups[IndexOfTitle].Value;
+                var url = match.Groups[IndexOfURL].Value;
+                var detailRequestConfig = SpiderConfig.RequestConfig.Clone();
+                detailRequestConfig.URLStrategy = URLStrategy.Default;
+                detailRequestConfig.URL = url;
+                var detailGrabConfig = new GrabConfigOfFile(SpiderConfig) { IsOn = true, DirectoryPath = DetailOutputDirectoryPath, FileName = issueName + "_" + orderNumber + ".xml" };
+                var detailGrabResult = detailGrabConfig.StartGrabbing(detailRequestConfig);
+                switch (new TGrabList().Create(session, SpiderConfig.Spider.SpiderId, issueName, orderNumber, title, url, detailGrabResult ? Path.Combine(DetailOutputDirectoryPath, detailGrabConfig.FileName) : ""))
                 {
                     case TGrabList.CreateGrabListResult.Success:
                         break;
@@ -126,7 +128,7 @@ namespace VL.Spider.Manipulator.Configs
                 }
                 orderNumber++;
             }
-            return new Result(nameof(GrabContent)) { ResultCode = EResultCode.Success, Message = "解析页面数据成功,共计" + (orderNumber - 1).ToString() + "项数据" };
+            return new Result(nameof(GrabContent)) { ResultCode = orderNumber == 0 ? EResultCode.Failure : EResultCode.Success, Message = "解析页面数据结束,共计" + (orderNumber - 1).ToString() + "项数据" };
         }
     }
 }

@@ -13,6 +13,7 @@ namespace VL.Spider.Manipulator.Configs
     /// </summary>
     public class GrabConfigOfDetail : IGrabConfig
     {
+
         public GrabConfigOfDetail(ConfigOfSpider spiderConfig, XElement element) : base(element, spiderConfig)
         {
         }
@@ -39,7 +40,10 @@ namespace VL.Spider.Manipulator.Configs
         }
         public override void LoadXElement(XElement element)
         {
-            IsOn = Convert.ToBoolean(element.Attribute(nameof(IsOn)).Value);
+            if (element.Attribute(nameof(IsOn)) != null)
+            {
+                IsOn = Convert.ToBoolean(element.Attribute(nameof(IsOn)).Value);
+            }
         }
         public override IGrabConfig Clone(ConfigOfSpider spider)
         {

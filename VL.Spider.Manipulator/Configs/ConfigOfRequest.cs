@@ -143,6 +143,7 @@ namespace VL.Spider.Manipulator.Configs
                 StartAt = this.StartAt,
                 IncreaseBy = this.IncreaseBy,
                 StopWhenLT = this.StopWhenLT,
+                Encoding = this.Encoding,
             };
         }
     }

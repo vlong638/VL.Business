@@ -65,10 +65,22 @@ namespace VL.Spider.Manipulator.Configs
         }
         public override void LoadXElement(XElement element)
         {
-            DirectoryPath = element.Attribute(nameof(DirectoryPath)).Value;
-            FileNameTag = element.Attribute(nameof(FileNameTag)).Value;
-            FileName = element.Attribute(nameof(FileName)).Value;
-            IsOn = Convert.ToBoolean(element.Attribute(nameof(IsOn)).Value);
+            if (element.Attribute(nameof(DirectoryPath)) != null)
+            {
+                DirectoryPath = element.Attribute(nameof(DirectoryPath)).Value;
+            }
+            if (element.Attribute(nameof(FileNameTag)) != null)
+            {
+                FileNameTag = element.Attribute(nameof(FileNameTag)).Value;
+            }
+            if (element.Attribute(nameof(FileName)) != null)
+            {
+                FileName = element.Attribute(nameof(FileName)).Value;
+            }
+            if (element.Attribute(nameof(IsOn)) != null)
+            {
+                IsOn = Convert.ToBoolean(element.Attribute(nameof(IsOn)).Value);
+            }
         }
         public override IGrabConfig Clone(ConfigOfSpider spider)
         {
