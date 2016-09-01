@@ -48,18 +48,15 @@ namespace VL.Spider.Manipulator.Configs
             return true;
         }
 
-        public override EGrabType GrabType
+        public override EGrabType GetGrabType()
         {
-            get
-            {
                 return EGrabType.File;
-            }
         }
 
         public override XElement ToXElement()
         {
             return new XElement(nameof(IGrabConfig)
-                , new XAttribute(nameof(GrabType), GrabType)
+                , new XAttribute(nameof(EGrabType), GetGrabType())
                 , new XAttribute(nameof(IsOn), IsOn)
                 , new XAttribute(nameof(DirectoryPath), DirectoryPath)
                 , new XAttribute(nameof(FileNameTag), FileNameTag)
@@ -83,36 +80,60 @@ namespace VL.Spider.Manipulator.Configs
                 FileName = this.FileName,
             };
         }
-
-        protected override Result GrabbingContent(string pageString, string pageName = "")
+        #region old
+        //protected override Result GrabbingContent(string pageString, string pageName = "")
+        //{
+        //    string path;
+        //    if (pageName != "")
+        //    {
+        //        path = Path.Combine(DirectoryPath, pageName);
+        //    }
+        //    else
+        //    {
+        //        if (string.IsNullOrEmpty(FileNameTag))
+        //        {
+        //            throw new NotImplementedException(nameof(FileName) + "和" + nameof(FileNameTag) + "之间至少设置一项值");
+        //        }
+        //        pageName = string.IsNullOrEmpty(FileName) ? GrabNamingHelper.GetNameForFile(FileNameTag) : FileName;
+        //        path = Path.Combine(DirectoryPath, pageName);
+        //    }
+        //    if (!path.EndsWith(".xml"))
+        //    {
+        //        path += ".xml";
+        //    }
+        //    File.WriteAllText(path, pageString);
+        //    return new Result(nameof(GrabConfigOfFile) + "." + nameof(GrabbingContent))
+        //    {
+        //        ResultCode = EResultCode.Success,
+        //        Message = "抓取成功,文件输出于" + path,
+        //    };
+        //} 
+        #endregion
+        public override string GetPageNameWhileEmptyOrNull(string issueName)
         {
-            string path;
-            if (pageName != "")
+            if (!string.IsNullOrEmpty(issueName))
             {
-                path = Path.Combine(DirectoryPath, pageName);
+                return issueName;
             }
-            else
+            if (string.IsNullOrEmpty(FileNameTag))
             {
-                if (string.IsNullOrEmpty(FileNameTag))
-                {
-                    throw new NotImplementedException(nameof(FileName) + "和" + nameof(FileNameTag) + "之间至少设置一项值");
-                }
-                path = Path.Combine(DirectoryPath, string.IsNullOrEmpty(FileName) ? GrabNamingHelper.GetNameForFile(FileNameTag) : FileName);
+                throw new NotImplementedException(nameof(FileName) + "和" + nameof(FileNameTag) + "之间至少设置一项值");
             }
+            return string.IsNullOrEmpty(FileName) ? GrabNamingHelper.GetNameForFile(FileNameTag) : FileName;
+        }
+        public override Result GrabContent(DbSession session, string pageString, string issueName)
+        {
+            string path = Path.Combine(DirectoryPath, issueName);
             if (!path.EndsWith(".xml"))
             {
                 path += ".xml";
             }
             File.WriteAllText(path, pageString);
-            return new Result(nameof(GrabConfigOfFile) + "." + nameof(GrabbingContent))
+            return new Result(nameof(GrabConfigOfFile) + "." + nameof(GrabContent))
             {
                 ResultCode = EResultCode.Success,
                 Message = "抓取成功,文件输出于" + path,
             };
-        }
-        protected override Result GrabbingContent(DbSession session, string pageString, string pageName = "Default")
-        {
-            throw new NotImplementedException("该类型暂不支持保存于数据库的抓取");
         }
     }
 }

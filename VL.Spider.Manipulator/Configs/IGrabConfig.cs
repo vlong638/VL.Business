@@ -8,6 +8,8 @@ using VL.Common.DAS.Objects;
 using VL.Common.Logger.Objects;
 using VL.Common.Protocol.IService;
 using VL.Spider.Manipulator.Entities;
+using VL.Spider.Manipulator.Utilities;
+using VL.Spider.Objects.Entities;
 using VL.Spider.Objects.Enums;
 
 namespace VL.Spider.Manipulator.Configs
@@ -21,7 +23,7 @@ namespace VL.Spider.Manipulator.Configs
         public ConfigOfSpider SpiderConfig { set; get; }
         public static IGrabConfig GetGrabConfig(XElement element, ConfigOfSpider spiderConfig)
         {
-            EGrabType grabType = (EGrabType)Enum.Parse(typeof(EGrabType), element.Attribute(nameof(GrabType)).Value);
+            EGrabType grabType = (EGrabType)Enum.Parse(typeof(EGrabType), element.Attribute(nameof(EGrabType)).Value);
             switch (grabType)
             {
                 case EGrabType.File:
@@ -52,7 +54,8 @@ namespace VL.Spider.Manipulator.Configs
         }
         public bool IsOn { set; get; }
         public abstract bool CheckAvailable(ILogger logger);
-        public abstract EGrabType GrabType { get; }
+        public string GrabTypeString { get { return GetGrabType().ToString(); } }
+        public abstract EGrabType GetGrabType();
 
         public delegate void GrabbingDelegate(string url, bool isSuccess, string message);
         public GrabbingDelegate OnGrabFinish;//event
@@ -128,20 +131,20 @@ namespace VL.Spider.Manipulator.Configs
                     break;
             }
         }
-
         private Result GrabContentByGrabType(string pageString, string pageName = null)
         {
             Result result = null;
-            switch (GrabType)
+            switch (GetGrabType())
             {
+                //case EGrabType.File:
+                    //result = GrabbingContent(pageString, pageName);
+                    //break;
                 case EGrabType.File:
-                    result = GrabbingContent(pageString, pageName);
-                    break;
                 case EGrabType.StaticList:
                 case EGrabType.DynamicList:
                     result = Constraints.ServiceContext.ServiceDelegator.HandleTransactionEvent(Constraints.DbName, (session) =>
                     {
-                        return GrabbingContent(session, pageString, pageName);
+                        return ProcessingGrab(session, pageString, pageName);
                     });
                     break;
                 default:
@@ -150,7 +153,6 @@ namespace VL.Spider.Manipulator.Configs
 
             return result;
         }
-
         private static Encoding GetEncoding(ConfigOfRequest requestConfig)
         {
             Encoding encoding = Encoding.Unicode;
@@ -181,8 +183,109 @@ namespace VL.Spider.Manipulator.Configs
             request.UserAgent = requestConfig.UserAgent;
             return request;
         }
-        protected abstract Result GrabbingContent(string pageString, string pageName = "Default");
-        protected abstract Result GrabbingContent(DbSession session, string pageString, string pageName = "Default");
+        //protected abstract Result GrabbingContent(string pageString, string pageName = "Default");
+        protected Result ProcessingGrab(DbSession session, string pageString, string issueName = "")
+        {
+            //补全期名称
+            if (string.IsNullOrEmpty(issueName))
+            {
+                issueName = GetPageNameWhileEmptyOrNull(issueName);
+            }
+            //请求查询
+            var request = new TGrabRequest(SpiderConfig.Spider.SpiderId, GetGrabType(), issueName);
+            if (!request.DbLoad(session))
+            {
+                var requestResult = StartGrabRequest(session, issueName);
+                request = requestResult.Data;
+            }
+            if (request.ProcessStatus==EProcessStatus.Success)
+            {
+                return new Result() { ResultCode = EResultCode.Failure, Message = "存在已经处理的请求" };
+            }
+            //请求发起处理
+            Result result=null;
+            try
+            {
+                result = GrabContent(session, pageString, issueName);
+            }
+            catch (Exception ex)
+            {
+                result = new Result() { ResultCode = EResultCode.Error, Message = ex.ToString() };
+            }
+            //请求结束处理
+            return FinishGrabRequest(session, request, result.ResultCode, result.Message);
+
+            #region old
+            ////期请求存储
+            //session.BeginTransaction();
+            //try
+            //{
+            //    //内容抓取处理
+            //    if (result.ResultCode==EResultCode.Success)
+            //    {
+            //        result = GrabContent(session, pageString,issueName);
+            //    }
+            //    //请求结束处理
+            //    result = FinishGrabRequest(session, requestResult.Data);
+            //    if (result.ResultCode == EResultCode.Success)
+            //    {
+            //    }
+            //    if (result.ResultCode == EResultCode.Success)
+            //    {
+            //        session.CommitTransaction();
+            //    }
+            //    else
+            //    {
+            //        session.RollBackTransaction();
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    session.RollBackTransaction();
+            //    return new Result() { ResultCode = EResultCode.Error, Message = ex.ToString() };
+            //}
+            //return new Result() { ResultCode = result.ResultCode, Message = result.Message }; 
+            #endregion
+        }
+        public abstract string GetPageNameWhileEmptyOrNull(string issueName);
+        public Result<TGrabRequest> StartGrabRequest(DbSession session, string issueName)
+        {
+            TGrabRequest request = new TGrabRequest();
+            var result = request.Create(session, SpiderConfig.Spider.SpiderId, GetGrabType(), issueName, SpiderConfig.Spider.SpiderName);
+            switch (result)
+            {
+                case TGrabRequest.CreateGrabRequestResult.Success:
+                    return new Result<TGrabRequest>() { ResultCode = EResultCode.Success, Data = request, Message = "创建请求对象成功" };
+                case TGrabRequest.CreateGrabRequestResult.DbOperationFailed:
+                    return new Result<TGrabRequest>() { ResultCode = EResultCode.Failure, Message = "创建请求对象失败" };
+                case TGrabRequest.CreateGrabRequestResult.Existed:
+                    return new Result<TGrabRequest>() { ResultCode = EResultCode.Failure, Message = "存在重复的请求对象,新增数据详情:" + Newtonsoft.Json.JsonConvert.SerializeObject(request) };
+                default:
+                    ExceptionHelper.DoWhileResultCodeHandlerNotImplemented();
+                    return null;
+            }
+        }
+        public abstract Result GrabContent(DbSession session, string pageString, string issueName);
+        public Result FinishGrabRequest(DbSession session, TGrabRequest request,EResultCode code,string message)
+        {
+            EProcessStatus status = EProcessStatus.Ready;
+            switch (code)
+            {
+                case EResultCode.Success:
+                    status = EProcessStatus.Success;
+                    break;
+                case EResultCode.Failure:
+                    status = EProcessStatus.Failure;
+                    break;
+                case EResultCode.Error:
+                    status = EProcessStatus.Error;
+                    break;
+                default:
+                    ExceptionHelper.DoWhileResultCodeHandlerNotImplemented();
+                    break;
+            }
+            return new Result() { ResultCode = request.Settle(session, status, message) ? EResultCode.Success : EResultCode.Failure, Message = message };
+        }
         public abstract IGrabConfig Clone(ConfigOfSpider spider);
     }
 }

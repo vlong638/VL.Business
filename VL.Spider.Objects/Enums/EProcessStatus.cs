@@ -3,32 +3,27 @@ using System.Runtime.Serialization;
 namespace VL.Spider.Objects.Enums
 {
     [DataContract]
-    public enum EGrabType
+    public enum EProcessStatus
     {
         /// <summary>
-        /// 未分类
+        /// 未执行处理
         /// </summary>
         [EnumMember]
-        None = 0,
+        Ready = 0,
         /// <summary>
-        /// 文件
+        /// 处理成功
         /// </summary>
         [EnumMember]
-        File,
+        Success,
         /// <summary>
-        /// 静态列表
+        /// 处理失败
         /// </summary>
         [EnumMember]
-        StaticList,
+        Failure,
         /// <summary>
-        /// 动态列表
+        /// 结果异常
         /// </summary>
         [EnumMember]
-        DynamicList,
-        /// <summary>
-        /// 详情
-        /// </summary>
-        [EnumMember]
-        Detail,
+        Error,
     }
 }

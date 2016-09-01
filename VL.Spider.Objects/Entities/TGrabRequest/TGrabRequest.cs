@@ -22,7 +22,9 @@ namespace VL.Spider.Objects.Entities
         [DataMember]
         public String SpiderName { get; set; }
         [DataMember]
-        public Boolean IsSuccess { get; set; }
+        public EProcessStatus ProcessStatus { get; set; }
+        [DataMember]
+        public String Message { get; set; }
         #endregion
 
         #region Constructors
@@ -48,7 +50,8 @@ namespace VL.Spider.Objects.Entities
             this.GrabType = (EGrabType)Enum.Parse(typeof(EGrabType), reader[nameof(this.GrabType)].ToString());
             this.IssueName = Convert.ToString(reader[nameof(this.IssueName)]);
             this.SpiderName = Convert.ToString(reader[nameof(this.SpiderName)]);
-            this.IsSuccess = Convert.ToBoolean(reader[nameof(this.IsSuccess)]);
+            this.ProcessStatus = (EProcessStatus)Enum.Parse(typeof(EProcessStatus), reader[nameof(this.ProcessStatus)].ToString());
+            this.Message = Convert.ToString(reader[nameof(this.Message)]);
         }
         public override void Init(IDataReader reader, List<string> fields)
         {
@@ -72,9 +75,13 @@ namespace VL.Spider.Objects.Entities
             {
                 this.SpiderName = Convert.ToString(reader[nameof(this.SpiderName)]);
             }
-            if (fields.Contains(nameof(IsSuccess)))
+            if (fields.Contains(nameof(ProcessStatus)))
             {
-                this.IsSuccess = Convert.ToBoolean(reader[nameof(this.IsSuccess)]);
+                this.ProcessStatus = (EProcessStatus)Enum.Parse(typeof(EProcessStatus), reader[nameof(this.ProcessStatus)].ToString());
+            }
+            if (fields.Contains(nameof(Message)))
+            {
+                this.Message = Convert.ToString(reader[nameof(this.Message)]);
             }
         }
         [DataMember]

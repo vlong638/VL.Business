@@ -119,6 +119,7 @@
       <DependentUpon>ManageOfRequest.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\DbConfigOfSpider.cs" />
+    <Compile Include="Utilities\ExceptionHelper.cs" />
     <Compile Include="Utilities\GrabNamingHelper.cs" />
     <Compile Include="Utilities\ServiceContextOfSpider.cs" />
     <Page Include="MainWindow.xaml">

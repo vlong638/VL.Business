@@ -54,6 +54,11 @@ namespace VL.Spider.Objects.Entities
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.Remark));
             }
             builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabListProperties.Remark, entity.Remark));
+            if (entity.DetailFilePath == null)
+            {
+                throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.DetailFilePath));
+            }
+            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabListProperties.DetailFilePath, entity.DetailFilePath));
             query.InsertBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Insert<TGrabList>(session, query);
         }
@@ -86,6 +91,11 @@ namespace VL.Spider.Objects.Entities
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.Remark));
             }
                 builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabListProperties.Remark, entity.Remark));
+            if (entity.DetailFilePath == null)
+            {
+                throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.DetailFilePath));
+            }
+                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabListProperties.DetailFilePath, entity.DetailFilePath));
                 query.InsertBuilders.Add(builder);
             }
             return IORMProvider.GetQueryOperator(session).InsertAll<TGrabList>(session, query);
@@ -106,6 +116,7 @@ namespace VL.Spider.Objects.Entities
                 builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.Title, entity.Title));
                 builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.URL, entity.URL));
                 builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.Remark, entity.Remark));
+                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.DetailFilePath, entity.DetailFilePath));
             }
             else
             {
@@ -124,6 +135,10 @@ namespace VL.Spider.Objects.Entities
                 if (fields.Contains(TGrabListProperties.Remark))
                 {
                     builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.Remark, entity.Remark));
+                }
+                if (fields.Contains(TGrabListProperties.DetailFilePath))
+                {
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.DetailFilePath, entity.DetailFilePath));
                 }
             }
             query.UpdateBuilders.Add(builder);
@@ -147,6 +162,7 @@ namespace VL.Spider.Objects.Entities
                     builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.Title, entity.Title));
                     builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.URL, entity.URL));
                     builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.Remark, entity.Remark));
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.DetailFilePath, entity.DetailFilePath));
                 }
                 else
                 {
@@ -166,6 +182,10 @@ namespace VL.Spider.Objects.Entities
                     {
                         builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.Remark, entity.Remark));
                     }
+                    if (fields.Contains(TGrabListProperties.DetailFilePath))
+                    {
+                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabListProperties.DetailFilePath, entity.DetailFilePath));
+                    }
                 }
                 query.UpdateBuilders.Add(builder);
             }
@@ -173,6 +193,9 @@ namespace VL.Spider.Objects.Entities
         }
         #endregion
         #region 读
+        /// <summary>
+        /// 未查询到数据时返回 null
+        /// </summary>
         public static TGrabList DbSelect(this TGrabList entity, DbSession session, params PDMDbProperty[] fields)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
@@ -186,6 +209,7 @@ namespace VL.Spider.Objects.Entities
                 builder.ComponentSelect.Values.Add(TGrabListProperties.Title);
                 builder.ComponentSelect.Values.Add(TGrabListProperties.URL);
                 builder.ComponentSelect.Values.Add(TGrabListProperties.Remark);
+                builder.ComponentSelect.Values.Add(TGrabListProperties.DetailFilePath);
             }
             else
             {
@@ -203,6 +227,9 @@ namespace VL.Spider.Objects.Entities
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Select<TGrabList>(session, query);
         }
+        /// <summary>
+        /// 未查询到数据时返回 null
+        /// </summary>
         public static List<TGrabList> DbSelect(this List<TGrabList> entities, DbSession session, params PDMDbProperty[] fields)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
@@ -216,6 +243,7 @@ namespace VL.Spider.Objects.Entities
                 builder.ComponentSelect.Values.Add(TGrabListProperties.Title);
                 builder.ComponentSelect.Values.Add(TGrabListProperties.URL);
                 builder.ComponentSelect.Values.Add(TGrabListProperties.Remark);
+                builder.ComponentSelect.Values.Add(TGrabListProperties.DetailFilePath);
             }
             else
             {
@@ -235,32 +263,60 @@ namespace VL.Spider.Objects.Entities
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).SelectAll<TGrabList>(session, query);
         }
-        public static void DbLoad(this TGrabList entity, DbSession session, params PDMDbProperty[] fields)
+        /// <summary>
+        /// 存在相应对象时返回true,缺少对象时返回false
+        /// </summary>
+        public static bool DbLoad(this TGrabList entity, DbSession session, params PDMDbProperty[] fields)
         {
             var result = entity.DbSelect(session, fields);
-            if (fields.Contains(TGrabListProperties.ListItemId))
+            if (result == null)
+            {
+                return false;
+            }
+            if (fields.Count() == 0)
             {
                 entity.ListItemId = result.ListItemId;
-            }
-            if (fields.Contains(TGrabListProperties.Title))
-            {
                 entity.Title = result.Title;
-            }
-            if (fields.Contains(TGrabListProperties.URL))
-            {
                 entity.URL = result.URL;
-            }
-            if (fields.Contains(TGrabListProperties.Remark))
-            {
                 entity.Remark = result.Remark;
+                entity.DetailFilePath = result.DetailFilePath;
             }
+            else
+            {
+                if (fields.Contains(TGrabListProperties.ListItemId))
+                {
+                    entity.ListItemId = result.ListItemId;
+                }
+                if (fields.Contains(TGrabListProperties.Title))
+                {
+                    entity.Title = result.Title;
+                }
+                if (fields.Contains(TGrabListProperties.URL))
+                {
+                    entity.URL = result.URL;
+                }
+                if (fields.Contains(TGrabListProperties.Remark))
+                {
+                    entity.Remark = result.Remark;
+                }
+                if (fields.Contains(TGrabListProperties.DetailFilePath))
+                {
+                    entity.DetailFilePath = result.DetailFilePath;
+                }
+            }
+            return true;
         }
-        public static void DbLoad(this List<TGrabList> entities, DbSession session, params PDMDbProperty[] fields)
+        /// <summary>
+        /// 存在相应对象时返回true,缺少对象时返回false
+        /// </summary>
+        public static bool DbLoad(this List<TGrabList> entities, DbSession session, params PDMDbProperty[] fields)
         {
+            bool result = true;
             foreach (var entity in entities)
             {
-                entity.DbLoad(session, fields);
+                result = result && entity.DbLoad(session, fields);
             }
+            return result;
         }
         #endregion
         #endregion

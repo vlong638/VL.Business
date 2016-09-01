@@ -50,14 +50,6 @@ namespace VL.Spider.Manipulator.Configs
         #endregion
         #endregion
 
-        //public HttpWebRequest GetRequest()
-        //{
-        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
-        //    request.Method = Method;
-        //    request.UserAgent = UserAgent;
-        //    return request;
-        //}
-
         public bool CheckAvailable(ILogger logger)
         {
             if (string.IsNullOrEmpty(URL))
@@ -124,8 +116,6 @@ namespace VL.Spider.Manipulator.Configs
                 Encoding = (EEncoding)Enum.Parse(typeof(EEncoding), encodingAttr.Value);
             }
         }
-
-
         /// <summary>
         /// 检查对应的RequestConfig是否通畅
         /// </summary>

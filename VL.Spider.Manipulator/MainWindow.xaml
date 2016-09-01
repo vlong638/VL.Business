@@ -69,8 +69,8 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <CheckBox IsChecked="{Binding IsOn}" Tag="{Binding GrabType}" Checked="CheckBox_Checked" Margin="10,10"/>
-                        <Button Content="{Binding GrabType}" Click="SetDetailForGrabConfig"/>
+                        <CheckBox IsChecked="{Binding IsOn}" Tag="{Binding GrabTypeString}" Checked="CheckBox_Checked" Margin="10,10"/>
+                        <Button Content="{Binding GrabTypeString}" Click="SetDetailForGrabConfig"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

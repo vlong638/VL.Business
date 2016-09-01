@@ -99,6 +99,9 @@ namespace VL.Spider.Objects.Entities
         }
         #endregion
         #region 读
+        /// <summary>
+        /// 未查询到数据时返回 null
+        /// </summary>
         public static TSpider DbSelect(this TSpider entity, DbSession session, params PDMDbProperty[] fields)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
@@ -120,6 +123,9 @@ namespace VL.Spider.Objects.Entities
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Select<TSpider>(session, query);
         }
+        /// <summary>
+        /// 未查询到数据时返回 null
+        /// </summary>
         public static List<TSpider> DbSelect(this List<TSpider> entities, DbSession session, params PDMDbProperty[] fields)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
@@ -145,20 +151,40 @@ namespace VL.Spider.Objects.Entities
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).SelectAll<TSpider>(session, query);
         }
-        public static void DbLoad(this TSpider entity, DbSession session, params PDMDbProperty[] fields)
+        /// <summary>
+        /// 存在相应对象时返回true,缺少对象时返回false
+        /// </summary>
+        public static bool DbLoad(this TSpider entity, DbSession session, params PDMDbProperty[] fields)
         {
             var result = entity.DbSelect(session, fields);
-            if (fields.Contains(TSpiderProperties.SpiderName))
+            if (result == null)
+            {
+                return false;
+            }
+            if (fields.Count() == 0)
             {
                 entity.SpiderName = result.SpiderName;
             }
+            else
+            {
+                if (fields.Contains(TSpiderProperties.SpiderName))
+                {
+                    entity.SpiderName = result.SpiderName;
+                }
+            }
+            return true;
         }
-        public static void DbLoad(this List<TSpider> entities, DbSession session, params PDMDbProperty[] fields)
+        /// <summary>
+        /// 存在相应对象时返回true,缺少对象时返回false
+        /// </summary>
+        public static bool DbLoad(this List<TSpider> entities, DbSession session, params PDMDbProperty[] fields)
         {
+            bool result = true;
             foreach (var entity in entities)
             {
-                entity.DbLoad(session, fields);
+                result = result && entity.DbLoad(session, fields);
             }
+            return result;
         }
         #endregion
         #endregion

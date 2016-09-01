@@ -95,6 +95,8 @@
     <Compile Include="Entities\TSpider\TSpiderProperties.cs" />
     <Compile Include="Enums\EAnalysisPattern.cs" />
     <Compile Include="Enums\EGrabType.cs" />
+    <Compile Include="Enums\EProcessResultType.cs" />
+    <Compile Include="Enums\EProcessStatus.cs" />
     <Compile Include="Enums\ESourceAndSetting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -103,7 +105,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="备注\query.sql" />
+    <Content Include="备注\QueryOfSpider.sql" />
     <Content Include="备注\多表查询.txt" />
   </ItemGroup>
   <ItemGroup />

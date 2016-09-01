@@ -25,6 +25,8 @@ namespace VL.Spider.Objects.Entities
         public String URL { get; set; }
         [DataMember]
         public String Remark { get; set; }
+        [DataMember]
+        public String DetailFilePath { get; set; }
         #endregion
 
         #region Constructors
@@ -52,6 +54,7 @@ namespace VL.Spider.Objects.Entities
             this.Title = Convert.ToString(reader[nameof(this.Title)]);
             this.URL = Convert.ToString(reader[nameof(this.URL)]);
             this.Remark = Convert.ToString(reader[nameof(this.Remark)]);
+            this.DetailFilePath = Convert.ToString(reader[nameof(this.DetailFilePath)]);
         }
         public override void Init(IDataReader reader, List<string> fields)
         {
@@ -82,6 +85,10 @@ namespace VL.Spider.Objects.Entities
             if (fields.Contains(nameof(Remark)))
             {
                 this.Remark = Convert.ToString(reader[nameof(this.Remark)]);
+            }
+            if (fields.Contains(nameof(DetailFilePath)))
+            {
+                this.DetailFilePath = Convert.ToString(reader[nameof(this.DetailFilePath)]);
             }
         }
         [DataMember]

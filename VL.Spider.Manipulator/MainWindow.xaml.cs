@@ -276,10 +276,13 @@ namespace VL.Spider.Manipulator
             var grabTypeStrings = Enum.GetNames(typeof(EGrabType));
             foreach (var grabTypeString in grabTypeStrings)
             {
-                if (!grabConfigs.Exists(c => c.GrabType.ToString() == grabTypeString))
+                if (!grabConfigs.Exists(c => c.GetGrabType().ToString() == grabTypeString))
                 {
                     var grabType = (EGrabType)Enum.Parse(typeof(EGrabType), grabTypeString);
-                    grabConfigs.Add(IGrabConfig.GetGrabConfig(grabType, spiderConfig));
+                    if (grabType!=EGrabType.None)
+                    {
+                        grabConfigs.Add(IGrabConfig.GetGrabConfig(grabType, spiderConfig));
+                    }
                 }
             }
             lb_GrabConfigs.ItemsSource = grabConfigs;
@@ -433,7 +436,7 @@ namespace VL.Spider.Manipulator
                         {
                             var item = new GrabResult(isSuccess)
                             {
-                                GrabType = grabConfig.GrabType.ToString(),
+                                GrabType = grabConfig.GetGrabType().ToString(),
                                 URL = url,
                                 Message = message
                             };
@@ -724,7 +727,7 @@ namespace VL.Spider.Manipulator
         {
             string type = (e.OriginalSource as Button).Content.ToString();
             EGrabType grabType = (EGrabType)Enum.Parse(typeof(EGrabType), type);
-            var grabConfig = SpiderManager.CurrentConfigOfSpider.GrabConfigs.FirstOrDefault(c => c.GrabType == grabType);
+            var grabConfig = SpiderManager.CurrentConfigOfSpider.GrabConfigs.FirstOrDefault(c => c.GetGrabType() == grabType);
             switch (grabType)
             {
                 case EGrabType.File:
@@ -768,7 +771,7 @@ namespace VL.Spider.Manipulator
         {
             var checkBox = (sender as CheckBox);
             var grabType = checkBox.Tag.ToString();
-            var grabConfig = SpiderManager.CurrentConfigOfSpider.GrabConfigs.FirstOrDefault(c => c.GrabType.ToString() == grabType);
+            var grabConfig = SpiderManager.CurrentConfigOfSpider.GrabConfigs.FirstOrDefault(c => c.GetGrabType().ToString() == grabType);
             if (grabConfig==null)
             {
                 SpiderManager.CurrentConfigOfSpider.GrabConfigs.Add(IGrabConfig.GetGrabConfig((EGrabType)Enum.Parse(typeof(EGrabType), grabType), SpiderManager.CurrentConfigOfSpider));

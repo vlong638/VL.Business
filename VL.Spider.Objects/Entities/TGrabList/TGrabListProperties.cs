@@ -10,8 +10,9 @@ namespace VL.Spider.Objects.Entities
         public static PDMDbProperty IssueName { get; set; } = new PDMDbProperty(nameof(IssueName), "IssueName", "批次号", true, PDMDataType.varchar, 200, 0, true, null);
         public static PDMDbProperty OrderNumber { get; set; } = new PDMDbProperty(nameof(OrderNumber), "OrderNumber", "批内序号", true, PDMDataType.numeric, 16, 0, true, null);
         public static PDMDbProperty Title { get; set; } = new PDMDbProperty(nameof(Title), "Title", "标题", false, PDMDataType.varchar, 200, 0, true, null);
-        public static PDMDbProperty URL { get; set; } = new PDMDbProperty(nameof(URL), "URL", "链接", false, PDMDataType.varchar, 1000, 0, true, null);
+        public static PDMDbProperty URL { get; set; } = new PDMDbProperty(nameof(URL), "URL", "链接", false, PDMDataType.varchar, 500, 0, true, null);
         public static PDMDbProperty Remark { get; set; } = new PDMDbProperty(nameof(Remark), "Remark", "备注", false, PDMDataType.varchar, 2000, 0, true, null);
+        public static PDMDbProperty DetailFilePath { get; set; } = new PDMDbProperty(nameof(DetailFilePath), "DetailFilePath", "详情输出文件路径", false, PDMDataType.varchar, 500, 0, true, null);
         #endregion
     }
 }

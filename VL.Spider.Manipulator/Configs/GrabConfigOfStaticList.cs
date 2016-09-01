@@ -32,18 +32,15 @@ namespace VL.Spider.Manipulator.Configs
             //TODO
             return true;
         }
-        public override EGrabType GrabType
+        public override EGrabType GetGrabType()
         {
-            get
-            {
-                return EGrabType.StaticList;
-            }
+            return EGrabType.StaticList;
         }
 
         public override XElement ToXElement()
         {
             return new XElement(nameof(IGrabConfig)
-                , new XAttribute(nameof(GrabType), GrabType)
+                , new XAttribute(nameof(EGrabType), GetGrabType())
                 , new XAttribute(nameof(IsOn), IsOn)
                 , new XAttribute(nameof(Pattern), Pattern)
                 , new XAttribute(nameof(IndexOfTitle), IndexOfTitle)
@@ -83,27 +80,53 @@ namespace VL.Spider.Manipulator.Configs
                 IndexOfURL = this.IndexOfURL,
             };
         }
-        protected override Result GrabbingContent(string pageStream, string pageName = "")
+        //protected override Result GrabbingContent(DbSession session, string pageString, string pageName = "Default")
+        //{
+        //    Regex regex = new Regex(Pattern);
+        //    var matches = regex.Matches(pageString);
+        //    short orderNumber = 1;
+        //    foreach (Match match in matches)
+        //    {
+        //        switch (new TGrabList().Create(session, SpiderConfig.Spider.SpiderId, pageName, orderNumber, match.Groups[IndexOfTitle].Value, match.Groups[IndexOfURL].Value))
+        //        {
+        //            case TGrabList.CreateGrabListResult.Success:
+        //                break;
+        //            case TGrabList.CreateGrabListResult.DbOperationFailed:
+        //                return new Result(nameof(GrabbingContent)) { ResultCode = EResultCode.Failure, Message = "插入GrabList数据失败" };
+        //            case TGrabList.CreateGrabListResult.Existed:
+        //                return new Result(nameof(GrabbingContent)) { ResultCode = EResultCode.Failure, Message = "GrabList数据已存在" };
+        //            default:
+        //                throw new NotImplementedException("未实现对该CreateGrabListResult的处理");
+        //        }
+        //        orderNumber++;
+        //    }
+        //    return new Result(nameof(GrabbingContent)) { ResultCode = EResultCode.Success, Message = "解析页面数据成功,共计" + (orderNumber - 1).ToString() + "项数据" };
+        //}
+        public override string GetPageNameWhileEmptyOrNull(string issueName)
         {
-            throw new NotImplementedException("该类型暂不支持保存于文件的抓取");
+            throw new NotImplementedException("StaticList的期号必为外界生成,程序存在异常");
         }
-        protected override Result GrabbingContent(DbSession session, string pageString, string pageName = "Default")
+        public override Result GrabContent(DbSession session, string pageString, string issueName)
         {
-            //var pattern = @"<a test=a href='(http[\w\:\/\.]+)' target='_blank'>(.{0,100})</a><span> \([\d\/\s\:]+\)</span><span class='star'>";
-            //int indexOfTitle = 2;
-            //int indexOfURL = 1;
             Regex regex = new Regex(Pattern);
             var matches = regex.Matches(pageString);
             short orderNumber = 1;
             foreach (Match match in matches)
             {
-                if (!new TGrabList().Create(session, SpiderConfig.Spider.SpiderId, pageName, orderNumber, match.Groups[IndexOfTitle].Value, match.Groups[IndexOfURL].Value))
+                switch (new TGrabList().Create(session, SpiderConfig.Spider.SpiderId, issueName, orderNumber, match.Groups[IndexOfTitle].Value, match.Groups[IndexOfURL].Value))
                 {
-                    return new Result(nameof(GrabbingContent)) { ResultCode = EResultCode.Failure, Message = "解析页面数据失败" };
+                    case TGrabList.CreateGrabListResult.Success:
+                        break;
+                    case TGrabList.CreateGrabListResult.DbOperationFailed:
+                        return new Result(nameof(GrabContent)) { ResultCode = EResultCode.Failure, Message = "插入GrabList数据失败" };
+                    case TGrabList.CreateGrabListResult.Existed:
+                        return new Result(nameof(GrabContent)) { ResultCode = EResultCode.Failure, Message = "GrabList数据已存在" };
+                    default:
+                        throw new NotImplementedException("未实现对该CreateGrabListResult的处理");
                 }
                 orderNumber++;
             }
-            return new Result(nameof(GrabbingContent)) { ResultCode = EResultCode.Success, Message = "解析页面数据成功,共计" + (orderNumber - 1).ToString() + "项数据" };
+            return new Result(nameof(GrabContent)) { ResultCode = EResultCode.Success, Message = "解析页面数据成功,共计" + (orderNumber - 1).ToString() + "项数据" };
         }
     }
 }

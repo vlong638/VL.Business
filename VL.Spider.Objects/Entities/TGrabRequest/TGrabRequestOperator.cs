@@ -44,7 +44,12 @@ namespace VL.Spider.Objects.Entities
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.SpiderName));
             }
             builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.SpiderName, entity.SpiderName));
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.IsSuccess, entity.IsSuccess));
+            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.ProcessStatus, entity.ProcessStatus));
+            if (entity.Message == null)
+            {
+                throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.Message));
+            }
+            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.Message, entity.Message));
             query.InsertBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Insert<TGrabRequest>(session, query);
         }
@@ -67,7 +72,12 @@ namespace VL.Spider.Objects.Entities
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.SpiderName));
             }
                 builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.SpiderName, entity.SpiderName));
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.IsSuccess, entity.IsSuccess));
+                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.ProcessStatus, entity.ProcessStatus));
+            if (entity.Message == null)
+            {
+                throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.Message));
+            }
+                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.Message, entity.Message));
                 query.InsertBuilders.Add(builder);
             }
             return IORMProvider.GetQueryOperator(session).InsertAll<TGrabRequest>(session, query);
@@ -86,7 +96,8 @@ namespace VL.Spider.Objects.Entities
                 builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.GrabType, entity.GrabType));
                 builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.IssueName, entity.IssueName));
                 builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.SpiderName, entity.SpiderName));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.IsSuccess, entity.IsSuccess));
+                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.ProcessStatus, entity.ProcessStatus));
+                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.Message, entity.Message));
             }
             else
             {
@@ -98,9 +109,13 @@ namespace VL.Spider.Objects.Entities
                 {
                     builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.SpiderName, entity.SpiderName));
                 }
-                if (fields.Contains(TGrabRequestProperties.IsSuccess))
+                if (fields.Contains(TGrabRequestProperties.ProcessStatus))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.IsSuccess, entity.IsSuccess));
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.ProcessStatus, entity.ProcessStatus));
+                }
+                if (fields.Contains(TGrabRequestProperties.Message))
+                {
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.Message, entity.Message));
                 }
             }
             query.UpdateBuilders.Add(builder);
@@ -122,7 +137,8 @@ namespace VL.Spider.Objects.Entities
                     builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.GrabType, entity.GrabType));
                     builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.IssueName, entity.IssueName));
                     builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.SpiderName, entity.SpiderName));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.IsSuccess, entity.IsSuccess));
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.ProcessStatus, entity.ProcessStatus));
+                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.Message, entity.Message));
                 }
                 else
                 {
@@ -134,9 +150,13 @@ namespace VL.Spider.Objects.Entities
                     {
                         builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.SpiderName, entity.SpiderName));
                     }
-                    if (fields.Contains(TGrabRequestProperties.IsSuccess))
+                    if (fields.Contains(TGrabRequestProperties.ProcessStatus))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.IsSuccess, entity.IsSuccess));
+                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.ProcessStatus, entity.ProcessStatus));
+                    }
+                    if (fields.Contains(TGrabRequestProperties.Message))
+                    {
+                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.Message, entity.Message));
                     }
                 }
                 query.UpdateBuilders.Add(builder);
@@ -145,6 +165,9 @@ namespace VL.Spider.Objects.Entities
         }
         #endregion
         #region 读
+        /// <summary>
+        /// 未查询到数据时返回 null
+        /// </summary>
         public static TGrabRequest DbSelect(this TGrabRequest entity, DbSession session, params PDMDbProperty[] fields)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
@@ -156,7 +179,8 @@ namespace VL.Spider.Objects.Entities
                 builder.ComponentSelect.Values.Add(TGrabRequestProperties.GrabType);
                 builder.ComponentSelect.Values.Add(TGrabRequestProperties.IssueName);
                 builder.ComponentSelect.Values.Add(TGrabRequestProperties.SpiderName);
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.IsSuccess);
+                builder.ComponentSelect.Values.Add(TGrabRequestProperties.ProcessStatus);
+                builder.ComponentSelect.Values.Add(TGrabRequestProperties.Message);
             }
             else
             {
@@ -174,6 +198,9 @@ namespace VL.Spider.Objects.Entities
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Select<TGrabRequest>(session, query);
         }
+        /// <summary>
+        /// 未查询到数据时返回 null
+        /// </summary>
         public static List<TGrabRequest> DbSelect(this List<TGrabRequest> entities, DbSession session, params PDMDbProperty[] fields)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
@@ -185,7 +212,8 @@ namespace VL.Spider.Objects.Entities
                 builder.ComponentSelect.Values.Add(TGrabRequestProperties.GrabType);
                 builder.ComponentSelect.Values.Add(TGrabRequestProperties.IssueName);
                 builder.ComponentSelect.Values.Add(TGrabRequestProperties.SpiderName);
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.IsSuccess);
+                builder.ComponentSelect.Values.Add(TGrabRequestProperties.ProcessStatus);
+                builder.ComponentSelect.Values.Add(TGrabRequestProperties.Message);
             }
             else
             {
@@ -205,28 +233,55 @@ namespace VL.Spider.Objects.Entities
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).SelectAll<TGrabRequest>(session, query);
         }
-        public static void DbLoad(this TGrabRequest entity, DbSession session, params PDMDbProperty[] fields)
+        /// <summary>
+        /// 存在相应对象时返回true,缺少对象时返回false
+        /// </summary>
+        public static bool DbLoad(this TGrabRequest entity, DbSession session, params PDMDbProperty[] fields)
         {
             var result = entity.DbSelect(session, fields);
-            if (fields.Contains(TGrabRequestProperties.RequestId))
+            if (result == null)
+            {
+                return false;
+            }
+            if (fields.Count() == 0)
             {
                 entity.RequestId = result.RequestId;
-            }
-            if (fields.Contains(TGrabRequestProperties.SpiderName))
-            {
                 entity.SpiderName = result.SpiderName;
+                entity.ProcessStatus = result.ProcessStatus;
+                entity.Message = result.Message;
             }
-            if (fields.Contains(TGrabRequestProperties.IsSuccess))
+            else
             {
-                entity.IsSuccess = result.IsSuccess;
+                if (fields.Contains(TGrabRequestProperties.RequestId))
+                {
+                    entity.RequestId = result.RequestId;
+                }
+                if (fields.Contains(TGrabRequestProperties.SpiderName))
+                {
+                    entity.SpiderName = result.SpiderName;
+                }
+                if (fields.Contains(TGrabRequestProperties.ProcessStatus))
+                {
+                    entity.ProcessStatus = result.ProcessStatus;
+                }
+                if (fields.Contains(TGrabRequestProperties.Message))
+                {
+                    entity.Message = result.Message;
+                }
             }
+            return true;
         }
-        public static void DbLoad(this List<TGrabRequest> entities, DbSession session, params PDMDbProperty[] fields)
+        /// <summary>
+        /// 存在相应对象时返回true,缺少对象时返回false
+        /// </summary>
+        public static bool DbLoad(this List<TGrabRequest> entities, DbSession session, params PDMDbProperty[] fields)
         {
+            bool result = true;
             foreach (var entity in entities)
             {
-                entity.DbLoad(session, fields);
+                result = result && entity.DbLoad(session, fields);
             }
+            return result;
         }
         #endregion
         #endregion

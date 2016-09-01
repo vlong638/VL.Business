@@ -25,18 +25,15 @@ namespace VL.Spider.Manipulator.Configs
             //TODO
             return true;
         }
-        public override EGrabType GrabType
+        public override EGrabType GetGrabType()
         {
-            get
-            {
-                return EGrabType.Detail;
-            }
+            return EGrabType.Detail;
         }
 
         public override XElement ToXElement()
         {
             return new XElement(nameof(IGrabConfig)
-                , new XAttribute(nameof(GrabType), GrabType)
+                , new XAttribute(nameof(EGrabType), GetGrabType())
                 , new XAttribute(nameof(IsOn), IsOn)
                 );
         }
@@ -51,16 +48,13 @@ namespace VL.Spider.Manipulator.Configs
                 IsOn = this.IsOn,
             };
         }
-        protected override Result GrabbingContent(string pageStream, string pageName = "")
+        public override string GetPageNameWhileEmptyOrNull(string issueName)
         {
-            throw new NotImplementedException("该类型暂不支持保存于文件的抓取");
+            throw new NotImplementedException("该功能暂未实现");
         }
-        protected override Result GrabbingContent(DbSession session, string pageString, string pageName = "Default")
+        public override Result GrabContent(DbSession session, string pageString, string issueName)
         {
-            //<a test="a" href='http://business.sohu.com/20160825/n465882932.shtml' target='_blank'>干货！2016新成立基金破千及规模排名</a><span> (08/25 09:10)</span><span class='star'>
-
-
-            throw new NotImplementedException("该类型暂不支持保存于数据库的抓取");
+            throw new NotImplementedException("该功能暂未实现");
         }
     }
 }
