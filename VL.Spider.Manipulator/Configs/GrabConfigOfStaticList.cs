@@ -114,6 +114,10 @@ namespace VL.Spider.Manipulator.Configs
                 detailRequestConfig.URLStrategy = URLStrategy.Default;
                 detailRequestConfig.URL = url;
                 var detailGrabConfig = new GrabConfigOfFile(SpiderConfig) { IsOn = true, DirectoryPath = DetailOutputDirectoryPath, FileName = issueName + "_" + orderNumber + ".xml" };
+                if (detailGrabConfig.OnGrabFinish==null)
+                {
+                    detailGrabConfig.OnGrabFinish += this.OnGrabFinish;
+                }
                 var detailGrabResult = detailGrabConfig.StartGrabbing(detailRequestConfig);
                 switch (new TGrabList().Create(session, SpiderConfig.Spider.SpiderId, issueName, orderNumber, title, url, detailGrabResult ? Path.Combine(DetailOutputDirectoryPath, detailGrabConfig.FileName) : ""))
                 {
