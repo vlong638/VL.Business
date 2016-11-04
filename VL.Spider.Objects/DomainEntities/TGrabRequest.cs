@@ -37,10 +37,10 @@ namespace VL.Spider.Objects.Entities
         private static bool CheckExistence(DbSession session, Guid spiderId,EGrabType grabType, string issueName)
         {
             var query = IORMProvider.GetDbQueryBuilder(session).SelectBuilder;
-            query.ComponentSelect.Values.Add(new ComponentValueOfSelect("1"));
-            query.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabRequestProperties.SpiderId, spiderId, LocateType.Equal));
-            query.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabRequestProperties.GrabType, grabType, LocateType.Equal));
-            query.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabRequestProperties.IssueName, issueName, LocateType.Equal));
+            query.ComponentSelect.Add(new ComponentValueOfSelect("1"));
+            query.ComponentWhere.Add(new ComponentValueOfWhere(TGrabRequestProperties.SpiderId, spiderId, LocateType.Equal));
+            query.ComponentWhere.Add(new ComponentValueOfWhere(TGrabRequestProperties.GrabType, grabType, LocateType.Equal));
+            query.ComponentWhere.Add(new ComponentValueOfWhere(TGrabRequestProperties.IssueName, issueName, LocateType.Equal));
             var result = IORMProvider.GetQueryOperator(session).SelectAsInt<TGrabRequest>(session, query);
             return result != null;
         }

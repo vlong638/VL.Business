@@ -15,7 +15,7 @@ namespace VL.User.Service
     /// Service是工作单元块,这里负责单元化的工作处理
     /// 以及服务日志的处理(这里将UnitOfWork无关的部分移至ServiceDelegator,仅留下了纯粹的UnitOfWork)
     /// </summary>
-    public class UserService : IUserService
+    public class UserService : ISubjectUserService 
     {
         static ServiceContextOfUser ServiceContext { set; get; }
         static DependencyResult DependencyResult { set; get; }

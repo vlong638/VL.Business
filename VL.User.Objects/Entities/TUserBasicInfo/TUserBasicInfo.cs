@@ -14,18 +14,24 @@ namespace VL.User.Objects.Entities
         [DataMember]
         public Guid UserId { get; set; }
         [DataMember]
-        public EGender Gender { get; set; }
+        public ESample Gender { get; set; }
         [DataMember]
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
         [DataMember]
-        public Int16 Mobile { get; set; }
+        public Int16? Mobile { get; set; }
         [DataMember]
         public String Email { get; set; }
+        [DataMember]
+        public String IdCardNumber { get; set; }
         #endregion
 
         #region Constructors
         public TUserBasicInfo()
         {
+        }
+        public TUserBasicInfo(Guid userId)
+        {
+            UserId = userId;
         }
         public TUserBasicInfo(IDataReader reader) : base(reader)
         {
@@ -36,10 +42,26 @@ namespace VL.User.Objects.Entities
         public override void Init(IDataReader reader)
         {
             this.UserId = new Guid(reader[nameof(this.UserId)].ToString());
-            this.Gender = (EGender)Enum.Parse(typeof(EGender), reader[nameof(this.Gender)].ToString());
-            this.Birthday = Convert.ToDateTime(reader[nameof(this.Birthday)]);
-            this.Mobile = Convert.ToInt16(reader[nameof(this.Mobile)]);
-            this.Email = Convert.ToString(reader[nameof(this.Email)]);
+            if (reader[nameof(this.Gender)] != DBNull.Value)
+            {
+                this.Gender = (ESample)Enum.Parse(typeof(ESample), reader[nameof(this.Gender)].ToString());
+            }
+            if (reader[nameof(this.Birthday)] != DBNull.Value)
+            {
+                this.Birthday = Convert.ToDateTime(reader[nameof(this.Birthday)]);
+            }
+            if (reader[nameof(this.Mobile)] != DBNull.Value)
+            {
+                this.Mobile = Convert.ToInt16(reader[nameof(this.Mobile)]);
+            }
+            if (reader[nameof(this.Email)] != DBNull.Value)
+            {
+                this.Email = Convert.ToString(reader[nameof(this.Email)]);
+            }
+            if (reader[nameof(this.IdCardNumber)] != DBNull.Value)
+            {
+                this.IdCardNumber = Convert.ToString(reader[nameof(this.IdCardNumber)]);
+            }
         }
         public override void Init(IDataReader reader, List<string> fields)
         {
@@ -49,19 +71,38 @@ namespace VL.User.Objects.Entities
             }
             if (fields.Contains(nameof(Gender)))
             {
-                this.Gender = (EGender)Enum.Parse(typeof(EGender), reader[nameof(this.Gender)].ToString());
+                if (reader[nameof(this.Gender)] != DBNull.Value)
+                {
+                    this.Gender = (ESample)Enum.Parse(typeof(ESample), reader[nameof(this.Gender)].ToString());
+                }
             }
             if (fields.Contains(nameof(Birthday)))
             {
-                this.Birthday = Convert.ToDateTime(reader[nameof(this.Birthday)]);
+                if (reader[nameof(this.Birthday)] != DBNull.Value)
+                {
+                    this.Birthday = Convert.ToDateTime(reader[nameof(this.Birthday)]);
+                }
             }
             if (fields.Contains(nameof(Mobile)))
             {
-                this.Mobile = Convert.ToInt16(reader[nameof(this.Mobile)]);
+                if (reader[nameof(this.Mobile)] != DBNull.Value)
+                {
+                    this.Mobile = Convert.ToInt16(reader[nameof(this.Mobile)]);
+                }
             }
             if (fields.Contains(nameof(Email)))
             {
-                this.Email = Convert.ToString(reader[nameof(this.Email)]);
+                if (reader[nameof(this.Email)] != DBNull.Value)
+                {
+                    this.Email = Convert.ToString(reader[nameof(this.Email)]);
+                }
+            }
+            if (fields.Contains(nameof(IdCardNumber)))
+            {
+                if (reader[nameof(this.IdCardNumber)] != DBNull.Value)
+                {
+                    this.IdCardNumber = Convert.ToString(reader[nameof(this.IdCardNumber)]);
+                }
             }
         }
         [DataMember]

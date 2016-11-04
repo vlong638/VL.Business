@@ -1,132 +1,66 @@
+using System.Runtime.Serialization;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using VL.Common.DAS.Objects;
-using VL.Common.ORM.Objects;
+using VL.User.Objects.Enums;
 using VL.Common.ORM.Utilities.QueryBuilders;
-using VL.Common.ORM.Utilities.QueryOperators;
-using VL.Common.Protocol.IService;
 using VL.Common.Protocol.IService.IORM;
-using VL.User.Objects.SubResults;
+using VL.Common.Protocol.IService;
+using System.Collections.Generic;
 
 namespace VL.User.Objects.Entities
 {
-    public partial class TUser : IPDMTBase
+    public partial class TUser
     {
-        #region Outer Subject Function
-        public CreateUserResult Create(DbSession session)
+        static ClassReportHelper ReportHelper { set; get; } = Constraints.ReportHelper.GetClassReportHelper(nameof(TUser));
+
+        enum ECode_Create
         {
-            //用户名校验
-            if (this.CheckExistenceOfUserName(session))
+            Default=Report.CodeOfManualStart,
+            用户名_空值检测,
+            密码_空值检测,
+            操作数据库失败,
+        }
+        public Report Create(DbSession session)
+        {
+            this.UserId = Guid.NewGuid();
+            this.CreateTime = DateTime.Now;
+            if (string.IsNullOrEmpty(this.UserName))
             {
-                return CreateUserResult.UserNameExist;
+                return ReportHelper.GetReport(nameof(Create), (int)ECode_Create.用户名_空值检测);
             }
-            //手机号码校验
-            if (this.CheckExistenceOfMobile(session))
+            if (string.IsNullOrEmpty(this.Password))
             {
-                return CreateUserResult.MobileExist;
+                return ReportHelper.GetReport(nameof(Create), (int)ECode_Create.密码_空值检测);
             }
-            //邮箱校验
-            if (this.CheckExistenceOfEmail(session))
-            {
-                return CreateUserResult.EmailExist;
-            }
-            //Id校验
-            if (this.CheckExistenceOfId(session))
-            {
-                return CreateUserResult.IdExist;
-            }
-            //保存入数据库
-            UserId = Guid.NewGuid();
-            CreateTime = DateTime.Now;
             if (this.DbInsert(session))
-            {
-                return CreateUserResult.Success;
-            }
+                return new Report(Report.CodeOfSuccess, "");
             else
-            {
-                return CreateUserResult.DbOperationFailed;
-            }
+                return ReportHelper.GetReport(nameof(Create), (int)ECode_Create.操作数据库失败);
         }
-
-        public AuthenticateResult Authenticate(DbSession session)
+        enum ECode_Authenticate
         {
-            //用户名校验
-            if (!this.CheckExistenceOfUserName(session))
+            Default = Report.CodeOfManualStart,
+            用户名_空值检测,
+            密码_空值检测,
+            操作数据库失败,
+        }
+        public Report Authenticate(DbSession session)
+        {
+            if (string.IsNullOrEmpty(this.UserName))
             {
-                return AuthenticateResult.UserNameUnexist;
+                return ReportHelper.GetReport(nameof(Create), (int)ECode_Create.用户名_空值检测);
             }
-            //密码校验
-            if (!this.CheckValidityOfPassword(session))
+            if (string.IsNullOrEmpty(this.Password))
             {
-                return AuthenticateResult.Success;
+                return ReportHelper.GetReport(nameof(Create), (int)ECode_Create.密码_空值检测);
             }
+            var builder = IORMProvider.GetDbQueryBuilder(session).SelectBuilder;
+            builder.ComponentWhere.Add(TUserProperties.UserName, this.UserName, LocateType.Equal);
+            builder.ComponentWhere.Add(TUserProperties.UserName, this.Password, LocateType.Equal);
+            if (this.DbSelect(session, builder) !=null)
+                return new Report(Report.CodeOfSuccess, "");
             else
-            {
-                return AuthenticateResult.PasswordError;
-            }
+                return ReportHelper.GetReport(nameof(Create), (int)ECode_Create.操作数据库失败);
         }
-        #endregion
-
-        #region Inner Function
-        private bool CheckExistenceOfUserName(DbSession session)
-        {
-            var queryOperator = IORMProvider.GetQueryOperator(session);
-            var selectBuilder = new SelectBuilder();
-            selectBuilder.TableName = nameof(TUser);
-            selectBuilder.ComponentSelect.Values.Add(new ComponentValueOfSelect ("count(*)"));
-            selectBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TUserProperties.UserName, this.UserName, LocateType.Equal));
-            var result = queryOperator.SelectAsInt<TUser>(session, selectBuilder);
-            return result.HasValue&& result.Value> 0;
-        }
-        private bool CheckExistenceOfMobile(DbSession session)
-        {
-            var queryOperator = IORMProvider.GetQueryOperator(session);
-            var selectBuilder = new SelectBuilder();
-            selectBuilder.TableName = nameof(TUser);
-            selectBuilder.ComponentSelect.Values.Add(new ComponentValueOfSelect("count(*)"));
-            selectBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TUserProperties.Mobile, this.Mobile, LocateType.Equal));
-            var result = queryOperator.SelectAsInt<TUser>(session, selectBuilder);
-            return result.HasValue && result.Value > 0;
-        }
-        private bool CheckExistenceOfEmail(DbSession session)
-        {
-            var queryOperator = IORMProvider.GetQueryOperator(session);
-            var selectBuilder = new SelectBuilder();
-            selectBuilder.TableName = nameof(TUser);
-            selectBuilder.ComponentSelect.Values.Add(new ComponentValueOfSelect("count(*)"));
-            selectBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TUserProperties.Email, this.Email, LocateType.Equal));
-            var result = queryOperator.SelectAsInt<TUser>(session, selectBuilder);
-            return result.HasValue && result.Value > 0;
-        }
-        private bool CheckExistenceOfId(DbSession session)
-        {
-            var queryOperator = IORMProvider.GetQueryOperator(session);
-            var selectBuilder = new SelectBuilder();
-            selectBuilder.TableName = nameof(TUser);
-            selectBuilder.ComponentSelect.Values.Add(new ComponentValueOfSelect("count(*)"));
-            selectBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TUserProperties.IdCardNumber, this.IdCardNumber, LocateType.Equal));
-            var result = queryOperator.SelectAsInt<TUser>(session, selectBuilder);
-            return result.HasValue && result.Value > 0;
-        }
-        private bool CheckValidityOfPassword(DbSession session)
-        {
-            var queryOperator = IORMProvider.GetQueryOperator(session);
-            var selectBuilder = new SelectBuilder();
-            selectBuilder.TableName = nameof(TUser);
-            selectBuilder.ComponentSelect.Values.Add(new ComponentValueOfSelect("count(*)"));
-            selectBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TUserProperties.UserId, this.UserId, LocateType.Equal));
-            selectBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TUserProperties.Password, this.Password, LocateType.Equal));
-            var result = queryOperator.SelectAsInt<TUser>(session, selectBuilder);
-            return result.HasValue && result.Value > 0;
-        }
-        #endregion
-
-        #region Outer Object Function
-        public List<TUser> GetAllUsers(DbSession session)
-        {
-            return new List<TUser>().DbSelect(session);
-        }
-        #endregion
     }
 }

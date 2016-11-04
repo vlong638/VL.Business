@@ -16,12 +16,6 @@ namespace VL.User.Objects.Entities
         [DataMember]
         public String UserName { get; set; }
         [DataMember]
-        public Int16 Mobile { get; set; }
-        [DataMember]
-        public String Email { get; set; }
-        [DataMember]
-        public String IdCardNumber { get; set; }
-        [DataMember]
         public String Password { get; set; }
         [DataMember]
         public DateTime CreateTime { get; set; }
@@ -30,6 +24,10 @@ namespace VL.User.Objects.Entities
         #region Constructors
         public TUser()
         {
+        }
+        public TUser(Guid userId)
+        {
+            UserId = userId;
         }
         public TUser(IDataReader reader) : base(reader)
         {
@@ -41,9 +39,6 @@ namespace VL.User.Objects.Entities
         {
             this.UserId = new Guid(reader[nameof(this.UserId)].ToString());
             this.UserName = Convert.ToString(reader[nameof(this.UserName)]);
-            this.Mobile = Convert.ToInt16(reader[nameof(this.Mobile)]);
-            this.Email = Convert.ToString(reader[nameof(this.Email)]);
-            this.IdCardNumber = Convert.ToString(reader[nameof(this.IdCardNumber)]);
             this.Password = Convert.ToString(reader[nameof(this.Password)]);
             this.CreateTime = Convert.ToDateTime(reader[nameof(this.CreateTime)]);
         }
@@ -56,18 +51,6 @@ namespace VL.User.Objects.Entities
             if (fields.Contains(nameof(UserName)))
             {
                 this.UserName = Convert.ToString(reader[nameof(this.UserName)]);
-            }
-            if (fields.Contains(nameof(Mobile)))
-            {
-                this.Mobile = Convert.ToInt16(reader[nameof(this.Mobile)]);
-            }
-            if (fields.Contains(nameof(Email)))
-            {
-                this.Email = Convert.ToString(reader[nameof(this.Email)]);
-            }
-            if (fields.Contains(nameof(IdCardNumber)))
-            {
-                this.IdCardNumber = Convert.ToString(reader[nameof(this.IdCardNumber)]);
             }
             if (fields.Contains(nameof(Password)))
             {

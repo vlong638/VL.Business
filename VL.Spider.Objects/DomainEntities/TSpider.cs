@@ -22,8 +22,8 @@ namespace VL.Spider.Objects.Entities
         private static bool CheckExistence(DbSession session, string spiderName)
         {
             var query = IORMProvider.GetDbQueryBuilder(session).SelectBuilder;
-            query.ComponentSelect.Values.Add(new ComponentValueOfSelect("1"));
-            query.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TSpiderProperties.SpiderName, spiderName, LocateType.Equal));
+            query.ComponentSelect.Add(new ComponentValueOfSelect("1"));
+            query.ComponentWhere.Add(new ComponentValueOfWhere(TSpiderProperties.SpiderName, spiderName, LocateType.Equal));
             var @operator = IORMProvider.GetQueryOperator(session);
             return @operator.SelectAsInt<TSpider>(session, query).HasValue;
         }

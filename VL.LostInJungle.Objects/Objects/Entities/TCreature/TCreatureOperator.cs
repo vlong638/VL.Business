@@ -15,30 +15,30 @@ namespace VL.LostInJungle.Objects.Entities
         public static bool DbDelete(this TCreature entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureProperties.CreatureId, entity.CreatureId, LocateType.Equal));
+            query.DeleteBuilder.ComponentWhere.Add(new ComponentValueOfWhere(TCreatureProperties.CreatureId, entity.CreatureId, LocateType.Equal));
             return IORMProvider.GetQueryOperator(session).Delete<TCreature>(session, query);
         }
         public static bool DbDelete(this List<TCreature> entities, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             var Ids = entities.Select(c =>c.CreatureId );
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureProperties.CreatureId, Ids, LocateType.In));
+            query.DeleteBuilder.ComponentWhere.Add(new ComponentValueOfWhere(TCreatureProperties.CreatureId, Ids, LocateType.In));
             return IORMProvider.GetQueryOperator(session).Delete<TCreature>(session, query);
         }
         public static bool DbInsert(this TCreature entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             InsertBuilder builder = new InsertBuilder();
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.CreatureId, entity.CreatureId));
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.CreatureType, entity.CreatureType));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureProperties.CreatureId, entity.CreatureId));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureProperties.CreatureType, entity.CreatureType));
             if (entity.Name == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.Name));
             }
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.Name, entity.Name));
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.Experience, entity.Experience));
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.Level, entity.Level));
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.Profession, entity.Profession));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureProperties.Name, entity.Name));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureProperties.Experience, entity.Experience));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureProperties.Level, entity.Level));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureProperties.Profession, entity.Profession));
             query.InsertBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Insert<TCreature>(session, query);
         }
@@ -48,16 +48,16 @@ namespace VL.LostInJungle.Objects.Entities
             foreach (var entity in entities)
             {
                 InsertBuilder builder = new InsertBuilder();
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.CreatureId, entity.CreatureId));
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.CreatureType, entity.CreatureType));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureProperties.CreatureId, entity.CreatureId));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureProperties.CreatureType, entity.CreatureType));
             if (entity.Name == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.Name));
             }
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.Name, entity.Name));
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.Experience, entity.Experience));
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.Level, entity.Level));
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureProperties.Profession, entity.Profession));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureProperties.Name, entity.Name));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureProperties.Experience, entity.Experience));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureProperties.Level, entity.Level));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureProperties.Profession, entity.Profession));
                 query.InsertBuilders.Add(builder);
             }
             return IORMProvider.GetQueryOperator(session).InsertAll<TCreature>(session, query);
@@ -66,37 +66,37 @@ namespace VL.LostInJungle.Objects.Entities
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             UpdateBuilder builder = new UpdateBuilder();
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureProperties.CreatureId, entity.CreatureId, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TCreatureProperties.CreatureId, entity.CreatureId, LocateType.Equal));
             if (fields==null|| fields.Length==0)
             {
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.CreatureId, entity.CreatureId));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.CreatureType, entity.CreatureType));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Name, entity.Name));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Experience, entity.Experience));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Level, entity.Level));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Profession, entity.Profession));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.CreatureId, entity.CreatureId));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.CreatureType, entity.CreatureType));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.Name, entity.Name));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.Experience, entity.Experience));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.Level, entity.Level));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.Profession, entity.Profession));
             }
             else
             {
                 if (fields.Contains(TCreatureProperties.CreatureType))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.CreatureType, entity.CreatureType));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.CreatureType, entity.CreatureType));
                 }
                 if (fields.Contains(TCreatureProperties.Name))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Name, entity.Name));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.Name, entity.Name));
                 }
                 if (fields.Contains(TCreatureProperties.Experience))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Experience, entity.Experience));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.Experience, entity.Experience));
                 }
                 if (fields.Contains(TCreatureProperties.Level))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Level, entity.Level));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.Level, entity.Level));
                 }
                 if (fields.Contains(TCreatureProperties.Profession))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Profession, entity.Profession));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.Profession, entity.Profession));
                 }
             }
             query.UpdateBuilders.Add(builder);
@@ -108,37 +108,37 @@ namespace VL.LostInJungle.Objects.Entities
             foreach (var entity in entities)
             {
                 UpdateBuilder builder = new UpdateBuilder();
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureProperties.CreatureId, entity.CreatureId, LocateType.Equal));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TCreatureProperties.CreatureId, entity.CreatureId, LocateType.Equal));
                 if (fields==null|| fields.Length==0)
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.CreatureId, entity.CreatureId));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.CreatureType, entity.CreatureType));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Name, entity.Name));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Experience, entity.Experience));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Level, entity.Level));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Profession, entity.Profession));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.CreatureId, entity.CreatureId));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.CreatureType, entity.CreatureType));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.Name, entity.Name));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.Experience, entity.Experience));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.Level, entity.Level));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.Profession, entity.Profession));
                 }
                 else
                 {
                     if (fields.Contains(TCreatureProperties.CreatureType))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.CreatureType, entity.CreatureType));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.CreatureType, entity.CreatureType));
                     }
                     if (fields.Contains(TCreatureProperties.Name))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Name, entity.Name));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.Name, entity.Name));
                     }
                     if (fields.Contains(TCreatureProperties.Experience))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Experience, entity.Experience));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.Experience, entity.Experience));
                     }
                     if (fields.Contains(TCreatureProperties.Level))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Level, entity.Level));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.Level, entity.Level));
                     }
                     if (fields.Contains(TCreatureProperties.Profession))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureProperties.Profession, entity.Profession));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureProperties.Profession, entity.Profession));
                     }
                 }
                 query.UpdateBuilders.Add(builder);
@@ -153,22 +153,22 @@ namespace VL.LostInJungle.Objects.Entities
             SelectBuilder builder = new SelectBuilder();
             if (fields.Count() == 0)
             {
-                builder.ComponentSelect.Values.Add(TCreatureProperties.CreatureId);
-                builder.ComponentSelect.Values.Add(TCreatureProperties.CreatureType);
-                builder.ComponentSelect.Values.Add(TCreatureProperties.Name);
-                builder.ComponentSelect.Values.Add(TCreatureProperties.Experience);
-                builder.ComponentSelect.Values.Add(TCreatureProperties.Level);
-                builder.ComponentSelect.Values.Add(TCreatureProperties.Profession);
+                builder.ComponentSelect.Add(TCreatureProperties.CreatureId);
+                builder.ComponentSelect.Add(TCreatureProperties.CreatureType);
+                builder.ComponentSelect.Add(TCreatureProperties.Name);
+                builder.ComponentSelect.Add(TCreatureProperties.Experience);
+                builder.ComponentSelect.Add(TCreatureProperties.Level);
+                builder.ComponentSelect.Add(TCreatureProperties.Profession);
             }
             else
             {
-                builder.ComponentSelect.Values.Add(TCreatureProperties.CreatureId);
+                builder.ComponentSelect.Add(TCreatureProperties.CreatureId);
                 foreach (var field in fields)
                 {
-                    builder.ComponentSelect.Values.Add(field);
+                    builder.ComponentSelect.Add(field);
                 }
             }
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureProperties.CreatureId, entity.CreatureId, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TCreatureProperties.CreatureId, entity.CreatureId, LocateType.Equal));
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Select<TCreature>(session, query);
         }
@@ -178,25 +178,25 @@ namespace VL.LostInJungle.Objects.Entities
             SelectBuilder builder = new SelectBuilder();
             if (fields.Count() == 0)
             {
-                builder.ComponentSelect.Values.Add(TCreatureProperties.CreatureId);
-                builder.ComponentSelect.Values.Add(TCreatureProperties.CreatureType);
-                builder.ComponentSelect.Values.Add(TCreatureProperties.Name);
-                builder.ComponentSelect.Values.Add(TCreatureProperties.Experience);
-                builder.ComponentSelect.Values.Add(TCreatureProperties.Level);
-                builder.ComponentSelect.Values.Add(TCreatureProperties.Profession);
+                builder.ComponentSelect.Add(TCreatureProperties.CreatureId);
+                builder.ComponentSelect.Add(TCreatureProperties.CreatureType);
+                builder.ComponentSelect.Add(TCreatureProperties.Name);
+                builder.ComponentSelect.Add(TCreatureProperties.Experience);
+                builder.ComponentSelect.Add(TCreatureProperties.Level);
+                builder.ComponentSelect.Add(TCreatureProperties.Profession);
             }
             else
             {
-                builder.ComponentSelect.Values.Add(TCreatureProperties.CreatureId);
+                builder.ComponentSelect.Add(TCreatureProperties.CreatureId);
                 foreach (var field in fields)
                 {
-                    builder.ComponentSelect.Values.Add(field);
+                    builder.ComponentSelect.Add(field);
                 }
             }
             var Ids = entities.Select(c =>c.CreatureId );
             if (Ids.Count() != 0)
             {
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureProperties.CreatureId, Ids, LocateType.In));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TCreatureProperties.CreatureId, Ids, LocateType.In));
             }
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).SelectAll<TCreature>(session, query);

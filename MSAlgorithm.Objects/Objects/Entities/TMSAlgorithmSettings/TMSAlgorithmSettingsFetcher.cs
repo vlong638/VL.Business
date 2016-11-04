@@ -17,13 +17,13 @@ namespace Dacai.MagicSquareAlgorithm.Objects.Entities
             {
                 var subselect = new SelectBuilder();
                 subselect.TableName = nameof(TMSAlgorithmSettings);
-                subselect.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.AlgorithmId);
-                subselect.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.SubWeightType, tMSAlgorithmSettings.SubWeightType, LocateType.Equal));
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmProperties.AlgorithmId, subselect, LocateType.Equal));
+                subselect.ComponentSelect.Add(TMSAlgorithmSettingsProperties.AlgorithmId);
+                subselect.ComponentWhere.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.SubWeightType, tMSAlgorithmSettings.SubWeightType, LocateType.Equal));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TMSAlgorithmProperties.AlgorithmId, subselect, LocateType.Equal));
             }
             else
             {
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmProperties.AlgorithmId, tMSAlgorithmSettings.AlgorithmId, LocateType.Equal));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TMSAlgorithmProperties.AlgorithmId, tMSAlgorithmSettings.AlgorithmId, LocateType.Equal));
             }
             query.SelectBuilders.Add(builder);
             tMSAlgorithmSettings.MSAlgorithm = IORMProvider.GetQueryOperator(session).Select<TMSAlgorithm>(session, query);

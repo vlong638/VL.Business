@@ -17,13 +17,13 @@ namespace VL.User.Objects.Entities
             {
                 var subselect = new SelectBuilder();
                 subselect.TableName = nameof(TUserBasicInfo);
-                subselect.ComponentSelect.Values.Add(TUserBasicInfoProperties.UserId);
-                subselect.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TUserBasicInfoProperties.UserId, tUserBasicInfo.UserId, LocateType.Equal));
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TUserProperties.UserId, subselect, LocateType.Equal));
+                subselect.ComponentSelect.Add(TUserBasicInfoProperties.UserId);
+                subselect.ComponentWhere.Add(new ComponentValueOfWhere(TUserBasicInfoProperties.UserId, tUserBasicInfo.UserId, LocateType.Equal));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TUserProperties.UserId, subselect, LocateType.Equal));
             }
             else
             {
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TUserProperties.UserId, tUserBasicInfo.UserId, LocateType.Equal));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TUserProperties.UserId, tUserBasicInfo.UserId, LocateType.Equal));
             }
             query.SelectBuilders.Add(builder);
             tUserBasicInfo.User = IORMProvider.GetQueryOperator(session).Select<TUser>(session, query);

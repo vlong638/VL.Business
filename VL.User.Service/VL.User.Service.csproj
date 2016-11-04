@@ -57,7 +57,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization">
-      <HintPath>..\packages\VL.Common.Protocol.1.0.1608081724.1\lib\net452\System.Runtime.Serialization.dll</HintPath>
+      <HintPath>..\packages\VL.Common.Protocol.1.0.1611041625.1\lib\net452\System.Runtime.Serialization.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.ServiceModel" />
@@ -75,23 +75,23 @@
       <HintPath>..\packages\VL.Common.Logger.1.0.1604121655.1\lib\net452\VL.Common.Logger.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="VL.Common.ORM, Version=1.0.6080.30858, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Common.ORM.1.0.1608241708.1\lib\net452\VL.Common.ORM.dll</HintPath>
+    <Reference Include="VL.Common.ORM, Version=1.0.6127.29448, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.ORM.1.0.1610101703.1\lib\net452\VL.Common.ORM.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="VL.Common.Protocol, Version=1.0.6064.30164, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Common.Protocol.1.0.1608081724.1\lib\net452\VL.Common.Protocol.dll</HintPath>
+    <Reference Include="VL.Common.Protocol, Version=1.0.6152.29577, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.Protocol.1.0.1611041625.1\lib\net452\VL.Common.Protocol.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configs\DbConfigOfUser.cs" />
-    <Compile Include="DomainEntities\ObjectOperator.cs" />
-    <Compile Include="DomainEntities\SubjectOperator.cs" />
-    <Compile Include="IUserService.cs" />
+    <Compile Include="Services\ISubjectUserService.cs" />
+    <Compile Include="Services\IObjectUserService.cs" />
+    <Compile Include="Services\ObjectOperator.cs" />
+    <Compile Include="Services\SubjectUserService.cs" />
     <Compile Include="问题记录\WCF不支持属性间引用.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserService.cs" />
     <Compile Include="Utilities\ServiceContextOfUser.cs" />
   </ItemGroup>
   <ItemGroup>

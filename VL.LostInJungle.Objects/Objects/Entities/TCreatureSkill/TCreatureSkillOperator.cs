@@ -15,56 +15,56 @@ namespace VL.LostInJungle.Objects.Entities
         public static bool DbDelete(this TCreatureSkill entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureSkillProperties.CreatureId, entity.CreatureId, LocateType.Equal));
+            query.DeleteBuilder.ComponentWhere.Add(new ComponentValueOfWhere(TCreatureSkillProperties.CreatureId, entity.CreatureId, LocateType.Equal));
             return IORMProvider.GetQueryOperator(session).Delete<TCreatureSkill>(session, query);
         }
         public static bool DbDelete(this List<TCreatureSkill> entities, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             var Ids = entities.Select(c =>c.CreatureId );
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureSkillProperties.CreatureId, Ids, LocateType.In));
+            query.DeleteBuilder.ComponentWhere.Add(new ComponentValueOfWhere(TCreatureSkillProperties.CreatureId, Ids, LocateType.In));
             return IORMProvider.GetQueryOperator(session).Delete<TCreatureSkill>(session, query);
         }
         public static bool DbInsert(this TCreatureSkill entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             InsertBuilder builder = new InsertBuilder();
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureSkillProperties.CreatureId, entity.CreatureId));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureSkillProperties.CreatureId, entity.CreatureId));
             if (entity.SurvivalSkill == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.SurvivalSkill));
             }
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureSkillProperties.SurvivalSkill, entity.SurvivalSkill));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureSkillProperties.SurvivalSkill, entity.SurvivalSkill));
             if (entity.WarriorSkills == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.WarriorSkills));
             }
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureSkillProperties.WarriorSkills, entity.WarriorSkills));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureSkillProperties.WarriorSkills, entity.WarriorSkills));
             if (entity.ExplorerSkills == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.ExplorerSkills));
             }
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureSkillProperties.ExplorerSkills, entity.ExplorerSkills));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureSkillProperties.ExplorerSkills, entity.ExplorerSkills));
             if (entity.FarmingSkills == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.FarmingSkills));
             }
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureSkillProperties.FarmingSkills, entity.FarmingSkills));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureSkillProperties.FarmingSkills, entity.FarmingSkills));
             if (entity.RasingSkills == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.RasingSkills));
             }
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureSkillProperties.RasingSkills, entity.RasingSkills));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureSkillProperties.RasingSkills, entity.RasingSkills));
             if (entity.BowmanSkills == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.BowmanSkills));
             }
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureSkillProperties.BowmanSkills, entity.BowmanSkills));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureSkillProperties.BowmanSkills, entity.BowmanSkills));
             if (entity.FishingSkills == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.FishingSkills));
             }
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureSkillProperties.FishingSkills, entity.FishingSkills));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureSkillProperties.FishingSkills, entity.FishingSkills));
             query.InsertBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Insert<TCreatureSkill>(session, query);
         }
@@ -74,42 +74,42 @@ namespace VL.LostInJungle.Objects.Entities
             foreach (var entity in entities)
             {
                 InsertBuilder builder = new InsertBuilder();
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureSkillProperties.CreatureId, entity.CreatureId));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureSkillProperties.CreatureId, entity.CreatureId));
             if (entity.SurvivalSkill == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.SurvivalSkill));
             }
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureSkillProperties.SurvivalSkill, entity.SurvivalSkill));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureSkillProperties.SurvivalSkill, entity.SurvivalSkill));
             if (entity.WarriorSkills == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.WarriorSkills));
             }
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureSkillProperties.WarriorSkills, entity.WarriorSkills));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureSkillProperties.WarriorSkills, entity.WarriorSkills));
             if (entity.ExplorerSkills == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.ExplorerSkills));
             }
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureSkillProperties.ExplorerSkills, entity.ExplorerSkills));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureSkillProperties.ExplorerSkills, entity.ExplorerSkills));
             if (entity.FarmingSkills == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.FarmingSkills));
             }
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureSkillProperties.FarmingSkills, entity.FarmingSkills));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureSkillProperties.FarmingSkills, entity.FarmingSkills));
             if (entity.RasingSkills == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.RasingSkills));
             }
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureSkillProperties.RasingSkills, entity.RasingSkills));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureSkillProperties.RasingSkills, entity.RasingSkills));
             if (entity.BowmanSkills == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.BowmanSkills));
             }
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureSkillProperties.BowmanSkills, entity.BowmanSkills));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureSkillProperties.BowmanSkills, entity.BowmanSkills));
             if (entity.FishingSkills == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.FishingSkills));
             }
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureSkillProperties.FishingSkills, entity.FishingSkills));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureSkillProperties.FishingSkills, entity.FishingSkills));
                 query.InsertBuilders.Add(builder);
             }
             return IORMProvider.GetQueryOperator(session).InsertAll<TCreatureSkill>(session, query);
@@ -118,47 +118,47 @@ namespace VL.LostInJungle.Objects.Entities
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             UpdateBuilder builder = new UpdateBuilder();
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureSkillProperties.CreatureId, entity.CreatureId, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TCreatureSkillProperties.CreatureId, entity.CreatureId, LocateType.Equal));
             if (fields==null|| fields.Length==0)
             {
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.CreatureId, entity.CreatureId));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.SurvivalSkill, entity.SurvivalSkill));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.WarriorSkills, entity.WarriorSkills));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.ExplorerSkills, entity.ExplorerSkills));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.FarmingSkills, entity.FarmingSkills));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.RasingSkills, entity.RasingSkills));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.BowmanSkills, entity.BowmanSkills));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.FishingSkills, entity.FishingSkills));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.CreatureId, entity.CreatureId));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.SurvivalSkill, entity.SurvivalSkill));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.WarriorSkills, entity.WarriorSkills));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.ExplorerSkills, entity.ExplorerSkills));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.FarmingSkills, entity.FarmingSkills));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.RasingSkills, entity.RasingSkills));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.BowmanSkills, entity.BowmanSkills));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.FishingSkills, entity.FishingSkills));
             }
             else
             {
                 if (fields.Contains(TCreatureSkillProperties.SurvivalSkill))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.SurvivalSkill, entity.SurvivalSkill));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.SurvivalSkill, entity.SurvivalSkill));
                 }
                 if (fields.Contains(TCreatureSkillProperties.WarriorSkills))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.WarriorSkills, entity.WarriorSkills));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.WarriorSkills, entity.WarriorSkills));
                 }
                 if (fields.Contains(TCreatureSkillProperties.ExplorerSkills))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.ExplorerSkills, entity.ExplorerSkills));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.ExplorerSkills, entity.ExplorerSkills));
                 }
                 if (fields.Contains(TCreatureSkillProperties.FarmingSkills))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.FarmingSkills, entity.FarmingSkills));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.FarmingSkills, entity.FarmingSkills));
                 }
                 if (fields.Contains(TCreatureSkillProperties.RasingSkills))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.RasingSkills, entity.RasingSkills));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.RasingSkills, entity.RasingSkills));
                 }
                 if (fields.Contains(TCreatureSkillProperties.BowmanSkills))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.BowmanSkills, entity.BowmanSkills));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.BowmanSkills, entity.BowmanSkills));
                 }
                 if (fields.Contains(TCreatureSkillProperties.FishingSkills))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.FishingSkills, entity.FishingSkills));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.FishingSkills, entity.FishingSkills));
                 }
             }
             query.UpdateBuilders.Add(builder);
@@ -170,47 +170,47 @@ namespace VL.LostInJungle.Objects.Entities
             foreach (var entity in entities)
             {
                 UpdateBuilder builder = new UpdateBuilder();
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureSkillProperties.CreatureId, entity.CreatureId, LocateType.Equal));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TCreatureSkillProperties.CreatureId, entity.CreatureId, LocateType.Equal));
                 if (fields==null|| fields.Length==0)
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.CreatureId, entity.CreatureId));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.SurvivalSkill, entity.SurvivalSkill));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.WarriorSkills, entity.WarriorSkills));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.ExplorerSkills, entity.ExplorerSkills));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.FarmingSkills, entity.FarmingSkills));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.RasingSkills, entity.RasingSkills));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.BowmanSkills, entity.BowmanSkills));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.FishingSkills, entity.FishingSkills));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.CreatureId, entity.CreatureId));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.SurvivalSkill, entity.SurvivalSkill));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.WarriorSkills, entity.WarriorSkills));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.ExplorerSkills, entity.ExplorerSkills));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.FarmingSkills, entity.FarmingSkills));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.RasingSkills, entity.RasingSkills));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.BowmanSkills, entity.BowmanSkills));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.FishingSkills, entity.FishingSkills));
                 }
                 else
                 {
                     if (fields.Contains(TCreatureSkillProperties.SurvivalSkill))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.SurvivalSkill, entity.SurvivalSkill));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.SurvivalSkill, entity.SurvivalSkill));
                     }
                     if (fields.Contains(TCreatureSkillProperties.WarriorSkills))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.WarriorSkills, entity.WarriorSkills));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.WarriorSkills, entity.WarriorSkills));
                     }
                     if (fields.Contains(TCreatureSkillProperties.ExplorerSkills))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.ExplorerSkills, entity.ExplorerSkills));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.ExplorerSkills, entity.ExplorerSkills));
                     }
                     if (fields.Contains(TCreatureSkillProperties.FarmingSkills))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.FarmingSkills, entity.FarmingSkills));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.FarmingSkills, entity.FarmingSkills));
                     }
                     if (fields.Contains(TCreatureSkillProperties.RasingSkills))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.RasingSkills, entity.RasingSkills));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.RasingSkills, entity.RasingSkills));
                     }
                     if (fields.Contains(TCreatureSkillProperties.BowmanSkills))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.BowmanSkills, entity.BowmanSkills));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.BowmanSkills, entity.BowmanSkills));
                     }
                     if (fields.Contains(TCreatureSkillProperties.FishingSkills))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureSkillProperties.FishingSkills, entity.FishingSkills));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureSkillProperties.FishingSkills, entity.FishingSkills));
                     }
                 }
                 query.UpdateBuilders.Add(builder);
@@ -225,24 +225,24 @@ namespace VL.LostInJungle.Objects.Entities
             SelectBuilder builder = new SelectBuilder();
             if (fields.Count() == 0)
             {
-                builder.ComponentSelect.Values.Add(TCreatureSkillProperties.CreatureId);
-                builder.ComponentSelect.Values.Add(TCreatureSkillProperties.SurvivalSkill);
-                builder.ComponentSelect.Values.Add(TCreatureSkillProperties.WarriorSkills);
-                builder.ComponentSelect.Values.Add(TCreatureSkillProperties.ExplorerSkills);
-                builder.ComponentSelect.Values.Add(TCreatureSkillProperties.FarmingSkills);
-                builder.ComponentSelect.Values.Add(TCreatureSkillProperties.RasingSkills);
-                builder.ComponentSelect.Values.Add(TCreatureSkillProperties.BowmanSkills);
-                builder.ComponentSelect.Values.Add(TCreatureSkillProperties.FishingSkills);
+                builder.ComponentSelect.Add(TCreatureSkillProperties.CreatureId);
+                builder.ComponentSelect.Add(TCreatureSkillProperties.SurvivalSkill);
+                builder.ComponentSelect.Add(TCreatureSkillProperties.WarriorSkills);
+                builder.ComponentSelect.Add(TCreatureSkillProperties.ExplorerSkills);
+                builder.ComponentSelect.Add(TCreatureSkillProperties.FarmingSkills);
+                builder.ComponentSelect.Add(TCreatureSkillProperties.RasingSkills);
+                builder.ComponentSelect.Add(TCreatureSkillProperties.BowmanSkills);
+                builder.ComponentSelect.Add(TCreatureSkillProperties.FishingSkills);
             }
             else
             {
-                builder.ComponentSelect.Values.Add(TCreatureSkillProperties.CreatureId);
+                builder.ComponentSelect.Add(TCreatureSkillProperties.CreatureId);
                 foreach (var field in fields)
                 {
-                    builder.ComponentSelect.Values.Add(field);
+                    builder.ComponentSelect.Add(field);
                 }
             }
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureSkillProperties.CreatureId, entity.CreatureId, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TCreatureSkillProperties.CreatureId, entity.CreatureId, LocateType.Equal));
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Select<TCreatureSkill>(session, query);
         }
@@ -252,27 +252,27 @@ namespace VL.LostInJungle.Objects.Entities
             SelectBuilder builder = new SelectBuilder();
             if (fields.Count() == 0)
             {
-                builder.ComponentSelect.Values.Add(TCreatureSkillProperties.CreatureId);
-                builder.ComponentSelect.Values.Add(TCreatureSkillProperties.SurvivalSkill);
-                builder.ComponentSelect.Values.Add(TCreatureSkillProperties.WarriorSkills);
-                builder.ComponentSelect.Values.Add(TCreatureSkillProperties.ExplorerSkills);
-                builder.ComponentSelect.Values.Add(TCreatureSkillProperties.FarmingSkills);
-                builder.ComponentSelect.Values.Add(TCreatureSkillProperties.RasingSkills);
-                builder.ComponentSelect.Values.Add(TCreatureSkillProperties.BowmanSkills);
-                builder.ComponentSelect.Values.Add(TCreatureSkillProperties.FishingSkills);
+                builder.ComponentSelect.Add(TCreatureSkillProperties.CreatureId);
+                builder.ComponentSelect.Add(TCreatureSkillProperties.SurvivalSkill);
+                builder.ComponentSelect.Add(TCreatureSkillProperties.WarriorSkills);
+                builder.ComponentSelect.Add(TCreatureSkillProperties.ExplorerSkills);
+                builder.ComponentSelect.Add(TCreatureSkillProperties.FarmingSkills);
+                builder.ComponentSelect.Add(TCreatureSkillProperties.RasingSkills);
+                builder.ComponentSelect.Add(TCreatureSkillProperties.BowmanSkills);
+                builder.ComponentSelect.Add(TCreatureSkillProperties.FishingSkills);
             }
             else
             {
-                builder.ComponentSelect.Values.Add(TCreatureSkillProperties.CreatureId);
+                builder.ComponentSelect.Add(TCreatureSkillProperties.CreatureId);
                 foreach (var field in fields)
                 {
-                    builder.ComponentSelect.Values.Add(field);
+                    builder.ComponentSelect.Add(field);
                 }
             }
             var Ids = entities.Select(c =>c.CreatureId );
             if (Ids.Count() != 0)
             {
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureSkillProperties.CreatureId, Ids, LocateType.In));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TCreatureSkillProperties.CreatureId, Ids, LocateType.In));
             }
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).SelectAll<TCreatureSkill>(session, query);

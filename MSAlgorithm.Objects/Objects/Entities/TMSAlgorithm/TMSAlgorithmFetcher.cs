@@ -13,7 +13,7 @@ namespace Dacai.MagicSquareAlgorithm.Objects.Entities
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             SelectBuilder builder = new SelectBuilder();
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.AlgorithmId, tMSAlgorithm.AlgorithmId, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.AlgorithmId, tMSAlgorithm.AlgorithmId, LocateType.Equal));
             query.SelectBuilders.Add(builder);
             tMSAlgorithm.MSAlgorithmSettings = IORMProvider.GetQueryOperator(session).SelectAll<TMSAlgorithmSettings>(session, query);
             return tMSAlgorithm.MSAlgorithmSettings.Count > 0;

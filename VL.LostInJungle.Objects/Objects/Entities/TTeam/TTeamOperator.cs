@@ -15,26 +15,26 @@ namespace VL.LostInJungle.Objects.Entities
         public static bool DbDelete(this TTeam entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TTeamProperties.TeamId, entity.TeamId, LocateType.Equal));
+            query.DeleteBuilder.ComponentWhere.Add(new ComponentValueOfWhere(TTeamProperties.TeamId, entity.TeamId, LocateType.Equal));
             return IORMProvider.GetQueryOperator(session).Delete<TTeam>(session, query);
         }
         public static bool DbDelete(this List<TTeam> entities, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             var Ids = entities.Select(c =>c.TeamId );
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TTeamProperties.TeamId, Ids, LocateType.In));
+            query.DeleteBuilder.ComponentWhere.Add(new ComponentValueOfWhere(TTeamProperties.TeamId, Ids, LocateType.In));
             return IORMProvider.GetQueryOperator(session).Delete<TTeam>(session, query);
         }
         public static bool DbInsert(this TTeam entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             InsertBuilder builder = new InsertBuilder();
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TTeamProperties.TeamId, entity.TeamId));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TTeamProperties.TeamId, entity.TeamId));
             if (entity.Name == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.Name));
             }
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TTeamProperties.Name, entity.Name));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TTeamProperties.Name, entity.Name));
             query.InsertBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Insert<TTeam>(session, query);
         }
@@ -44,12 +44,12 @@ namespace VL.LostInJungle.Objects.Entities
             foreach (var entity in entities)
             {
                 InsertBuilder builder = new InsertBuilder();
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TTeamProperties.TeamId, entity.TeamId));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TTeamProperties.TeamId, entity.TeamId));
             if (entity.Name == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.Name));
             }
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TTeamProperties.Name, entity.Name));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TTeamProperties.Name, entity.Name));
                 query.InsertBuilders.Add(builder);
             }
             return IORMProvider.GetQueryOperator(session).InsertAll<TTeam>(session, query);
@@ -58,17 +58,17 @@ namespace VL.LostInJungle.Objects.Entities
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             UpdateBuilder builder = new UpdateBuilder();
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TTeamProperties.TeamId, entity.TeamId, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TTeamProperties.TeamId, entity.TeamId, LocateType.Equal));
             if (fields==null|| fields.Length==0)
             {
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TTeamProperties.TeamId, entity.TeamId));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TTeamProperties.Name, entity.Name));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TTeamProperties.TeamId, entity.TeamId));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TTeamProperties.Name, entity.Name));
             }
             else
             {
                 if (fields.Contains(TTeamProperties.Name))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TTeamProperties.Name, entity.Name));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TTeamProperties.Name, entity.Name));
                 }
             }
             query.UpdateBuilders.Add(builder);
@@ -80,17 +80,17 @@ namespace VL.LostInJungle.Objects.Entities
             foreach (var entity in entities)
             {
                 UpdateBuilder builder = new UpdateBuilder();
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TTeamProperties.TeamId, entity.TeamId, LocateType.Equal));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TTeamProperties.TeamId, entity.TeamId, LocateType.Equal));
                 if (fields==null|| fields.Length==0)
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TTeamProperties.TeamId, entity.TeamId));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TTeamProperties.Name, entity.Name));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TTeamProperties.TeamId, entity.TeamId));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TTeamProperties.Name, entity.Name));
                 }
                 else
                 {
                     if (fields.Contains(TTeamProperties.Name))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TTeamProperties.Name, entity.Name));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TTeamProperties.Name, entity.Name));
                     }
                 }
                 query.UpdateBuilders.Add(builder);
@@ -105,18 +105,18 @@ namespace VL.LostInJungle.Objects.Entities
             SelectBuilder builder = new SelectBuilder();
             if (fields.Count() == 0)
             {
-                builder.ComponentSelect.Values.Add(TTeamProperties.TeamId);
-                builder.ComponentSelect.Values.Add(TTeamProperties.Name);
+                builder.ComponentSelect.Add(TTeamProperties.TeamId);
+                builder.ComponentSelect.Add(TTeamProperties.Name);
             }
             else
             {
-                builder.ComponentSelect.Values.Add(TTeamProperties.TeamId);
+                builder.ComponentSelect.Add(TTeamProperties.TeamId);
                 foreach (var field in fields)
                 {
-                    builder.ComponentSelect.Values.Add(field);
+                    builder.ComponentSelect.Add(field);
                 }
             }
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TTeamProperties.TeamId, entity.TeamId, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TTeamProperties.TeamId, entity.TeamId, LocateType.Equal));
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Select<TTeam>(session, query);
         }
@@ -126,21 +126,21 @@ namespace VL.LostInJungle.Objects.Entities
             SelectBuilder builder = new SelectBuilder();
             if (fields.Count() == 0)
             {
-                builder.ComponentSelect.Values.Add(TTeamProperties.TeamId);
-                builder.ComponentSelect.Values.Add(TTeamProperties.Name);
+                builder.ComponentSelect.Add(TTeamProperties.TeamId);
+                builder.ComponentSelect.Add(TTeamProperties.Name);
             }
             else
             {
-                builder.ComponentSelect.Values.Add(TTeamProperties.TeamId);
+                builder.ComponentSelect.Add(TTeamProperties.TeamId);
                 foreach (var field in fields)
                 {
-                    builder.ComponentSelect.Values.Add(field);
+                    builder.ComponentSelect.Add(field);
                 }
             }
             var Ids = entities.Select(c =>c.TeamId );
             if (Ids.Count() != 0)
             {
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TTeamProperties.TeamId, Ids, LocateType.In));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TTeamProperties.TeamId, Ids, LocateType.In));
             }
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).SelectAll<TTeam>(session, query);

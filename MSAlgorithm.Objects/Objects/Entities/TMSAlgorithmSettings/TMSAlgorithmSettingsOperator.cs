@@ -15,27 +15,27 @@ namespace Dacai.MagicSquareAlgorithm.Objects.Entities
         public static bool DbDelete(this TMSAlgorithmSettings entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId, LocateType.Equal));
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType, LocateType.Equal));
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType, LocateType.Equal));
+            query.DeleteBuilder.ComponentWhere.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId, LocateType.Equal));
+            query.DeleteBuilder.ComponentWhere.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType, LocateType.Equal));
+            query.DeleteBuilder.ComponentWhere.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType, LocateType.Equal));
             return IORMProvider.GetQueryOperator(session).Delete<TMSAlgorithmSettings>(session, query);
         }
         public static bool DbDelete(this List<TMSAlgorithmSettings> entities, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             var Ids = entities.Select(c =>c.AlgorithmId );
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.AlgorithmId, Ids, LocateType.In));
+            query.DeleteBuilder.ComponentWhere.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.AlgorithmId, Ids, LocateType.In));
             return IORMProvider.GetQueryOperator(session).Delete<TMSAlgorithmSettings>(session, query);
         }
         public static bool DbInsert(this TMSAlgorithmSettings entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             InsertBuilder builder = new InsertBuilder();
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId));
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType));
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType));
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
             query.InsertBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Insert<TMSAlgorithmSettings>(session, query);
         }
@@ -45,11 +45,11 @@ namespace Dacai.MagicSquareAlgorithm.Objects.Entities
             foreach (var entity in entities)
             {
                 InsertBuilder builder = new InsertBuilder();
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId));
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType));
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType));
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
                 query.InsertBuilders.Add(builder);
             }
             return IORMProvider.GetQueryOperator(session).InsertAll<TMSAlgorithmSettings>(session, query);
@@ -58,26 +58,26 @@ namespace Dacai.MagicSquareAlgorithm.Objects.Entities
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             UpdateBuilder builder = new UpdateBuilder();
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId, LocateType.Equal));
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType, LocateType.Equal));
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType, LocateType.Equal));
             if (fields==null|| fields.Length==0)
             {
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
             }
             else
             {
                 if (fields.Contains(TMSAlgorithmSettingsProperties.ResultType))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
                 }
                 if (fields.Contains(TMSAlgorithmSettingsProperties.WeightValue))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
                 }
             }
             query.UpdateBuilders.Add(builder);
@@ -89,26 +89,26 @@ namespace Dacai.MagicSquareAlgorithm.Objects.Entities
             foreach (var entity in entities)
             {
                 UpdateBuilder builder = new UpdateBuilder();
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId, LocateType.Equal));
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType, LocateType.Equal));
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType, LocateType.Equal));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId, LocateType.Equal));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType, LocateType.Equal));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType, LocateType.Equal));
                 if (fields==null|| fields.Length==0)
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
                 }
                 else
                 {
                     if (fields.Contains(TMSAlgorithmSettingsProperties.ResultType))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.ResultType, entity.ResultType));
                     }
                     if (fields.Contains(TMSAlgorithmSettingsProperties.WeightValue))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TMSAlgorithmSettingsProperties.WeightValue, entity.WeightValue));
                     }
                 }
                 query.UpdateBuilders.Add(builder);
@@ -123,25 +123,25 @@ namespace Dacai.MagicSquareAlgorithm.Objects.Entities
             SelectBuilder builder = new SelectBuilder();
             if (fields.Count() == 0)
             {
-                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.AlgorithmId);
-                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.TopWeightType);
-                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.SubWeightType);
-                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.ResultType);
-                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.WeightValue);
+                builder.ComponentSelect.Add(TMSAlgorithmSettingsProperties.AlgorithmId);
+                builder.ComponentSelect.Add(TMSAlgorithmSettingsProperties.TopWeightType);
+                builder.ComponentSelect.Add(TMSAlgorithmSettingsProperties.SubWeightType);
+                builder.ComponentSelect.Add(TMSAlgorithmSettingsProperties.ResultType);
+                builder.ComponentSelect.Add(TMSAlgorithmSettingsProperties.WeightValue);
             }
             else
             {
-                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.AlgorithmId);
-                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.TopWeightType);
-                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.SubWeightType);
+                builder.ComponentSelect.Add(TMSAlgorithmSettingsProperties.AlgorithmId);
+                builder.ComponentSelect.Add(TMSAlgorithmSettingsProperties.TopWeightType);
+                builder.ComponentSelect.Add(TMSAlgorithmSettingsProperties.SubWeightType);
                 foreach (var field in fields)
                 {
-                    builder.ComponentSelect.Values.Add(field);
+                    builder.ComponentSelect.Add(field);
                 }
             }
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId, LocateType.Equal));
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType, LocateType.Equal));
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.AlgorithmId, entity.AlgorithmId, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.TopWeightType, entity.TopWeightType, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.SubWeightType, entity.SubWeightType, LocateType.Equal));
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Select<TMSAlgorithmSettings>(session, query);
         }
@@ -151,26 +151,26 @@ namespace Dacai.MagicSquareAlgorithm.Objects.Entities
             SelectBuilder builder = new SelectBuilder();
             if (fields.Count() == 0)
             {
-                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.AlgorithmId);
-                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.TopWeightType);
-                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.SubWeightType);
-                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.ResultType);
-                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.WeightValue);
+                builder.ComponentSelect.Add(TMSAlgorithmSettingsProperties.AlgorithmId);
+                builder.ComponentSelect.Add(TMSAlgorithmSettingsProperties.TopWeightType);
+                builder.ComponentSelect.Add(TMSAlgorithmSettingsProperties.SubWeightType);
+                builder.ComponentSelect.Add(TMSAlgorithmSettingsProperties.ResultType);
+                builder.ComponentSelect.Add(TMSAlgorithmSettingsProperties.WeightValue);
             }
             else
             {
-                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.AlgorithmId);
-                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.TopWeightType);
-                builder.ComponentSelect.Values.Add(TMSAlgorithmSettingsProperties.SubWeightType);
+                builder.ComponentSelect.Add(TMSAlgorithmSettingsProperties.AlgorithmId);
+                builder.ComponentSelect.Add(TMSAlgorithmSettingsProperties.TopWeightType);
+                builder.ComponentSelect.Add(TMSAlgorithmSettingsProperties.SubWeightType);
                 foreach (var field in fields)
                 {
-                    builder.ComponentSelect.Values.Add(field);
+                    builder.ComponentSelect.Add(field);
                 }
             }
             var Ids = entities.Select(c =>c.AlgorithmId );
             if (Ids.Count() != 0)
             {
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.AlgorithmId, Ids, LocateType.In));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TMSAlgorithmSettingsProperties.AlgorithmId, Ids, LocateType.In));
             }
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).SelectAll<TMSAlgorithmSettings>(session, query);

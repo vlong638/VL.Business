@@ -7,6 +7,8 @@ namespace VL.User.Service.Configs
 {
     public class DbConfigOfUser : DbConfigEntity
     {
+        public const string DbName = nameof(VL.User);
+
         public DbConfigOfUser(string fileName) : base(fileName)
         {
         }

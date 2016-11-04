@@ -13,14 +13,14 @@ namespace TODOTask.Objects.Entities
         //public static bool DbDelete(this TTask entity, DbSession session)
         //{
         //    var query = IORMProvider.GetDbQueryBuilder(session);
-        //    query.DeleteBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TTaskProperties.TaskId, OperatorType.Equal, entity.TaskId));
+        //    query.DeleteBuilder.ComponentWhere.Add(new PDMDbPropertyOperateValue(TTaskProperties.TaskId, OperatorType.Equal, entity.TaskId));
         //    return IORMProvider.GetQueryOperator(session).Delete<TTask>(session, query);
         //}
         //public static bool DbDelete(this List<TTask> entities, DbSession session)
         //{
         //    var query = IORMProvider.GetDbQueryBuilder(session);
         //    var Ids = entities.Select(c =>c.TaskId );
-        //    query.DeleteBuilder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TTaskProperties.TaskId, OperatorType.In, Ids));
+        //    query.DeleteBuilder.ComponentWhere.Add(new PDMDbPropertyOperateValue(TTaskProperties.TaskId, OperatorType.In, Ids));
         //    return IORMProvider.GetQueryOperator(session).Delete<TTask>(session, query);
         //}
         //public static bool DbInsert(this TTask entity, DbSession session)
@@ -86,7 +86,7 @@ namespace TODOTask.Objects.Entities
         //{
         //    var query = IORMProvider.GetDbQueryBuilder(session);
         //    UpdateBuilder builder = new UpdateBuilder();
-        //    builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TTaskProperties.TaskId, OperatorType.Equal, entity.TaskId));
+        //    builder.ComponentWhere.Add(new PDMDbPropertyOperateValue(TTaskProperties.TaskId, OperatorType.Equal, entity.TaskId));
         //    if (fields.Contains(TTaskProperties.What.Title))
         //    {
         //        builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TTaskProperties.What, entity.What));
@@ -128,7 +128,7 @@ namespace TODOTask.Objects.Entities
         //    foreach (var entity in entities)
         //    {
         //        UpdateBuilder builder = new UpdateBuilder();
-        //        builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TTaskProperties.TaskId, OperatorType.Equal, entity.TaskId));
+        //        builder.ComponentWhere.Add(new PDMDbPropertyOperateValue(TTaskProperties.TaskId, OperatorType.Equal, entity.TaskId));
         //        if (fields.Contains(TTaskProperties.What.Title))
         //        {
         //            builder.ComponentValue.Values.Add(new PDMDbPropertyValue(TTaskProperties.What, entity.What));
@@ -175,7 +175,7 @@ namespace TODOTask.Objects.Entities
         //    {
         //        builder.ComponentFieldAliases.FieldAliases.Add(new FieldAlias(field));
         //    }
-        //    builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TTaskProperties.TaskId, OperatorType.Equal, entity.TaskId));
+        //    builder.ComponentWhere.Add(new PDMDbPropertyOperateValue(TTaskProperties.TaskId, OperatorType.Equal, entity.TaskId));
         //    query.SelectBuilders.Add(builder);
         //    return IORMProvider.GetQueryOperator(session).Select<TTask>(session, query);
         //}
@@ -190,7 +190,7 @@ namespace TODOTask.Objects.Entities
         //    var Ids = entities.Select(c =>c.TaskId );
         //    if (Ids.Count() != 0)
         //    {
-        //        builder.ComponentWhere.Wheres.Add(new PDMDbPropertyOperateValue(TTaskProperties.TaskId, OperatorType.In, Ids));
+        //        builder.ComponentWhere.Add(new PDMDbPropertyOperateValue(TTaskProperties.TaskId, OperatorType.In, Ids));
         //    }
         //    query.SelectBuilders.Add(builder);
         //    return IORMProvider.GetQueryOperator(session).SelectAll<TTask>(session, query);

@@ -15,27 +15,27 @@ namespace VL.LostInJungle.Objects.Entities
         public static bool DbDelete(this TEvent entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TEventProperties.EventId, entity.EventId, LocateType.Equal));
+            query.DeleteBuilder.ComponentWhere.Add(new ComponentValueOfWhere(TEventProperties.EventId, entity.EventId, LocateType.Equal));
             return IORMProvider.GetQueryOperator(session).Delete<TEvent>(session, query);
         }
         public static bool DbDelete(this List<TEvent> entities, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             var Ids = entities.Select(c =>c.EventId );
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TEventProperties.EventId, Ids, LocateType.In));
+            query.DeleteBuilder.ComponentWhere.Add(new ComponentValueOfWhere(TEventProperties.EventId, Ids, LocateType.In));
             return IORMProvider.GetQueryOperator(session).Delete<TEvent>(session, query);
         }
         public static bool DbInsert(this TEvent entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             InsertBuilder builder = new InsertBuilder();
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TEventProperties.AreaId, entity.AreaId));
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TEventProperties.EventId, entity.EventId));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TEventProperties.AreaId, entity.AreaId));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TEventProperties.EventId, entity.EventId));
             if (entity.Occurrence == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.Occurrence));
             }
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TEventProperties.Occurrence, entity.Occurrence));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TEventProperties.Occurrence, entity.Occurrence));
             query.InsertBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Insert<TEvent>(session, query);
         }
@@ -45,13 +45,13 @@ namespace VL.LostInJungle.Objects.Entities
             foreach (var entity in entities)
             {
                 InsertBuilder builder = new InsertBuilder();
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TEventProperties.AreaId, entity.AreaId));
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TEventProperties.EventId, entity.EventId));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TEventProperties.AreaId, entity.AreaId));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TEventProperties.EventId, entity.EventId));
             if (entity.Occurrence == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.Occurrence));
             }
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TEventProperties.Occurrence, entity.Occurrence));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TEventProperties.Occurrence, entity.Occurrence));
                 query.InsertBuilders.Add(builder);
             }
             return IORMProvider.GetQueryOperator(session).InsertAll<TEvent>(session, query);
@@ -60,22 +60,22 @@ namespace VL.LostInJungle.Objects.Entities
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             UpdateBuilder builder = new UpdateBuilder();
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TEventProperties.EventId, entity.EventId, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TEventProperties.EventId, entity.EventId, LocateType.Equal));
             if (fields==null|| fields.Length==0)
             {
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TEventProperties.AreaId, entity.AreaId));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TEventProperties.EventId, entity.EventId));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TEventProperties.Occurrence, entity.Occurrence));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TEventProperties.AreaId, entity.AreaId));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TEventProperties.EventId, entity.EventId));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TEventProperties.Occurrence, entity.Occurrence));
             }
             else
             {
                 if (fields.Contains(TEventProperties.AreaId))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TEventProperties.AreaId, entity.AreaId));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TEventProperties.AreaId, entity.AreaId));
                 }
                 if (fields.Contains(TEventProperties.Occurrence))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TEventProperties.Occurrence, entity.Occurrence));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TEventProperties.Occurrence, entity.Occurrence));
                 }
             }
             query.UpdateBuilders.Add(builder);
@@ -87,22 +87,22 @@ namespace VL.LostInJungle.Objects.Entities
             foreach (var entity in entities)
             {
                 UpdateBuilder builder = new UpdateBuilder();
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TEventProperties.EventId, entity.EventId, LocateType.Equal));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TEventProperties.EventId, entity.EventId, LocateType.Equal));
                 if (fields==null|| fields.Length==0)
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TEventProperties.AreaId, entity.AreaId));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TEventProperties.EventId, entity.EventId));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TEventProperties.Occurrence, entity.Occurrence));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TEventProperties.AreaId, entity.AreaId));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TEventProperties.EventId, entity.EventId));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TEventProperties.Occurrence, entity.Occurrence));
                 }
                 else
                 {
                     if (fields.Contains(TEventProperties.AreaId))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TEventProperties.AreaId, entity.AreaId));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TEventProperties.AreaId, entity.AreaId));
                     }
                     if (fields.Contains(TEventProperties.Occurrence))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TEventProperties.Occurrence, entity.Occurrence));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TEventProperties.Occurrence, entity.Occurrence));
                     }
                 }
                 query.UpdateBuilders.Add(builder);
@@ -117,19 +117,19 @@ namespace VL.LostInJungle.Objects.Entities
             SelectBuilder builder = new SelectBuilder();
             if (fields.Count() == 0)
             {
-                builder.ComponentSelect.Values.Add(TEventProperties.AreaId);
-                builder.ComponentSelect.Values.Add(TEventProperties.EventId);
-                builder.ComponentSelect.Values.Add(TEventProperties.Occurrence);
+                builder.ComponentSelect.Add(TEventProperties.AreaId);
+                builder.ComponentSelect.Add(TEventProperties.EventId);
+                builder.ComponentSelect.Add(TEventProperties.Occurrence);
             }
             else
             {
-                builder.ComponentSelect.Values.Add(TEventProperties.EventId);
+                builder.ComponentSelect.Add(TEventProperties.EventId);
                 foreach (var field in fields)
                 {
-                    builder.ComponentSelect.Values.Add(field);
+                    builder.ComponentSelect.Add(field);
                 }
             }
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TEventProperties.EventId, entity.EventId, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TEventProperties.EventId, entity.EventId, LocateType.Equal));
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Select<TEvent>(session, query);
         }
@@ -139,22 +139,22 @@ namespace VL.LostInJungle.Objects.Entities
             SelectBuilder builder = new SelectBuilder();
             if (fields.Count() == 0)
             {
-                builder.ComponentSelect.Values.Add(TEventProperties.AreaId);
-                builder.ComponentSelect.Values.Add(TEventProperties.EventId);
-                builder.ComponentSelect.Values.Add(TEventProperties.Occurrence);
+                builder.ComponentSelect.Add(TEventProperties.AreaId);
+                builder.ComponentSelect.Add(TEventProperties.EventId);
+                builder.ComponentSelect.Add(TEventProperties.Occurrence);
             }
             else
             {
-                builder.ComponentSelect.Values.Add(TEventProperties.EventId);
+                builder.ComponentSelect.Add(TEventProperties.EventId);
                 foreach (var field in fields)
                 {
-                    builder.ComponentSelect.Values.Add(field);
+                    builder.ComponentSelect.Add(field);
                 }
             }
             var Ids = entities.Select(c =>c.EventId );
             if (Ids.Count() != 0)
             {
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TEventProperties.EventId, Ids, LocateType.In));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TEventProperties.EventId, Ids, LocateType.In));
             }
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).SelectAll<TEvent>(session, query);

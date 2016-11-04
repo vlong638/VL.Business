@@ -15,26 +15,26 @@ namespace VL.Spider.Objects.Entities
         public static bool DbDelete(this TSpider entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TSpiderProperties.SpiderId, entity.SpiderId, LocateType.Equal));
+            query.DeleteBuilder.ComponentWhere.Add(new ComponentValueOfWhere(TSpiderProperties.SpiderId, entity.SpiderId, LocateType.Equal));
             return IORMProvider.GetQueryOperator(session).Delete<TSpider>(session, query);
         }
         public static bool DbDelete(this List<TSpider> entities, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             var Ids = entities.Select(c =>c.SpiderId );
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TSpiderProperties.SpiderId, Ids, LocateType.In));
+            query.DeleteBuilder.ComponentWhere.Add(new ComponentValueOfWhere(TSpiderProperties.SpiderId, Ids, LocateType.In));
             return IORMProvider.GetQueryOperator(session).Delete<TSpider>(session, query);
         }
         public static bool DbInsert(this TSpider entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             InsertBuilder builder = new InsertBuilder();
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TSpiderProperties.SpiderId, entity.SpiderId));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TSpiderProperties.SpiderId, entity.SpiderId));
             if (entity.SpiderName == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.SpiderName));
             }
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TSpiderProperties.SpiderName, entity.SpiderName));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TSpiderProperties.SpiderName, entity.SpiderName));
             query.InsertBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Insert<TSpider>(session, query);
         }
@@ -44,12 +44,12 @@ namespace VL.Spider.Objects.Entities
             foreach (var entity in entities)
             {
                 InsertBuilder builder = new InsertBuilder();
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TSpiderProperties.SpiderId, entity.SpiderId));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TSpiderProperties.SpiderId, entity.SpiderId));
             if (entity.SpiderName == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.SpiderName));
             }
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TSpiderProperties.SpiderName, entity.SpiderName));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TSpiderProperties.SpiderName, entity.SpiderName));
                 query.InsertBuilders.Add(builder);
             }
             return IORMProvider.GetQueryOperator(session).InsertAll<TSpider>(session, query);
@@ -58,17 +58,17 @@ namespace VL.Spider.Objects.Entities
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             UpdateBuilder builder = new UpdateBuilder();
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TSpiderProperties.SpiderId, entity.SpiderId, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TSpiderProperties.SpiderId, entity.SpiderId, LocateType.Equal));
             if (fields==null|| fields.Length==0)
             {
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TSpiderProperties.SpiderId, entity.SpiderId));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TSpiderProperties.SpiderName, entity.SpiderName));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TSpiderProperties.SpiderId, entity.SpiderId));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TSpiderProperties.SpiderName, entity.SpiderName));
             }
             else
             {
                 if (fields.Contains(TSpiderProperties.SpiderName))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TSpiderProperties.SpiderName, entity.SpiderName));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TSpiderProperties.SpiderName, entity.SpiderName));
                 }
             }
             query.UpdateBuilders.Add(builder);
@@ -80,17 +80,17 @@ namespace VL.Spider.Objects.Entities
             foreach (var entity in entities)
             {
                 UpdateBuilder builder = new UpdateBuilder();
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TSpiderProperties.SpiderId, entity.SpiderId, LocateType.Equal));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TSpiderProperties.SpiderId, entity.SpiderId, LocateType.Equal));
                 if (fields==null|| fields.Length==0)
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TSpiderProperties.SpiderId, entity.SpiderId));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TSpiderProperties.SpiderName, entity.SpiderName));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TSpiderProperties.SpiderId, entity.SpiderId));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TSpiderProperties.SpiderName, entity.SpiderName));
                 }
                 else
                 {
                     if (fields.Contains(TSpiderProperties.SpiderName))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TSpiderProperties.SpiderName, entity.SpiderName));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TSpiderProperties.SpiderName, entity.SpiderName));
                     }
                 }
                 query.UpdateBuilders.Add(builder);
@@ -108,18 +108,18 @@ namespace VL.Spider.Objects.Entities
             SelectBuilder builder = new SelectBuilder();
             if (fields.Count() == 0)
             {
-                builder.ComponentSelect.Values.Add(TSpiderProperties.SpiderId);
-                builder.ComponentSelect.Values.Add(TSpiderProperties.SpiderName);
+                builder.ComponentSelect.Add(TSpiderProperties.SpiderId);
+                builder.ComponentSelect.Add(TSpiderProperties.SpiderName);
             }
             else
             {
-                builder.ComponentSelect.Values.Add(TSpiderProperties.SpiderId);
+                builder.ComponentSelect.Add(TSpiderProperties.SpiderId);
                 foreach (var field in fields)
                 {
-                    builder.ComponentSelect.Values.Add(field);
+                    builder.ComponentSelect.Add(field);
                 }
             }
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TSpiderProperties.SpiderId, entity.SpiderId, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TSpiderProperties.SpiderId, entity.SpiderId, LocateType.Equal));
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Select<TSpider>(session, query);
         }
@@ -132,21 +132,21 @@ namespace VL.Spider.Objects.Entities
             SelectBuilder builder = new SelectBuilder();
             if (fields.Count() == 0)
             {
-                builder.ComponentSelect.Values.Add(TSpiderProperties.SpiderId);
-                builder.ComponentSelect.Values.Add(TSpiderProperties.SpiderName);
+                builder.ComponentSelect.Add(TSpiderProperties.SpiderId);
+                builder.ComponentSelect.Add(TSpiderProperties.SpiderName);
             }
             else
             {
-                builder.ComponentSelect.Values.Add(TSpiderProperties.SpiderId);
+                builder.ComponentSelect.Add(TSpiderProperties.SpiderId);
                 foreach (var field in fields)
                 {
-                    builder.ComponentSelect.Values.Add(field);
+                    builder.ComponentSelect.Add(field);
                 }
             }
             var Ids = entities.Select(c =>c.SpiderId );
             if (Ids.Count() != 0)
             {
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TSpiderProperties.SpiderId, Ids, LocateType.In));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TSpiderProperties.SpiderId, Ids, LocateType.In));
             }
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).SelectAll<TSpider>(session, query);

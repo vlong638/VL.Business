@@ -15,24 +15,24 @@ namespace VL.LostInJungle.Objects.Entities
         public static bool DbDelete(this TCreatureQuality entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureQualityProperties.CreatureId, entity.CreatureId, LocateType.Equal));
+            query.DeleteBuilder.ComponentWhere.Add(new ComponentValueOfWhere(TCreatureQualityProperties.CreatureId, entity.CreatureId, LocateType.Equal));
             return IORMProvider.GetQueryOperator(session).Delete<TCreatureQuality>(session, query);
         }
         public static bool DbDelete(this List<TCreatureQuality> entities, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             var Ids = entities.Select(c =>c.CreatureId );
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureQualityProperties.CreatureId, Ids, LocateType.In));
+            query.DeleteBuilder.ComponentWhere.Add(new ComponentValueOfWhere(TCreatureQualityProperties.CreatureId, Ids, LocateType.In));
             return IORMProvider.GetQueryOperator(session).Delete<TCreatureQuality>(session, query);
         }
         public static bool DbInsert(this TCreatureQuality entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             InsertBuilder builder = new InsertBuilder();
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureQualityProperties.CreatureId, entity.CreatureId));
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureQualityProperties.FirstLevelQuality, entity.FirstLevelQuality));
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureQualityProperties.SecondLevelQuality, entity.SecondLevelQuality));
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureQualityProperties.ThirdLevelQuality, entity.ThirdLevelQuality));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureQualityProperties.CreatureId, entity.CreatureId));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureQualityProperties.FirstLevelQuality, entity.FirstLevelQuality));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureQualityProperties.SecondLevelQuality, entity.SecondLevelQuality));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureQualityProperties.ThirdLevelQuality, entity.ThirdLevelQuality));
             query.InsertBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Insert<TCreatureQuality>(session, query);
         }
@@ -42,10 +42,10 @@ namespace VL.LostInJungle.Objects.Entities
             foreach (var entity in entities)
             {
                 InsertBuilder builder = new InsertBuilder();
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureQualityProperties.CreatureId, entity.CreatureId));
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureQualityProperties.FirstLevelQuality, entity.FirstLevelQuality));
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureQualityProperties.SecondLevelQuality, entity.SecondLevelQuality));
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TCreatureQualityProperties.ThirdLevelQuality, entity.ThirdLevelQuality));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureQualityProperties.CreatureId, entity.CreatureId));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureQualityProperties.FirstLevelQuality, entity.FirstLevelQuality));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureQualityProperties.SecondLevelQuality, entity.SecondLevelQuality));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TCreatureQualityProperties.ThirdLevelQuality, entity.ThirdLevelQuality));
                 query.InsertBuilders.Add(builder);
             }
             return IORMProvider.GetQueryOperator(session).InsertAll<TCreatureQuality>(session, query);
@@ -54,27 +54,27 @@ namespace VL.LostInJungle.Objects.Entities
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             UpdateBuilder builder = new UpdateBuilder();
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureQualityProperties.CreatureId, entity.CreatureId, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TCreatureQualityProperties.CreatureId, entity.CreatureId, LocateType.Equal));
             if (fields==null|| fields.Length==0)
             {
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureQualityProperties.CreatureId, entity.CreatureId));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureQualityProperties.FirstLevelQuality, entity.FirstLevelQuality));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureQualityProperties.SecondLevelQuality, entity.SecondLevelQuality));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureQualityProperties.ThirdLevelQuality, entity.ThirdLevelQuality));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureQualityProperties.CreatureId, entity.CreatureId));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureQualityProperties.FirstLevelQuality, entity.FirstLevelQuality));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureQualityProperties.SecondLevelQuality, entity.SecondLevelQuality));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureQualityProperties.ThirdLevelQuality, entity.ThirdLevelQuality));
             }
             else
             {
                 if (fields.Contains(TCreatureQualityProperties.FirstLevelQuality))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureQualityProperties.FirstLevelQuality, entity.FirstLevelQuality));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureQualityProperties.FirstLevelQuality, entity.FirstLevelQuality));
                 }
                 if (fields.Contains(TCreatureQualityProperties.SecondLevelQuality))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureQualityProperties.SecondLevelQuality, entity.SecondLevelQuality));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureQualityProperties.SecondLevelQuality, entity.SecondLevelQuality));
                 }
                 if (fields.Contains(TCreatureQualityProperties.ThirdLevelQuality))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureQualityProperties.ThirdLevelQuality, entity.ThirdLevelQuality));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureQualityProperties.ThirdLevelQuality, entity.ThirdLevelQuality));
                 }
             }
             query.UpdateBuilders.Add(builder);
@@ -86,27 +86,27 @@ namespace VL.LostInJungle.Objects.Entities
             foreach (var entity in entities)
             {
                 UpdateBuilder builder = new UpdateBuilder();
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureQualityProperties.CreatureId, entity.CreatureId, LocateType.Equal));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TCreatureQualityProperties.CreatureId, entity.CreatureId, LocateType.Equal));
                 if (fields==null|| fields.Length==0)
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureQualityProperties.CreatureId, entity.CreatureId));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureQualityProperties.FirstLevelQuality, entity.FirstLevelQuality));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureQualityProperties.SecondLevelQuality, entity.SecondLevelQuality));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureQualityProperties.ThirdLevelQuality, entity.ThirdLevelQuality));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureQualityProperties.CreatureId, entity.CreatureId));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureQualityProperties.FirstLevelQuality, entity.FirstLevelQuality));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureQualityProperties.SecondLevelQuality, entity.SecondLevelQuality));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureQualityProperties.ThirdLevelQuality, entity.ThirdLevelQuality));
                 }
                 else
                 {
                     if (fields.Contains(TCreatureQualityProperties.FirstLevelQuality))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureQualityProperties.FirstLevelQuality, entity.FirstLevelQuality));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureQualityProperties.FirstLevelQuality, entity.FirstLevelQuality));
                     }
                     if (fields.Contains(TCreatureQualityProperties.SecondLevelQuality))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureQualityProperties.SecondLevelQuality, entity.SecondLevelQuality));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureQualityProperties.SecondLevelQuality, entity.SecondLevelQuality));
                     }
                     if (fields.Contains(TCreatureQualityProperties.ThirdLevelQuality))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TCreatureQualityProperties.ThirdLevelQuality, entity.ThirdLevelQuality));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TCreatureQualityProperties.ThirdLevelQuality, entity.ThirdLevelQuality));
                     }
                 }
                 query.UpdateBuilders.Add(builder);
@@ -121,20 +121,20 @@ namespace VL.LostInJungle.Objects.Entities
             SelectBuilder builder = new SelectBuilder();
             if (fields.Count() == 0)
             {
-                builder.ComponentSelect.Values.Add(TCreatureQualityProperties.CreatureId);
-                builder.ComponentSelect.Values.Add(TCreatureQualityProperties.FirstLevelQuality);
-                builder.ComponentSelect.Values.Add(TCreatureQualityProperties.SecondLevelQuality);
-                builder.ComponentSelect.Values.Add(TCreatureQualityProperties.ThirdLevelQuality);
+                builder.ComponentSelect.Add(TCreatureQualityProperties.CreatureId);
+                builder.ComponentSelect.Add(TCreatureQualityProperties.FirstLevelQuality);
+                builder.ComponentSelect.Add(TCreatureQualityProperties.SecondLevelQuality);
+                builder.ComponentSelect.Add(TCreatureQualityProperties.ThirdLevelQuality);
             }
             else
             {
-                builder.ComponentSelect.Values.Add(TCreatureQualityProperties.CreatureId);
+                builder.ComponentSelect.Add(TCreatureQualityProperties.CreatureId);
                 foreach (var field in fields)
                 {
-                    builder.ComponentSelect.Values.Add(field);
+                    builder.ComponentSelect.Add(field);
                 }
             }
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureQualityProperties.CreatureId, entity.CreatureId, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TCreatureQualityProperties.CreatureId, entity.CreatureId, LocateType.Equal));
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Select<TCreatureQuality>(session, query);
         }
@@ -144,23 +144,23 @@ namespace VL.LostInJungle.Objects.Entities
             SelectBuilder builder = new SelectBuilder();
             if (fields.Count() == 0)
             {
-                builder.ComponentSelect.Values.Add(TCreatureQualityProperties.CreatureId);
-                builder.ComponentSelect.Values.Add(TCreatureQualityProperties.FirstLevelQuality);
-                builder.ComponentSelect.Values.Add(TCreatureQualityProperties.SecondLevelQuality);
-                builder.ComponentSelect.Values.Add(TCreatureQualityProperties.ThirdLevelQuality);
+                builder.ComponentSelect.Add(TCreatureQualityProperties.CreatureId);
+                builder.ComponentSelect.Add(TCreatureQualityProperties.FirstLevelQuality);
+                builder.ComponentSelect.Add(TCreatureQualityProperties.SecondLevelQuality);
+                builder.ComponentSelect.Add(TCreatureQualityProperties.ThirdLevelQuality);
             }
             else
             {
-                builder.ComponentSelect.Values.Add(TCreatureQualityProperties.CreatureId);
+                builder.ComponentSelect.Add(TCreatureQualityProperties.CreatureId);
                 foreach (var field in fields)
                 {
-                    builder.ComponentSelect.Values.Add(field);
+                    builder.ComponentSelect.Add(field);
                 }
             }
             var Ids = entities.Select(c =>c.CreatureId );
             if (Ids.Count() != 0)
             {
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TCreatureQualityProperties.CreatureId, Ids, LocateType.In));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TCreatureQualityProperties.CreatureId, Ids, LocateType.In));
             }
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).SelectAll<TCreatureQuality>(session, query);

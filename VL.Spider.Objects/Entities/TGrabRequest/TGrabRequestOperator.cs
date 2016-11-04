@@ -15,41 +15,41 @@ namespace VL.Spider.Objects.Entities
         public static bool DbDelete(this TGrabRequest entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabRequestProperties.SpiderId, entity.SpiderId, LocateType.Equal));
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabRequestProperties.GrabType, entity.GrabType, LocateType.Equal));
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabRequestProperties.IssueName, entity.IssueName, LocateType.Equal));
+            query.DeleteBuilder.ComponentWhere.Add(new ComponentValueOfWhere(TGrabRequestProperties.SpiderId, entity.SpiderId, LocateType.Equal));
+            query.DeleteBuilder.ComponentWhere.Add(new ComponentValueOfWhere(TGrabRequestProperties.GrabType, entity.GrabType, LocateType.Equal));
+            query.DeleteBuilder.ComponentWhere.Add(new ComponentValueOfWhere(TGrabRequestProperties.IssueName, entity.IssueName, LocateType.Equal));
             return IORMProvider.GetQueryOperator(session).Delete<TGrabRequest>(session, query);
         }
         public static bool DbDelete(this List<TGrabRequest> entities, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             var Ids = entities.Select(c =>c.SpiderId );
-            query.DeleteBuilder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabRequestProperties.SpiderId, Ids, LocateType.In));
+            query.DeleteBuilder.ComponentWhere.Add(new ComponentValueOfWhere(TGrabRequestProperties.SpiderId, Ids, LocateType.In));
             return IORMProvider.GetQueryOperator(session).Delete<TGrabRequest>(session, query);
         }
         public static bool DbInsert(this TGrabRequest entity, DbSession session)
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             InsertBuilder builder = new InsertBuilder();
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.RequestId, entity.RequestId));
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.SpiderId, entity.SpiderId));
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.GrabType, entity.GrabType));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TGrabRequestProperties.RequestId, entity.RequestId));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TGrabRequestProperties.SpiderId, entity.SpiderId));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TGrabRequestProperties.GrabType, entity.GrabType));
             if (entity.IssueName == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.IssueName));
             }
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.IssueName, entity.IssueName));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TGrabRequestProperties.IssueName, entity.IssueName));
             if (entity.SpiderName == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.SpiderName));
             }
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.SpiderName, entity.SpiderName));
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.ProcessStatus, entity.ProcessStatus));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TGrabRequestProperties.SpiderName, entity.SpiderName));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TGrabRequestProperties.ProcessStatus, entity.ProcessStatus));
             if (entity.Message == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.Message));
             }
-            builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.Message, entity.Message));
+            builder.ComponentInsert.Add(new ComponentValueOfInsert(TGrabRequestProperties.Message, entity.Message));
             query.InsertBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Insert<TGrabRequest>(session, query);
         }
@@ -59,25 +59,25 @@ namespace VL.Spider.Objects.Entities
             foreach (var entity in entities)
             {
                 InsertBuilder builder = new InsertBuilder();
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.RequestId, entity.RequestId));
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.SpiderId, entity.SpiderId));
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.GrabType, entity.GrabType));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TGrabRequestProperties.RequestId, entity.RequestId));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TGrabRequestProperties.SpiderId, entity.SpiderId));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TGrabRequestProperties.GrabType, entity.GrabType));
             if (entity.IssueName == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.IssueName));
             }
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.IssueName, entity.IssueName));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TGrabRequestProperties.IssueName, entity.IssueName));
             if (entity.SpiderName == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.SpiderName));
             }
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.SpiderName, entity.SpiderName));
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.ProcessStatus, entity.ProcessStatus));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TGrabRequestProperties.SpiderName, entity.SpiderName));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TGrabRequestProperties.ProcessStatus, entity.ProcessStatus));
             if (entity.Message == null)
             {
                 throw new NotImplementedException("缺少必填的参数项值, 参数项: " + nameof(entity.Message));
             }
-                builder.ComponentInsert.Values.Add(new ComponentValueOfInsert(TGrabRequestProperties.Message, entity.Message));
+                builder.ComponentInsert.Add(new ComponentValueOfInsert(TGrabRequestProperties.Message, entity.Message));
                 query.InsertBuilders.Add(builder);
             }
             return IORMProvider.GetQueryOperator(session).InsertAll<TGrabRequest>(session, query);
@@ -86,36 +86,36 @@ namespace VL.Spider.Objects.Entities
         {
             var query = IORMProvider.GetDbQueryBuilder(session);
             UpdateBuilder builder = new UpdateBuilder();
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabRequestProperties.SpiderId, entity.SpiderId, LocateType.Equal));
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabRequestProperties.GrabType, entity.GrabType, LocateType.Equal));
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabRequestProperties.IssueName, entity.IssueName, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TGrabRequestProperties.SpiderId, entity.SpiderId, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TGrabRequestProperties.GrabType, entity.GrabType, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TGrabRequestProperties.IssueName, entity.IssueName, LocateType.Equal));
             if (fields==null|| fields.Length==0)
             {
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.RequestId, entity.RequestId));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.SpiderId, entity.SpiderId));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.GrabType, entity.GrabType));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.IssueName, entity.IssueName));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.SpiderName, entity.SpiderName));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.ProcessStatus, entity.ProcessStatus));
-                builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.Message, entity.Message));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.RequestId, entity.RequestId));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.SpiderId, entity.SpiderId));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.GrabType, entity.GrabType));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.IssueName, entity.IssueName));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.SpiderName, entity.SpiderName));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.ProcessStatus, entity.ProcessStatus));
+                builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.Message, entity.Message));
             }
             else
             {
                 if (fields.Contains(TGrabRequestProperties.RequestId))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.RequestId, entity.RequestId));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.RequestId, entity.RequestId));
                 }
                 if (fields.Contains(TGrabRequestProperties.SpiderName))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.SpiderName, entity.SpiderName));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.SpiderName, entity.SpiderName));
                 }
                 if (fields.Contains(TGrabRequestProperties.ProcessStatus))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.ProcessStatus, entity.ProcessStatus));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.ProcessStatus, entity.ProcessStatus));
                 }
                 if (fields.Contains(TGrabRequestProperties.Message))
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.Message, entity.Message));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.Message, entity.Message));
                 }
             }
             query.UpdateBuilders.Add(builder);
@@ -127,36 +127,36 @@ namespace VL.Spider.Objects.Entities
             foreach (var entity in entities)
             {
                 UpdateBuilder builder = new UpdateBuilder();
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabRequestProperties.SpiderId, entity.SpiderId, LocateType.Equal));
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabRequestProperties.GrabType, entity.GrabType, LocateType.Equal));
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabRequestProperties.IssueName, entity.IssueName, LocateType.Equal));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TGrabRequestProperties.SpiderId, entity.SpiderId, LocateType.Equal));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TGrabRequestProperties.GrabType, entity.GrabType, LocateType.Equal));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TGrabRequestProperties.IssueName, entity.IssueName, LocateType.Equal));
                 if (fields==null|| fields.Length==0)
                 {
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.RequestId, entity.RequestId));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.SpiderId, entity.SpiderId));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.GrabType, entity.GrabType));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.IssueName, entity.IssueName));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.SpiderName, entity.SpiderName));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.ProcessStatus, entity.ProcessStatus));
-                    builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.Message, entity.Message));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.RequestId, entity.RequestId));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.SpiderId, entity.SpiderId));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.GrabType, entity.GrabType));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.IssueName, entity.IssueName));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.SpiderName, entity.SpiderName));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.ProcessStatus, entity.ProcessStatus));
+                    builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.Message, entity.Message));
                 }
                 else
                 {
                     if (fields.Contains(TGrabRequestProperties.RequestId))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.RequestId, entity.RequestId));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.RequestId, entity.RequestId));
                     }
                     if (fields.Contains(TGrabRequestProperties.SpiderName))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.SpiderName, entity.SpiderName));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.SpiderName, entity.SpiderName));
                     }
                     if (fields.Contains(TGrabRequestProperties.ProcessStatus))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.ProcessStatus, entity.ProcessStatus));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.ProcessStatus, entity.ProcessStatus));
                     }
                     if (fields.Contains(TGrabRequestProperties.Message))
                     {
-                        builder.ComponentSet.Values.Add(new ComponentValueOfSet(TGrabRequestProperties.Message, entity.Message));
+                        builder.ComponentSet.Add(new ComponentValueOfSet(TGrabRequestProperties.Message, entity.Message));
                     }
                 }
                 query.UpdateBuilders.Add(builder);
@@ -174,27 +174,27 @@ namespace VL.Spider.Objects.Entities
             SelectBuilder builder = new SelectBuilder();
             if (fields.Count() == 0)
             {
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.RequestId);
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.SpiderId);
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.GrabType);
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.IssueName);
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.SpiderName);
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.ProcessStatus);
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.Message);
+                builder.ComponentSelect.Add(TGrabRequestProperties.RequestId);
+                builder.ComponentSelect.Add(TGrabRequestProperties.SpiderId);
+                builder.ComponentSelect.Add(TGrabRequestProperties.GrabType);
+                builder.ComponentSelect.Add(TGrabRequestProperties.IssueName);
+                builder.ComponentSelect.Add(TGrabRequestProperties.SpiderName);
+                builder.ComponentSelect.Add(TGrabRequestProperties.ProcessStatus);
+                builder.ComponentSelect.Add(TGrabRequestProperties.Message);
             }
             else
             {
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.SpiderId);
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.GrabType);
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.IssueName);
+                builder.ComponentSelect.Add(TGrabRequestProperties.SpiderId);
+                builder.ComponentSelect.Add(TGrabRequestProperties.GrabType);
+                builder.ComponentSelect.Add(TGrabRequestProperties.IssueName);
                 foreach (var field in fields)
                 {
-                    builder.ComponentSelect.Values.Add(field);
+                    builder.ComponentSelect.Add(field);
                 }
             }
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabRequestProperties.SpiderId, entity.SpiderId, LocateType.Equal));
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabRequestProperties.GrabType, entity.GrabType, LocateType.Equal));
-            builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabRequestProperties.IssueName, entity.IssueName, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TGrabRequestProperties.SpiderId, entity.SpiderId, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TGrabRequestProperties.GrabType, entity.GrabType, LocateType.Equal));
+            builder.ComponentWhere.Add(new ComponentValueOfWhere(TGrabRequestProperties.IssueName, entity.IssueName, LocateType.Equal));
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).Select<TGrabRequest>(session, query);
         }
@@ -207,28 +207,28 @@ namespace VL.Spider.Objects.Entities
             SelectBuilder builder = new SelectBuilder();
             if (fields.Count() == 0)
             {
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.RequestId);
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.SpiderId);
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.GrabType);
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.IssueName);
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.SpiderName);
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.ProcessStatus);
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.Message);
+                builder.ComponentSelect.Add(TGrabRequestProperties.RequestId);
+                builder.ComponentSelect.Add(TGrabRequestProperties.SpiderId);
+                builder.ComponentSelect.Add(TGrabRequestProperties.GrabType);
+                builder.ComponentSelect.Add(TGrabRequestProperties.IssueName);
+                builder.ComponentSelect.Add(TGrabRequestProperties.SpiderName);
+                builder.ComponentSelect.Add(TGrabRequestProperties.ProcessStatus);
+                builder.ComponentSelect.Add(TGrabRequestProperties.Message);
             }
             else
             {
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.SpiderId);
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.GrabType);
-                builder.ComponentSelect.Values.Add(TGrabRequestProperties.IssueName);
+                builder.ComponentSelect.Add(TGrabRequestProperties.SpiderId);
+                builder.ComponentSelect.Add(TGrabRequestProperties.GrabType);
+                builder.ComponentSelect.Add(TGrabRequestProperties.IssueName);
                 foreach (var field in fields)
                 {
-                    builder.ComponentSelect.Values.Add(field);
+                    builder.ComponentSelect.Add(field);
                 }
             }
             var Ids = entities.Select(c =>c.SpiderId );
             if (Ids.Count() != 0)
             {
-                builder.ComponentWhere.Wheres.Add(new ComponentValueOfWhere(TGrabRequestProperties.SpiderId, Ids, LocateType.In));
+                builder.ComponentWhere.Add(new ComponentValueOfWhere(TGrabRequestProperties.SpiderId, Ids, LocateType.In));
             }
             query.SelectBuilders.Add(builder);
             return IORMProvider.GetQueryOperator(session).SelectAll<TGrabRequest>(session, query);
