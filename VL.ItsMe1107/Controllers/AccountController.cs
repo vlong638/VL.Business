@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using VL.ItsMe1107.Models;
+using VL.ItsMe1107.Managers;
 
 namespace VL.ItsMe1107.Controllers
 {
