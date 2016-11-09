@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using System;
 using VL.ItsMe1107.Models;
+using System.Threading.Tasks;
 
 namespace VL.ItsMe1107.Managers
 {
@@ -60,6 +61,11 @@ namespace VL.ItsMe1107.Managers
                     new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
+        }
+
+        public override Task<IdentityResult> CreateAsync(ApplicationUser user)
+        {
+            return base.CreateAsync(user);
         }
     }
 }

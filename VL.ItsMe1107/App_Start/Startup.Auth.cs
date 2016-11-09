@@ -1,20 +1,33 @@
-﻿using System;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
 using Owin;
+using System;
+using VL.ItsMe1107.Managers;
 using VL.ItsMe1107.Models;
+using VL.ItsMe1107.SubjectUserService;
 
 namespace VL.ItsMe1107
 {
     public partial class Startup
     {
-        // 有关配置身份验证的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkId=301864
+        /// <summary>
+        /// 身份验证
+        /// 有关配置身份验证的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkId=301864
+        /// </summary>
+        /// <param name="app"></param>
         public void ConfigureAuth(IAppBuilder app)
         {
             // 配置数据库上下文、用户管理器和登录管理器，以便为每个请求使用单个实例
+            var result = new SubjectUserServiceClient().CheckNodeReferences();
+            if (!result.IsAllDependenciesAvailable)
+            {
+                throw new NotImplementedException(result.Message);
+            }
+
+
+            //配置数据库上下文、用户管理器和登录管理器，以便为每个请求使用单个实例
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
@@ -34,7 +47,7 @@ namespace VL.ItsMe1107
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // 使应用程序可以在双重身份验证过程中验证第二因素时暂时存储用户信息。

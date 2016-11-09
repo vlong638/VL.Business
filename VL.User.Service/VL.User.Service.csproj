@@ -57,7 +57,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization">
-      <HintPath>..\packages\VL.Common.Protocol.1.0.1611041625.1\lib\net452\System.Runtime.Serialization.dll</HintPath>
+      <HintPath>..\packages\VL.Common.Protocol.1.0.1611091743.1\lib\net452\System.Runtime.Serialization.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.ServiceModel" />
@@ -79,16 +79,33 @@
       <HintPath>..\packages\VL.Common.ORM.1.0.1610101703.1\lib\net452\VL.Common.ORM.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="VL.Common.Protocol, Version=1.0.6152.29577, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Common.Protocol.1.0.1611041625.1\lib\net452\VL.Common.Protocol.dll</HintPath>
+    <Reference Include="VL.Common.Protocol, Version=1.0.6157.31896, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.Protocol.1.0.1611091743.1\lib\net452\VL.Common.Protocol.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configs\DbConfigOfUser.cs" />
+    <Compile Include="Objects\Constraints.cs" />
+    <Compile Include="Objects\DomainEntities\TUser.cs" />
+    <Compile Include="Objects\DomainEntities\TUserBasicInfo.cs" />
+    <Compile Include="Objects\Entities\TUserBasicInfo\TUserBasicInfo.cs" />
+    <Compile Include="Objects\Entities\TUserBasicInfo\TUserBasicInfoFetcher.cs" />
+    <Compile Include="Objects\Entities\TUserBasicInfo\TUserBasicInfoOperator.cs" />
+    <Compile Include="Objects\Entities\TUserBasicInfo\TUserBasicInfoProperties.cs" />
+    <Compile Include="Objects\Entities\TUserBasicInfo\TUserBasicInfoReference.cs" />
+    <Compile Include="Objects\Entities\TUser\TUser.cs" />
+    <Compile Include="Objects\Entities\TUser\TUserFetcher.cs" />
+    <Compile Include="Objects\Entities\TUser\TUserOperator.cs" />
+    <Compile Include="Objects\Entities\TUser\TUserProperties.cs" />
+    <Compile Include="Objects\Entities\TUser\TUserReference.cs" />
+    <Compile Include="Objects\Enums\EGender.cs" />
+    <Compile Include="Objects\Enums\ESample.cs" />
+    <Compile Include="Objects\SubResults\AuthenticateResult.cs" />
+    <Compile Include="Objects\SubResults\CreateUserResult.cs" />
     <Compile Include="Services\ISubjectUserService.cs" />
     <Compile Include="Services\IObjectUserService.cs" />
-    <Compile Include="Services\ObjectOperator.cs" />
+    <Compile Include="Services\ObjectUserOperator.cs" />
     <Compile Include="Services\SubjectUserService.cs" />
     <Compile Include="问题记录\WCF不支持属性间引用.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -98,9 +115,11 @@
     <None Include="App.config" />
     <None Include="Configs\DbConnections.config">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Configs\ProtocolConfig.config">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <EmbeddedResource Include="log4net.config">
       <SubType>Designer</SubType>
@@ -109,12 +128,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VL.User.Objects\VL.User.Objects.csproj">
-      <Project>{b25101bf-c6b8-4f49-a7eb-b08af01b1fbc}</Project>
-      <Name>VL.User.Objects</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="IService\备注.txt" />
+    <Content Include="Objects\备注\多表查询.txt" />
     <Content Include="备注\多表查询.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

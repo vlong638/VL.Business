@@ -4,7 +4,7 @@ using System.Linq;
 using VL.Common.DAS.Objects;
 using VL.Common.ORM.Objects;
 using VL.Common.ORM.Utilities.QueryBuilders;
-using VL.Common.Protocol.IService.IORM;
+using VL.Common.Protocol.IService;
 
 namespace VL.User.Objects.Entities
 {

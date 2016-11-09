@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5098db76-1b9b-49fb-b7fd-5c37fdc51bff" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies>
+      <ReferencedAssembly AssemblyName="VL.Common.Protocol" />
+    </ReferencedAssemblies>
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8001/VL.User.Service.Services.SubjectUserService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="VL.xsd" MetadataType="Schema" ID="ca4c802a-1fd1-4530-9490-3fc8d3b98fa9" SourceId="1" SourceUrl="http://dcwl027:8001/VL.User.Service.Services.SubjectUserService.svc?xsd=xsd1" />
+    <MetadataFile FileName="VL5.xsd" MetadataType="Schema" ID="77957dad-768c-4d13-98d3-12645ce4f95f" SourceId="1" SourceUrl="http://dcwl027:8001/VL.User.Service.Services.SubjectUserService.svc?xsd=xsd5" />
+    <MetadataFile FileName="VL2.xsd" MetadataType="Schema" ID="eea627ea-db32-44b6-ae1f-cbef429d7970" SourceId="1" SourceUrl="http://dcwl027:8001/VL.User.Service.Services.SubjectUserService.svc?xsd=xsd4" />
+    <MetadataFile FileName="VL3.xsd" MetadataType="Schema" ID="5e8e99fc-ab2d-467e-8eff-fdff873069bc" SourceId="1" SourceUrl="http://dcwl027:8001/VL.User.Service.Services.SubjectUserService.svc?xsd=xsd0" />
+    <MetadataFile FileName="VL.disco" MetadataType="Disco" ID="60d0c94d-8a54-4ac1-ae65-651593f5516a" SourceId="1" SourceUrl="http://dcwl027:8001/VL.User.Service.Services.SubjectUserService.svc?disco" />
+    <MetadataFile FileName="VL4.xsd" MetadataType="Schema" ID="711cbce9-1878-4b29-91e3-5a4ab3a090e7" SourceId="1" SourceUrl="http://dcwl027:8001/VL.User.Service.Services.SubjectUserService.svc?xsd=xsd2" />
+    <MetadataFile FileName="SubjectUserService.wsdl" MetadataType="Wsdl" ID="6d59550b-576e-4cc9-bb24-19a5e3e5fcc2" SourceId="1" SourceUrl="http://dcwl027:8001/VL.User.Service.Services.SubjectUserService.svc?wsdl" />
+    <MetadataFile FileName="VL1.xsd" MetadataType="Schema" ID="063f3963-2236-46c0-9857-7a2e836d14ce" SourceId="1" SourceUrl="http://dcwl027:8001/VL.User.Service.Services.SubjectUserService.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

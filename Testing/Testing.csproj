@@ -52,7 +52,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization">
-      <HintPath>..\packages\VL.Common.Protocol.1.0.1608081724.1\lib\net452\System.Runtime.Serialization.dll</HintPath>
+      <HintPath>..\packages\VL.Common.Protocol.1.0.1611091439.1\lib\net452\System.Runtime.Serialization.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.ServiceModel" />
@@ -74,19 +74,19 @@
       <HintPath>..\packages\VL.Common.Logger.1.0.1604121655.1\lib\net452\VL.Common.Logger.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="VL.Common.ORM, Version=1.0.6080.30858, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Common.ORM.1.0.1608241708.1\lib\net452\VL.Common.ORM.dll</HintPath>
+    <Reference Include="VL.Common.ORM, Version=1.0.6127.29448, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.ORM.1.0.1610101703.1\lib\net452\VL.Common.ORM.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="VL.Common.Protocol, Version=1.0.6064.30164, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Common.Protocol.1.0.1608081724.1\lib\net452\VL.Common.Protocol.dll</HintPath>
+    <Reference Include="VL.Common.Protocol, Version=1.0.6157.26374, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.Protocol.1.0.1611091439.1\lib\net452\VL.Common.Protocol.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\UserServiceReference\Reference.cs">
+    <Compile Include="Service References\SubjectUserService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -101,49 +101,31 @@
     <None Include="packages.config" />
     <None Include="Properties\DataSources\VL.Common.Protocol.IService.DependencyResult.datasource" />
     <None Include="Properties\DataSources\VL.Common.Protocol.IService.Result.datasource" />
-    <None Include="Service References\UserServiceReference\service.wsdl" />
-    <None Include="Service References\UserServiceReference\service.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\UserServiceReference\service1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\UserServiceReference\Testing.UserServiceReference.AuthenticateResult.datasource">
+    <None Include="Service References\SubjectUserService\SubjectUserService.wsdl" />
+    <None Include="Service References\SubjectUserService\Testing.SubjectUserService.Report.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\UserServiceReference\Testing.UserServiceReference.CreateUserResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\UserServiceReference\VL.Common.ORM.Objects.xsd">
+    <None Include="Service References\SubjectUserService\VL.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\UserServiceReference\VL.Common.Protocol.IService.xsd">
+    <None Include="Service References\SubjectUserService\VL1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\UserServiceReference\VL.User.Objects.Entities.xsd">
+    <None Include="Service References\SubjectUserService\VL2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\UserServiceReference\VL.User.Objects.SubResults.xsd">
+    <None Include="Service References\SubjectUserService\VL3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SubjectUserService\VL4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SubjectUserService\VL5.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\UserServiceReference\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\UserServiceReference\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\UserServiceReference\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\UserServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VL.User.Service\VL.User.Service.csproj">
@@ -152,6 +134,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\SubjectUserService\VL.disco" />
+    <None Include="Service References\SubjectUserService\configuration91.svcinfo" />
+    <None Include="Service References\SubjectUserService\configuration.svcinfo" />
+    <None Include="Service References\SubjectUserService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\SubjectUserService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="IService\备注.txt" />
     <Content Include="备注\多表查询.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

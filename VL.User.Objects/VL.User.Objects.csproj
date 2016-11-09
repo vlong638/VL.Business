@@ -50,7 +50,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization">
-      <HintPath>..\packages\VL.Common.Protocol.1.0.1611041520.1\lib\net452\System.Runtime.Serialization.dll</HintPath>
+      <HintPath>..\packages\VL.Common.Protocol.1.0.1611081712.1\lib\net452\System.Runtime.Serialization.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
@@ -75,8 +75,8 @@
       <HintPath>..\packages\VL.Common.ORM.1.0.1610101703.1\lib\net452\VL.Common.ORM.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="VL.Common.Protocol, Version=1.0.6152.27606, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VL.Common.Protocol.1.0.1611041520.1\lib\net452\VL.Common.Protocol.dll</HintPath>
+    <Reference Include="VL.Common.Protocol, Version=1.0.6156.30979, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VL.Common.Protocol.1.0.1611081712.1\lib\net452\VL.Common.Protocol.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -105,6 +105,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="IService\备注.txt" />
     <Content Include="备注\多表查询.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

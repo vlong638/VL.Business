@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using VL.Common.DAS.Utilities;
 using VL.Common.Logger.Objects;
 using VL.Common.Logger.Utilities;
@@ -31,11 +30,9 @@ namespace VL.User.Service.Utilities
         {
             return new ProtocolConfig("ProtocolConfig.config");
         }
-
-        public const string DefaultLogName = "ServiceLog";
         protected override ILogger GetDefaultServiceLogger()
         {
-            return LoggerProvider.GetLog4netLogger(DefaultLogName);
+            return LoggerProvider.GetLog4netLogger("ServiceLog");
         }
 
         protected override List<DependencyResult> InitOthers()

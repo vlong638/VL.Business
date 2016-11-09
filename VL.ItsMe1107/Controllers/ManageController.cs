@@ -11,7 +11,7 @@ using VL.ItsMe1107.Models;
 namespace VL.ItsMe1107.Controllers
 {
     [Authorize]
-    public class ManageController : Controller
+    public class ManageController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;

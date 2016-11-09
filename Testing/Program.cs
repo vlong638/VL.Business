@@ -1,5 +1,5 @@
 ﻿using System;
-using Testing.UserServiceReference;
+using Testing.SubjectUserService;
 using VL.User.Service.Configs;
 
 namespace Testing
@@ -8,16 +8,16 @@ namespace Testing
     {
         static void Main(string[] args)
         {
-            //TestService();
+            CreateUser();
             //CreateDbConfigForUser();
-            //CheckNodeReferences();
+            CheckNodeReferences();
         }
 
         private static void CheckNodeReferences()
         {
             do
             {
-                var result = new UserServiceClient().CheckNodeReferences();
+                var result = new SubjectUserServiceClient().CheckNodeReferences();
             } while (Console.ReadLine() != "q");
         }
 
@@ -27,13 +27,13 @@ namespace Testing
             dbConfigs.Save();
         }
 
-        private static void TestService()
+        private static void CreateUser()
         {
-            UserServiceClient client = new UserServiceClient();
+            SubjectUserServiceClient client = new SubjectUserServiceClient();
             TUser user = new TUser();
             user.UserName = "vlong638";
             user.Password = "701616";
-            var result = client.Register(user);
+            var result = client.CreateUser(user);
         }
     }
 }
