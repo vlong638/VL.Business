@@ -306,7 +306,7 @@ namespace VL.ItsMe1107.Controllers
         public ActionResult LinkLogin(string provider)
         {
             // 请求重定向至外部登录提供程序，以链接当前用户的登录名
-            return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
+            return new Account3Controller.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
         }
 
         //
