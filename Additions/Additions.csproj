@@ -93,6 +93,7 @@
     <None Include="PDMs\GenerateSample.pdm" />
     <None Include="PDMs\LostInJungle.pdm" />
     <None Include="PDMs\TODOTask.pdm" />
+    <None Include="PDMs\VL.Blog.pdm" />
     <None Include="PDMs\VL.Common.pdm" />
     <None Include="PDMs\VL.Transaction.pdm" />
     <None Include="PDMs\VL.User.pdm" />
