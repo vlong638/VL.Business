@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PmSoft.ConstructionManagement", "PmSoft.ConstructionManagement.csproj", "{DF9420FF-6ACF-423B-A5CF-70FFEFD071B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PmSoft.ConstructionManagement.Commands", "PmSoft.ConstructionManagement.Commands\PmSoft.ConstructionManagement.Commands.csproj", "{1231CD92-78E0-4600-9107-6977255537D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathFixer", "PathFixer\PathFixer.csproj", "{961E23F4-1579-4050-B8A7-C7AB0A007A66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseFixer", "DatabaseFixer\DatabaseFixer.csproj", "{977BC3EC-A88F-4B5D-B483-759C753259C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMSoft.ConstructionManagementV2", "PMSoft.ConstructionManagementV2\PMSoft.ConstructionManagementV2.csproj", "{5AF827DF-3C5D-4A6B-93A0-71A6C53112D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMSoft.ConstructionManagementV2.Commands", "PMSoft.ConstructionManagementV2.Commands\PMSoft.ConstructionManagementV2.Commands.csproj", "{4F28E3FC-A6FB-49EE-BA95-A7BF659F5505}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF9420FF-6ACF-423B-A5CF-70FFEFD071B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF9420FF-6ACF-423B-A5CF-70FFEFD071B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF9420FF-6ACF-423B-A5CF-70FFEFD071B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF9420FF-6ACF-423B-A5CF-70FFEFD071B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1231CD92-78E0-4600-9107-6977255537D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1231CD92-78E0-4600-9107-6977255537D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1231CD92-78E0-4600-9107-6977255537D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1231CD92-78E0-4600-9107-6977255537D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{961E23F4-1579-4050-B8A7-C7AB0A007A66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{961E23F4-1579-4050-B8A7-C7AB0A007A66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{961E23F4-1579-4050-B8A7-C7AB0A007A66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{961E23F4-1579-4050-B8A7-C7AB0A007A66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{977BC3EC-A88F-4B5D-B483-759C753259C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{977BC3EC-A88F-4B5D-B483-759C753259C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{977BC3EC-A88F-4B5D-B483-759C753259C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{977BC3EC-A88F-4B5D-B483-759C753259C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AF827DF-3C5D-4A6B-93A0-71A6C53112D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AF827DF-3C5D-4A6B-93A0-71A6C53112D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AF827DF-3C5D-4A6B-93A0-71A6C53112D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AF827DF-3C5D-4A6B-93A0-71A6C53112D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F28E3FC-A6FB-49EE-BA95-A7BF659F5505}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F28E3FC-A6FB-49EE-BA95-A7BF659F5505}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F28E3FC-A6FB-49EE-BA95-A7BF659F5505}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F28E3FC-A6FB-49EE-BA95-A7BF659F5505}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

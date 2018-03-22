@@ -1,0 +1,356 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DF9420FF-6ACF-423B-A5CF-70FFEFD071B2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PmSoft.ConstructionManagement</RootNamespace>
+    <AssemblyName>PmSoft.ConstructionManagement</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AdWindows">
+      <HintPath>C:\Program Files\Autodesk\Revit 2016\AdWindows.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>..\..\..\..\..\Work\export\Revit\2016\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="PmSoft.Common.CADBase20_x64">
+      <HintPath>DLLs\PmSoft.Common.CADBase20_x64.dll</HintPath>
+    </Reference>
+    <Reference Include="PmSoft.Common.CommonClass">
+      <HintPath>DLLs\PmSoft.Common.CommonClass.dll</HintPath>
+    </Reference>
+    <Reference Include="PmSoft.Common.Controls">
+      <HintPath>DLLs\PmSoft.Common.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="PmSoft.Common.MFCDll20_x64">
+      <HintPath>DLLs\PmSoft.Common.MFCDll20_x64.dll</HintPath>
+    </Reference>
+    <Reference Include="PmSoft.Common.RevitClass">
+      <HintPath>DLLs\PmSoft.Common.RevitClass.dll</HintPath>
+    </Reference>
+    <Reference Include="PmSoft.MainModel.EntData">
+      <HintPath>DLLs\PmSoft.MainModel.EntData.dll</HintPath>
+    </Reference>
+    <Reference Include="RevitAPI">
+      <HintPath>C:\Program Files\Autodesk\Revit 2016\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>C:\Program Files\Autodesk\Revit 2016\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.99.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Work\export\Revit\2016\System.Data.SQLite.DLL</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="VL.Common.Core, Version=1.0.6452.29809, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\VL.Common.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EarthWork\Business\DAL\TEarthworkBlockElement\TEarthworkBlockElementOperator.cs" />
+    <Compile Include="EarthWork\Business\DAL\TEarthworkBlocking\TEarthworkBlockingFetcher.cs" />
+    <Compile Include="EarthWork\Business\DAL\TEarthworkBlocking\TEarthworkBlockingOperator.cs" />
+    <Compile Include="EarthWork\Business\DAL\TEarthworkBlock\TEarthworkBlockFetcher.cs" />
+    <Compile Include="EarthWork\Business\DAL\TEarthworkBlock\TEarthworkBlockOperator.cs" />
+    <Compile Include="EarthWork\Business\Domain\TEarthworkBlockDomain.cs" />
+    <Compile Include="EarthWork\Business\Domain\TEarthworkBlockElementDomain.cs" />
+    <Compile Include="EarthWork\Business\Domain\TEarthworkBlockingDomain.cs" />
+    <Compile Include="EarthWork\Command\EarthworkBlockCommand.cs" />
+    <Compile Include="EarthWork\Objects\Entities\TEarthworkBlockElement\TEarthworkBlockElement.cs" />
+    <Compile Include="EarthWork\Objects\Entities\TEarthworkBlockElement\TEarthworkBlockElementProperties.cs" />
+    <Compile Include="EarthWork\Objects\Entities\TEarthworkBlocking\TEarthworkBlocking.cs" />
+    <Compile Include="EarthWork\Objects\Entities\TEarthworkBlocking\TEarthworkBlockingProperties.cs" />
+    <Compile Include="EarthWork\Objects\Entities\TEarthworkBlocking\TEarthworkBlockingReference.cs" />
+    <Compile Include="EarthWork\Objects\Entities\TEarthworkBlock\TEarthworkBlock.cs" />
+    <Compile Include="EarthWork\Objects\Entities\TEarthworkBlock\TEarthworkBlockProperties.cs" />
+    <Compile Include="EarthWork\Objects\Entities\TEarthworkBlock\TEarthworkBlockReference.cs" />
+    <Compile Include="Hook\HookTools.cs" />
+    <Compile Include="Hook\HookTypeNotImplementedException.cs" />
+    <Compile Include="Hook\HookTypes.cs" />
+    <Compile Include="Hook\KeyboardHook.cs" />
+    <Compile Include="Hook\KeyboardHookExt.cs" />
+    <Compile Include="Hook\ManagedHooksException.cs" />
+    <Compile Include="Hook\MouseHook.cs" />
+    <Compile Include="Hook\MouseHookExt.cs" />
+    <Compile Include="Hook\PickObjectsMouseHook.cs" />
+    <Compile Include="Hook\RevitHandle.cs" />
+    <Compile Include="Hook\SystemHook.cs" />
+    <Compile Include="Hook\VirtualKeys.cs" />
+    <Compile Include="SubsidenceMonitor\Command\WarnSettingsCommand.cs" />
+    <Compile Include="SubsidenceMonitor\Command\SubsidenceMonitorCommand.cs" />
+    <Compile Include="EarthWork\Entity\EarthworkBlock.cs" />
+    <Compile Include="EarthWork\Entity\EarthworkBlockCPSettings.cs" />
+    <Compile Include="EarthWork\Entity\EarthworkBlockImplementationInfo.cs" />
+    <Compile Include="EarthWork\Entity\EarthworkBlocking.cs" />
+    <Compile Include="EarthWork\Entity\MemorableData.cs" />
+    <Compile Include="EarthWork\Entity\SectionalData.cs" />
+    <Compile Include="EarthWork\UI\EarthworkBlockCPSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EarthWork\UI\EarthworkBlockCPSettingsForm.Designer.cs">
+      <DependentUpon>EarthworkBlockCPSettingsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EarthWork\UI\EarthworkBlockingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EarthWork\UI\EarthworkBlockingForm.Designer.cs">
+      <DependentUpon>EarthworkBlockingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Controls\MyDGV0427.cs" />
+    <Compile Include="SubsidenceMonitor\Entities\CPSettings.cs" />
+    <Compile Include="SubsidenceMonitor\Entities\DateTimeValue.cs" />
+    <Compile Include="SubsidenceMonitor\Entities\EIssueTypeEntities\AnalizeResult.cs" />
+    <Compile Include="SubsidenceMonitor\Entities\EIssueTypeEntities\SkewBack.cs" />
+    <Compile Include="SubsidenceMonitor\Entities\EIssueTypeEntities\UnpressedPipeLineSubsidence.cs" />
+    <Compile Include="SubsidenceMonitor\Entities\EIssueTypeEntities\PressedPipeLineSubsidence.cs" />
+    <Compile Include="SubsidenceMonitor\Entities\EIssueTypeEntities\EIssueType.cs" />
+    <Compile Include="SubsidenceMonitor\Entities\EIssueTypeEntities\STBAP.cs" />
+    <Compile Include="SubsidenceMonitor\Entities\EIssueTypeEntities\SurfaceSubsidence.cs" />
+    <Compile Include="SubsidenceMonitor\Entities\EIssueTypeEntities\BuildingSubsidence.cs" />
+    <Compile Include="SubsidenceMonitor\Entities\EIssueTypeEntities\EIssueTypeEntity.cs" />
+    <Compile Include="SubsidenceMonitor\Entities\ElementParameterValueSet.cs" />
+    <Compile Include="SubsidenceMonitor\Entities\MemorableDetail.cs" />
+    <Compile Include="SubsidenceMonitor\Entities\TDepthNode.cs" />
+    <Compile Include="SubsidenceMonitor\Entities\TDepthNodeElement.cs" />
+    <Compile Include="SubsidenceMonitor\Entities\TDetail.cs" />
+    <Compile Include="SubsidenceMonitor\Entities\TList.cs" />
+    <Compile Include="SubsidenceMonitor\Entities\TNode.cs" />
+    <Compile Include="SubsidenceMonitor\Entities\TNodeElement .cs" />
+    <Compile Include="SubsidenceMonitor\Entities\WarnSettings.cs" />
+    <Compile Include="SubsidenceMonitor\Interfaces\ICloneableData.cs" />
+    <Compile Include="SubsidenceMonitor\Interfaces\IContainer.cs" />
+    <Compile Include="SubsidenceMonitor\Interfaces\ILazyLoadData.cs" />
+    <Compile Include="SubsidenceMonitor\Interfaces\IMemorableData.cs" />
+    <Compile Include="SubsidenceMonitor\Interfaces\IPDMTBase.cs" />
+    <Compile Include="SubsidenceMonitor\Interfaces\IStringBasedData.cs" />
+    <Compile Include="SubsidenceMonitor\Interfaces\ITNodeData.cs" />
+    <Compile Include="SubsidenceMonitor\Interfaces\ITNodeDataCollection.cs" />
+    <Compile Include="SubsidenceMonitor\Interfaces\MemorableData.cs" />
+    <Compile Include="SubsidenceMonitor\Interfaces\MultipleSingleMemorableData.cs" />
+    <Compile Include="SubsidenceMonitor\Entities\MultipleSingleMemorableDetails.cs" />
+    <Compile Include="SubsidenceMonitor\Operators\BLLResult.cs" />
+    <Compile Include="SubsidenceMonitor\Operators\TDepthNodeElementOperator.cs" />
+    <Compile Include="SubsidenceMonitor\Operators\TNodeElementOperator.cs" />
+    <Compile Include="SubsidenceMonitor\Operators\Facade.cs" />
+    <Compile Include="SubsidenceMonitor\Operators\TListOperator.cs" />
+    <Compile Include="SubsidenceMonitor\Operators\TDetailOperator.cs" />
+    <Compile Include="SubsidenceMonitor\Operators\TDepthNodeOperator.cs" />
+    <Compile Include="SubsidenceMonitor\Operators\TNodeOperator.cs" />
+    <Compile Include="SubsidenceMonitor\UI\ChartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubsidenceMonitor\UI\ChartForm.Designer.cs">
+      <DependentUpon>ChartForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubsidenceMonitor\UI\CPSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubsidenceMonitor\UI\CPSettingsForm.Designer.cs">
+      <DependentUpon>CPSettingsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubsidenceMonitor\UI\ListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubsidenceMonitor\UI\ListForm.Designer.cs">
+      <DependentUpon>ListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubsidenceMonitor\UI\UIEnums.cs" />
+    <Compile Include="SubsidenceMonitor\UI\SkewBackMonitorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubsidenceMonitor\UI\SkewBackMonitorForm.Designer.cs">
+      <DependentUpon>SkewBackMonitorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubsidenceMonitor\UI\SubsidenceMonitorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubsidenceMonitor\UI\SubsidenceMonitorForm.Designer.cs">
+      <DependentUpon>SubsidenceMonitorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubsidenceMonitor\UI\WarnSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubsidenceMonitor\UI\WarnSettingsForm.Designer.cs">
+      <DependentUpon>WarnSettingsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\ExcelHelper.cs" />
+    <Compile Include="Utilities\PMSoftHelper.cs" />
+    <Compile Include="Utilities\Revit_Helper.cs" />
+    <Compile Include="Utilities\Revit_UIDocument_Helper.cs" />
+    <Compile Include="Utilities\Revit_View_Helper.cs" />
+    <Compile Include="Utilities\SaveKeyHelper.cs" />
+    <Compile Include="Utilities\SQLiteHelper.cs" />
+    <Compile Include="Utilities\Revit_Document_Helper.cs" />
+    <Compile Include="Utilities\TransactionHelper.cs" />
+    <Compile Include="Utilities\UniqueIdHelper.cs" />
+    <Compile Include="Utilities\VLConstraints.cs" />
+    <Compile Include="VLHooker\ButtonHandle.cs" />
+    <Compile Include="VLHooker\Hooker.cs" />
+    <Compile Include="VLHooker\MOUSEHOOKSTRUCT.cs" />
+    <EmbeddedResource Include="EarthWork\UI\EarthworkBlockCPSettingsForm.resx">
+      <DependentUpon>EarthworkBlockCPSettingsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EarthWork\UI\EarthworkBlockingForm.resx">
+      <DependentUpon>EarthworkBlockingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="SubsidenceMonitor\UI\ChartForm.resx">
+      <DependentUpon>ChartForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubsidenceMonitor\UI\CPSettingsForm.resx">
+      <DependentUpon>CPSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubsidenceMonitor\UI\ListForm.resx">
+      <DependentUpon>ListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubsidenceMonitor\UI\SkewBackMonitorForm.resx">
+      <DependentUpon>SkewBackMonitorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubsidenceMonitor\UI\SubsidenceMonitorForm.resx">
+      <DependentUpon>SubsidenceMonitorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubsidenceMonitor\UI\WarnSettingsForm.resx">
+      <DependentUpon>WarnSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DLLs\KernelBaseClass20_x64.dll" />
+    <Content Include="DLLs\LDVectorView20_x64.dll" />
+    <Content Include="DLLs\ManagedMC3.dll" />
+    <Content Include="DLLs\Microsoft.Office.Interop.Excel.dll" />
+    <Content Include="DLLs\Microsoft.Vbe.Interop.dll" />
+    <Content Include="DLLs\Microsoft.WindowsAPICodePack.dll" />
+    <Content Include="DLLs\Microsoft.WindowsAPICodePack.Shell.dll" />
+    <Content Include="DLLs\MySql.Data.dll" />
+    <Content Include="DLLs\Newtonsoft.Json.dll" />
+    <Content Include="DLLs\office.dll" />
+    <Content Include="DLLs\Oracle.ManagedDataAccess.dll" />
+    <Content Include="DLLs\PmBaseClass20_x64.dll" />
+    <Content Include="DLLs\PMBaseOpr20_x64.dll" />
+    <Content Include="DLLs\PmGeoBase20_x64.dll" />
+    <Content Include="DLLs\PmOdexBase20_x64.dll" />
+    <Content Include="DLLs\PmSoft.Common.CADBase20_x64.dll" />
+    <Content Include="DLLs\PmSoft.Common.CommonClass.dll" />
+    <Content Include="DLLs\PmSoft.Common.Controls.dll" />
+    <Content Include="DLLs\PmSoft.Common.MFCDll20_x64.dll" />
+    <Content Include="DLLs\PmSoft.Common.RevitClass.dll" />
+    <Content Include="DLLs\PmSoft.Common.UnManaged20_x64.dll" />
+    <Content Include="DLLs\PmSoft.General.MFCDll20_x64.dll" />
+    <Content Include="DLLs\PmSoft.MainModel.EntData.dll" />
+    <Content Include="DLLs\PresentationCore.dll" />
+    <Content Include="DLLs\PresentationFramework.dll" />
+    <Content Include="DLLs\PresentationUI.dll" />
+    <Content Include="DLLs\ReachFramework.dll" />
+    <Content Include="DLLs\stdole.dll" />
+    <Content Include="DLLs\System.Data.SQLite.dll" />
+    <Content Include="DLLs\UIAutomationProvider.dll" />
+    <Content Include="DLLs\UIAutomationTypes.dll" />
+    <Content Include="DLLs\VL.Common.Core.dll" />
+    <Content Include="EarthWork\Images\AddElement.png" />
+    <Content Include="EarthWork\Images\AddNode.png" />
+    <Content Include="EarthWork\Images\DeleteElement.png" />
+    <Content Include="EarthWork\Images\DeleteNode.png" />
+    <Content Include="EarthWork\Images\DownForward.png" />
+    <Content Include="EarthWork\Images\DownNode.png" />
+    <Content Include="EarthWork\Images\UpForward.png" />
+    <Content Include="EarthWork\Images\UpNode.png" />
+    <Content Include="Images\AddElement.png" />
+    <Content Include="Images\AddNode.png" />
+    <Content Include="Images\DeleteElement.png" />
+    <Content Include="Images\DeleteNode.png" />
+    <Content Include="Images\DownNode.png" />
+    <Content Include="Images\logoko.png" />
+    <Content Include="Images\UpNode.png" />
+    <None Include="Resources\工程设置.png" />
+    <None Include="Resources\土方分块.png" />
+    <None Include="Resources\预警系统.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

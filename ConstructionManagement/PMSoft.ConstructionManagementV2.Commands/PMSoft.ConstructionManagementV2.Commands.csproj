@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4F28E3FC-A6FB-49EE-BA95-A7BF659F5505}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PMSoft.ConstructionManagementV2.Commands</RootNamespace>
+    <AssemblyName>PMSoft.ConstructionManagementV2.Commands</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ManagedMC3, Version=8.5.0.0, Culture=neutral, PublicKeyToken=99052d24520ebbb3, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\ManagedMC3.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>DLLs\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Vbe.Interop, Version=11.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>DLLs\Microsoft.Vbe.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="office, Version=11.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>DLLs\office.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="PmSoft.Common.CADBase20_x64, Version=1.0.6351.18963, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\PmSoft.Common.CADBase20_x64.dll</HintPath>
+    </Reference>
+    <Reference Include="PmSoft.Common.CommonClass, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\PmSoft.Common.CommonClass.dll</HintPath>
+    </Reference>
+    <Reference Include="PmSoft.Common.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\PmSoft.Common.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="PmSoft.Common.MFCDll20_x64, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\PmSoft.Common.MFCDll20_x64.dll</HintPath>
+    </Reference>
+    <Reference Include="PmSoft.Common.RevitClass, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\PmSoft.Common.RevitClass.dll</HintPath>
+    </Reference>
+    <Reference Include="PmSoft.General.MFCDll20_x64, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\PmSoft.General.MFCDll20_x64.dll</HintPath>
+    </Reference>
+    <Reference Include="PmSoft.MainModel.EntData, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\PmSoft.MainModel.EntData.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="RevitAPI">
+      <HintPath>C:\Program Files\Autodesk\Revit 2016\RevitAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>C:\Program Files\Autodesk\Revit 2016\RevitAPIUI.dll</HintPath>
+    </Reference>
+    <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>DLLs\stdole.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.99.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\UIAutomationProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="UIAutomationTypes, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\UIAutomationTypes.dll</HintPath>
+    </Reference>
+    <Reference Include="VL.Common.Core, Version=1.0.6514.16368, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\VL.Common.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationPath.cs" />
+    <Compile Include="Application.cs" />
+    <Compile Include="Command.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\PMSoft.ConstructionManagementV2\PMSoft.ConstructionManagementV2.csproj">
+      <Project>{5af827df-3c5d-4a6b-93a0-71a6c53112d1}</Project>
+      <Name>PMSoft.ConstructionManagementV2</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AddIns\ConstructionManagementV2.addin" />
+    <Content Include="AddIns\ConstructionManagementV2ForTest.addin" />
+    <Content Include="DLLs\ManagedMC3.dll" />
+    <Content Include="DLLs\Microsoft.Office.Interop.Excel.dll" />
+    <Content Include="DLLs\Microsoft.Vbe.Interop.dll" />
+    <Content Include="DLLs\Microsoft.WindowsAPICodePack.dll" />
+    <Content Include="DLLs\Microsoft.WindowsAPICodePack.Shell.dll" />
+    <Content Include="DLLs\MySql.Data.dll" />
+    <Content Include="DLLs\Newtonsoft.Json.dll" />
+    <Content Include="DLLs\office.dll" />
+    <Content Include="DLLs\Oracle.ManagedDataAccess.dll" />
+    <Content Include="DLLs\PmSoft.Common.CADBase20_x64.dll" />
+    <Content Include="DLLs\PmSoft.Common.CommonClass.dll" />
+    <Content Include="DLLs\PmSoft.Common.Controls.dll" />
+    <Content Include="DLLs\PmSoft.Common.MFCDll20_x64.dll" />
+    <Content Include="DLLs\PmSoft.Common.RevitClass.dll" />
+    <Content Include="DLLs\PmSoft.General.MFCDll20_x64.dll" />
+    <Content Include="DLLs\PmSoft.MainModel.EntData.dll" />
+    <Content Include="DLLs\stdole.dll" />
+    <Content Include="DLLs\System.Data.SQLite.dll" />
+    <Content Include="DLLs\UIAutomationProvider.dll" />
+    <Content Include="DLLs\UIAutomationTypes.dll" />
+    <Content Include="DLLs\VL.Common.Core.dll" />
+    <Content Include="DLLs_Dependency\KernelBaseClass20_x64.dll" />
+    <Content Include="DLLs_Dependency\LDVectorView20_x64.dll" />
+    <Content Include="DLLs_Dependency\PmBaseClass20_x64.dll" />
+    <Content Include="DLLs_Dependency\PMBaseOpr20_x64.dll" />
+    <Content Include="DLLs_Dependency\PmGeoBase20_x64.dll" />
+    <Content Include="DLLs_Dependency\PmOdexBase20_x64.dll" />
+    <Content Include="DLLs_Dependency\PmSoft.Common.UnManaged20_x64.dll" />
+    <Content Include="DLLs_System\PresentationCore.dll" />
+    <Content Include="DLLs_System\PresentationFramework.dll" />
+    <Content Include="DLLs_System\PresentationUI.dll" />
+    <Content Include="DLLs_System\ReachFramework.dll" />
+    <Content Include="Icons\土方分块.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

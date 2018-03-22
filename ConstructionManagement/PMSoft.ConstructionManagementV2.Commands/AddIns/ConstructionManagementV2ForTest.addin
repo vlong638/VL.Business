@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>施工信息管理V2</Name>
+    <FullClassName>PMSoft.ConstructionManagementV2.Commands.CMCommand</FullClassName>
+    <Assembly>E:\Work\RevitProject\2.ProjectSource\ConstructionManagement\PMSoft.ConstructionManagementV2.Commands\bin\Debug\PmSoft.ConstructionManagement.Commands.dll</Assembly>
+    <AddInId>9a085e83-60e7-44b8-a773-87570d105145</AddInId>
+    <VendorId>ConstructionManagementV2</VendorId>
+    <VendorDescription>PMSoft</VendorDescription>
+  </AddIn>
+</RevitAddIns>
